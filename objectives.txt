@@ -1,0 +1,37 @@
+User interface
+	board
+		make templates
+			learn how to use gresources*
+			learn how to use glib-mkenums*
+			define the new type in code*
+				make setter/getter*
+				register properties*
+				make and bind handlers*
+		BoardButton
+			markup
+			styling
+			interactions
+				Select ball & highlight legal moves
+			code definition
+	Responsive
+	Game over screen
+	
+
+Game logic
+	game over
+	posible moves
+	in-memory board representation
+	
+
+Design
+	assets*
+		slots*
+		balls*
+	ui
+		board*
+		Menus
+			Gameover
+			player select
+			
+workflow
+	make a makefile*

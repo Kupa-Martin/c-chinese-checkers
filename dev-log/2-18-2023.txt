@@ -1,0 +1,9 @@
+Used photoshop to made the assets for the game
+	learned how to simulate 3d
+	"learned" how to use the elipsis tool
+
+Learned how to apply styles to the gtk application
+	Used GtkBuilder to make the ui from a xml test file
+	Used GtkCssProvider to test the styling for the ui
+
+It took me 5 hours :´(

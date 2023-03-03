@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/com/fullaccess/ChineseCheckers">
+    <file alias="ui/markup/app.ui">../ui/markup/app.ui</file>
+    <file alias="ui/markup/BoardButton.ui">../ui/markup/BoardButton.ui</file>
+    <file alias="ui/styles/global.css">../ui/styles/global.css</file>
+    <file alias="ui/styles/BoardButton.css">../ui/styles/BoardButton.css</file>
+    <file alias="ui/assets/empty_slot.png">../ui/assets/empty_slot.png</file>
+    <file alias="ui/assets/red_empty_slot.png">../ui/assets/red_empty_slot.png</file>
+    <file alias="ui/assets/red_ball.png">../ui/assets/red_empty_slot.png</file>
+    <file alias="ui/assets/blue_empty_slot.png">../ui/assets/blue_empty_slot.png</file>
+    <file alias="ui/assets/blue_ball.png">../ui/assets/blue_ball.png</file>
+    <file alias="ui/assets/green_empty_slot.png">../ui/assets/green_empty_slot.png</file>
+    <file alias="ui/assets/green_ball.png">../ui/assets/green_empty_slot.png</file>
+    <file alias="ui/assets/black_empty_slot.png">../ui/assets/black_empty_slot.png</file>
+    <file alias="ui/assets/black_ball.png">../ui/assets/black_empty_slot.png</file>
+    <file alias="ui/assets/yellow_empty_slot.png">../ui/assets/yellow_empty_slot.png</file>
+    <file alias="ui/assets/yellow_ball.png">../ui/assets/yellow_empty_slot.png</file>
+    <file alias="ui/assets/white_empty_slot.png">../ui/assets/white_empty_slot.png</file>
+    <file alias="ui/assets/white_ball.png">../ui/assets/white_empty_slot.png</file>
+  </gresource>
+</gresources>

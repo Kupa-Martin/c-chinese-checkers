@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="BoardButton" parent="GtkButton">
+        <signal name="clicked" handler="handle_board_button_clicked"></signal>
+        <property name="name">button</property>
+        <property name="has-frame">false</property>
+        <style>
+            <class name="board-buttons"></class>
+            <class name="circular"></class>
+        </style>
+        <child>
+            <object class="GtkImage" id="image">
+                <style>
+                    <class name="circular"></class>
+                </style>
+            </object>
+        </child>
+    </template>
+</interface>
