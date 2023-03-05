@@ -23,14 +23,13 @@ static void board_button_dispose(GObject *);
 static void board_button_finalize(GObject *);
 static void board_button_get_property(GObject *, guint, GValue *, GParamSpec *);
 static void board_button_set_property(GObject *, guint, const GValue *, GParamSpec *);
-static void handle_board_button_clicked(BoardButton *, gpointer);
+static void handle_board_button_clicked_self(BoardButton *, gpointer);
+static gchararray board_button_closure_sourceToResource(BoardButton *, BoardButtonSource);
 // End forward declarations
 
 static void board_button_init(BoardButton *self) {
-    gtk_widget_init_template(GTK_WIDGET(self));
-
     self->source = BOARD_BUTTON_EMPTY_SLOT;
-    gtk_image_set_from_resource(self->image, "/com/fullaccess/ChineseCheckers/ui/assets/empty_slot.png");
+    gtk_widget_init_template(GTK_WIDGET(self));
 
     GtkCssProvider *cssProvider = gtk_css_provider_new();
     gtk_css_provider_load_from_resource(cssProvider, "/com/fullaccess/ChineseCheckers/ui/styles/BoardButton.css");
@@ -63,7 +62,8 @@ static void board_button_class_init(BoardButtonClass *klass) {
 
     gtk_widget_class_set_template_from_resource(widgetClass, "/com/fullaccess/ChineseCheckers/ui/markup/BoardButton.ui");
     gtk_widget_class_bind_template_child(widgetClass, BoardButton, image);
-    gtk_widget_class_bind_template_callback(widgetClass, handle_board_button_clicked);
+    gtk_widget_class_bind_template_callback(widgetClass, handle_board_button_clicked_self);
+    gtk_widget_class_bind_template_callback(widgetClass, board_button_closure_sourceToResource);
     return;
 }
 
@@ -98,23 +98,7 @@ static void board_button_set_property(GObject *object, guint propertyId, const G
     
     switch (propertyId) {
         case PROPERTY_SOURCE: {
-            const char const *resources[] = {
-                "/com/fullaccess/ChineseCheckers/ui/assets/empty_slot.png",
-                "/com/fullaccess/ChineseCheckers/ui/assets/red_empty_slot.png",
-                "/com/fullaccess/ChineseCheckers/ui/assets/red_ball.png",
-                "/com/fullaccess/ChineseCheckers/ui/assets/blue_empty_slot.png",
-                "/com/fullaccess/ChineseCheckers/ui/assets/blue_ball.png",
-                "/com/fullaccess/ChineseCheckers/ui/assets/green_empty_slot.png",
-                "/com/fullaccess/ChineseCheckers/ui/assets/green_ball.png",
-                "/com/fullaccess/ChineseCheckers/ui/assets/black_empty_slot.png",
-                "/com/fullaccess/ChineseCheckers/ui/assets/black_ball.png",
-                "/com/fullaccess/ChineseCheckers/ui/assets/yellow_empty_slot.png",
-                "/com/fullaccess/ChineseCheckers/ui/assets/yellow_ball.png",
-                "/com/fullaccess/ChineseCheckers/ui/assets/white_empty_slot.png",
-                "/com/fullaccess/ChineseCheckers/ui/assets/white_ball.png"
-            };
             BoardButtonSource source = g_value_get_enum(value);
-            gtk_image_set_from_resource(self->image, resources[source]);
             self->source = source;
             break;
         }
@@ -125,9 +109,29 @@ static void board_button_set_property(GObject *object, guint propertyId, const G
     }
 }
 
-static void handle_board_button_clicked(BoardButton *self, gpointer data) {
+static void handle_board_button_clicked_self(BoardButton *self, gpointer data) {
     board_button_set_source(self, (board_button_get_source(self)+1)%BOARD_BUTTON_N_SOURCES);
     return;
+}
+
+static gchararray board_button_closure_sourceToResource(BoardButton *self, BoardButtonSource source) {
+    const char const *resources[] = {
+        "/com/fullaccess/ChineseCheckers/ui/assets/empty_slot.png",
+        "/com/fullaccess/ChineseCheckers/ui/assets/red_empty_slot.png",
+        "/com/fullaccess/ChineseCheckers/ui/assets/red_ball.png",
+        "/com/fullaccess/ChineseCheckers/ui/assets/blue_empty_slot.png",
+        "/com/fullaccess/ChineseCheckers/ui/assets/blue_ball.png",
+        "/com/fullaccess/ChineseCheckers/ui/assets/green_empty_slot.png",
+        "/com/fullaccess/ChineseCheckers/ui/assets/green_ball.png",
+        "/com/fullaccess/ChineseCheckers/ui/assets/black_empty_slot.png",
+        "/com/fullaccess/ChineseCheckers/ui/assets/black_ball.png",
+        "/com/fullaccess/ChineseCheckers/ui/assets/yellow_empty_slot.png",
+        "/com/fullaccess/ChineseCheckers/ui/assets/yellow_ball.png",
+        "/com/fullaccess/ChineseCheckers/ui/assets/white_empty_slot.png",
+        "/com/fullaccess/ChineseCheckers/ui/assets/white_ball.png"
+    };
+    // Dont return a string literal, it crashes the app.
+    return g_strdup_printf(resources[source]);
 }
 
 extern GtkWidget *board_button_new(void) {
@@ -144,3 +148,4 @@ extern void board_button_set_source(BoardButton *self, BoardButtonSource value) 
     g_object_set(self, "source", value, NULL);
     return;
 }
+

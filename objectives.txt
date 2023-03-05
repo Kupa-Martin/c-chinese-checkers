@@ -8,11 +8,12 @@ User interface
 				register properties*
 				make and bind handlers*
 		BoardButton
-			markup
+			markup*
 			styling
 			interactions
+				implemented basic handler*
 				Select ball & highlight legal moves
-			code definition
+			code definition*
 	Responsive
 	Game over screen
 	

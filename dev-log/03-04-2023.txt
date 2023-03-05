@@ -1,0 +1,11 @@
+Use 
+<binding name={decider-property}>
+	<lookup [class={decider-widget-class}] name={dependant-property}>{widget-id}</lookup>
+</binding>
+
+Note:
+	The decider widget has to be in the same .ui file
+	<lookup> cannot find widgets by the property "name", but it can reference the top level widget if widget-id is left empty
+
+<lookup> returns a property expression
+<binding> takes a propety expression and binds it to a property of the parent object

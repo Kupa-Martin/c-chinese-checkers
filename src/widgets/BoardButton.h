@@ -28,7 +28,7 @@ typedef enum {
 // End type definitions
 
 // Forward declarations
-G_DECLARE_FINAL_TYPE(BoardButton, board_button, BOARD, BUTTON, GtkButton)
+G_DECLARE_FINAL_TYPE(BoardButton, board_button, BOARD, BUTTON, GtkButton);
 
 extern GtkWidget *board_button_new(void);
 extern BoardButtonSource board_button_get_source(BoardButton *);
