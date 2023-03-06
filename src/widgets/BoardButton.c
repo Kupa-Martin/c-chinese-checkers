@@ -19,6 +19,8 @@ struct _BoardButtonClass {
 
 // Forward declarations
 G_DEFINE_TYPE(BoardButton, board_button, GTK_TYPE_BUTTON);
+static void board_button_init(BoardButton *);
+static void board_button_class_init(BoardButtonClass *);
 static void board_button_dispose(GObject *);
 static void board_button_finalize(GObject *);
 static void board_button_get_property(GObject *, guint, GValue *, GParamSpec *);

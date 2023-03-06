@@ -1,4 +1,5 @@
 todo:
+BoardWindow template
 design player select
 design game over
 
@@ -6,3 +7,4 @@ design game over
 done:
 finish BoardButton.ui*
 	bind BoardButton::source to BoardButtton::image::resource*
+design main menu*

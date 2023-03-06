@@ -3,8 +3,13 @@
   <gresource prefix="/com/fullaccess/ChineseCheckers">
     <file alias="ui/markup/app.ui">../ui/markup/app.ui</file>
     <file alias="ui/markup/BoardButton.ui">../ui/markup/BoardButton.ui</file>
+    <file alias="ui/markup/MainMenuWindow.ui">../ui/markup/MainMenuWindow.ui</file>
+    <file alias="ui/markup/BoardWindow.ui">../ui/markup/BoardWindow.ui</file>
     <file alias="ui/styles/global.css">../ui/styles/global.css</file>
     <file alias="ui/styles/BoardButton.css">../ui/styles/BoardButton.css</file>
+    <file alias="ui/styles/MainMenuWindow.css">../ui/styles/MainMenuWindow.css</file>
+    <file alias="ui/styles/BoardWindow.css">../ui/styles/BoardWindow.css</file>
+    <file alias="ui/assets/logo.svg">../ui/assets/logo.svg</file>
     <file alias="ui/assets/empty_slot.png">../ui/assets/empty_slot.png</file>
     <file alias="ui/assets/red_empty_slot.png">../ui/assets/red_empty_slot.png</file>
     <file alias="ui/assets/red_ball.png">../ui/assets/red_empty_slot.png</file>

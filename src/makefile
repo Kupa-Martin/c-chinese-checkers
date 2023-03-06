@@ -8,6 +8,8 @@ TARGET = app
 
 WIDGETS = $(addprefix ./widgets/,\
 	BoardButton\
+	MainMenuWindow\
+	BoardWindow\
 )
 
 all: build_app clean

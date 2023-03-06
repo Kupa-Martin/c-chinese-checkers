@@ -1,0 +1,12 @@
+.menu-main image {
+    padding: 10px;
+}
+
+.menu-main box {
+    padding: 10px;
+}
+
+.menu-main label.title {
+    font-weight: bolder;
+    font-size: xx-large;
+}
