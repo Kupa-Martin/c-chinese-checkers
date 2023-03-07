@@ -7,13 +7,15 @@ User interface
 				make setter/getter*
 				register properties*
 				make and bind handlers*
-		BoardButton
+		BoardButton*
 			markup*
-			styling
+			styling*
 			interactions
 				implemented basic handler*
 				Select ball & highlight legal moves
 			code definition*
+		BoardWindow*
+
 	Responsive
 	Game over screen
 	

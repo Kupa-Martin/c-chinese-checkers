@@ -34,6 +34,29 @@ board_button_source_get_type (void)
     }
   return static_g_enum_type_id;
 }
+/* enumerations from "BoardWindow.h" */
+GType
+board_window_initial_state_get_type (void)
+{
+  static gsize static_g_enum_type_id;
+
+  if (g_once_init_enter (&static_g_enum_type_id))
+    {
+      static const GEnumValue values[] = {
+            { BOARD_WINDOW_EMPTY_BOARD, "BOARD_WINDOW_EMPTY_BOARD", "empty-board" },
+            { BOARD_WINDOW_2_PLAYERS, "BOARD_WINDOW_2_PLAYERS", "2-players" },
+            { BOARD_WINDOW_4_PLAYERS, "BOARD_WINDOW_4_PLAYERS", "4-players" },
+            { BOARD_WINDOW_6_PLAYERS, "BOARD_WINDOW_6_PLAYERS", "6-players" },
+            { 0, NULL, NULL }
+      };
+
+      GType g_enum_type_id =
+        g_enum_register_static (g_intern_static_string ("BoardWindowInitialState"), values);
+
+      g_once_init_leave (&static_g_enum_type_id, g_enum_type_id);
+    }
+  return static_g_enum_type_id;
+}
 
 /* Generated data ends here */
 

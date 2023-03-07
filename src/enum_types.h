@@ -11,6 +11,10 @@ G_BEGIN_DECLS
 /* enumerations from "BoardButton.h" */
 GType board_button_source_get_type (void) G_GNUC_CONST;
 #define BOARD_TYPE_BUTTON_SOURCE (board_button_source_get_type ())
+
+/* enumerations from "BoardWindow.h" */
+GType board_window_initial_state_get_type (void) G_GNUC_CONST;
+#define BOARD_TYPE_WINDOW_INITIAL_STATE (board_window_initial_state_get_type ())
 G_END_DECLS
 
 /* Generated data ends here */

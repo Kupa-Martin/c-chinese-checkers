@@ -25,7 +25,10 @@ static void main_menu_window_init(MainMenuWindow *);
 static void main_menu_window_class_init(MainMenuWindowClass *);
 static void main_menu_window_dispose(GObject *);
 static void main_menu_window_finalize(GObject *);
+static void clicked_play(GtkButton *button1, BoardWindowInitialState players);
 static void handle_main_menu_window_clicked_button1(GtkButton *, gpointer);
+static void handle_main_menu_window_clicked_button2(GtkButton *, gpointer);
+static void handle_main_menu_window_clicked_button3(GtkButton *, gpointer);
 // End forward declarations
 
 static void main_menu_window_init(MainMenuWindow *self) {
@@ -56,6 +59,8 @@ static void main_menu_window_class_init(MainMenuWindowClass *klass) {
     gtk_widget_class_bind_template_child(widgetClass, MainMenuWindow, button2);
     gtk_widget_class_bind_template_child(widgetClass, MainMenuWindow, button3);
     gtk_widget_class_bind_template_callback(widgetClass, handle_main_menu_window_clicked_button1);
+    gtk_widget_class_bind_template_callback(widgetClass, handle_main_menu_window_clicked_button2);
+    gtk_widget_class_bind_template_callback(widgetClass, handle_main_menu_window_clicked_button3);
     return;
 }
 
@@ -70,15 +75,25 @@ static void main_menu_window_finalize(GObject *self) {
     return;
 }
 
-static void handle_main_menu_window_clicked_button1(GtkButton *button1, gpointer) {
+static void clicked_play(GtkButton *button, BoardWindowInitialState players) {
     GListModel *windowList = gtk_window_get_toplevels();
     GtkWindow *window = GTK_WINDOW(g_list_model_get_item(windowList, 0));
     GtkApplication *app = gtk_window_get_application(window);
     gtk_window_close(window);
-    GtkWindow *newWindow = GTK_WINDOW(main_menu_window_new());
+    GtkWindow *newWindow = GTK_WINDOW(g_object_new(BOARD_TYPE_WINDOW, "initial-state", players, NULL));
     gtk_window_set_application(newWindow, app);
     gtk_widget_show(GTK_WIDGET(newWindow));
     return;
+}
+
+static void handle_main_menu_window_clicked_button1(GtkButton *button1, gpointer) {
+    return clicked_play(button1, BOARD_WINDOW_2_PLAYERS);
+}
+static void handle_main_menu_window_clicked_button2(GtkButton *button2, gpointer) {
+    return clicked_play(button2, BOARD_WINDOW_4_PLAYERS);
+}
+static void handle_main_menu_window_clicked_button3(GtkButton *button3, gpointer) {
+    return clicked_play(button3, BOARD_WINDOW_6_PLAYERS);
 }
 
 extern GtkWidget *main_menu_window_new(void) {

@@ -7,6 +7,7 @@ void handle_gtk_application_activate_app(GtkApplication *app, gpointer userData)
     BoardButton *test= BOARD_BUTTON(board_button_new());
     #endif
     g_type_ensure(BOARD_TYPE_BUTTON);
+    g_type_ensure(BOARD_TYPE_WINDOW);
     g_type_ensure(MAIN_MENU_TYPE_WINDOW);
     GtkBuilder *builder = gtk_builder_new_from_resource("/com/fullaccess/ChineseCheckers/ui/markup/app.ui");
     GtkWindow *window = GTK_WINDOW(gtk_builder_get_object(builder, "window"));

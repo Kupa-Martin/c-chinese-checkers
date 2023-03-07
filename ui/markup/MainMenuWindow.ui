@@ -39,11 +39,13 @@
                         </child>
                         <child>
                             <object class="GtkButton" id="button2">
+                                <signal name="clicked" handler="handle_main_menu_window_clicked_button2"></signal>
                                 <property name="label">4 players</property>
                             </object>
                         </child>
                         <child>
                             <object class="GtkButton" id="button3">
+                                <signal name="clicked" handler="handle_main_menu_window_clicked_button3"></signal>
                                 <property name="label">6 players</property>
                             </object>
                         </child>

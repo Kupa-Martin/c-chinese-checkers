@@ -1,6 +1,6 @@
 #include "../includes.h"
 
-enum {
+enum /* Property id's */ {
     PROPERTY_SOURCE = 1
 };
 
