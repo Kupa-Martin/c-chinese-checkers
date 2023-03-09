@@ -6,13 +6,12 @@
         </style>
         <child>
             <object class="GtkBox" id="board">
+                <property name="name">board</property>
                 <property name="orientation">vertical</property>
                 <property name="halign">center</property>
                 <property name="width-request">800</property>
                 <property name="spacing">5</property>
-                <style>
-                    <class name="board-rows"></class>
-                </style>
+                
                 <child>
                     <object class="GtkLabel" id="label">
                         <property name="label">'s turn</property>
@@ -20,6 +19,10 @@
                 </child>
                 <child>
                     <object class="GtkBox" id="row1">
+                        <property name="name">row1</property>
+                        <style>
+                            <class name="board-rows"></class>
+                        </style>
                         <property name="spacing">5</property>
                         <property name="orientation">horizontal</property>
                         <property name="halign">center</property>
@@ -30,6 +33,10 @@
                 </child>
                 <child>
                     <object class="GtkBox" id="row2">
+                        <property name="name">row2</property>
+                        <style>
+                            <class name="board-rows"></class>
+                        </style>
                         <property name="spacing">5</property>
                         <property name="orientation">horizontal</property>
                         <property name="halign">center</property>
@@ -39,6 +46,10 @@
                 </child>
                 <child>
                     <object class="GtkBox" id="row3">
+                        <property name="name">row3</property>
+                        <style>
+                            <class name="board-rows"></class>
+                        </style>
                         <property name="spacing">5</property>
                         <property name="orientation">horizontal</property>
                         <property name="halign">center</property>
@@ -49,6 +60,10 @@
                 </child>
                 <child>
                     <object class="GtkBox" id="row4">
+                        <property name="name">row4</property>
+                        <style>
+                            <class name="board-rows"></class>
+                        </style>
                         <property name="spacing">5</property>
                         <property name="orientation">horizontal</property>
                         <property name="halign">center</property>
@@ -60,6 +75,10 @@
                 </child>
                 <child>
                     <object class="GtkBox" id="row5">
+                        <property name="name">row5</property>
+                        <style>
+                            <class name="board-rows"></class>
+                        </style>
                         <property name="spacing">5</property>
                         <property name="orientation">horizontal</property>
                         <property name="halign">center</property>
@@ -80,6 +99,10 @@
                 </child>
                 <child>
                     <object class="GtkBox" id="row6">
+                        <property name="name">row6</property>
+                        <style>
+                            <class name="board-rows"></class>
+                        </style>
                         <property name="spacing">5</property>
                         <property name="orientation">horizontal</property>
                         <property name="halign">center</property>
@@ -99,6 +122,10 @@
                 </child>
                 <child>
                     <object class="GtkBox" id="row7">
+                        <property name="name">row7</property>
+                        <style>
+                            <class name="board-rows"></class>
+                        </style>
                         <property name="spacing">5</property>
                         <property name="orientation">horizontal</property>
                         <property name="halign">center</property>
@@ -117,6 +144,10 @@
                 </child>
                 <child>
                     <object class="GtkBox" id="row8">
+                        <property name="name">row8</property>
+                        <style>
+                            <class name="board-rows"></class>
+                        </style>
                         <property name="spacing">5</property>
                         <property name="orientation">horizontal</property>
                         <property name="halign">center</property>
@@ -134,6 +165,10 @@
                 </child>
                 <child>
                     <object class="GtkBox" id="row9">
+                        <property name="name">row9</property>
+                        <style>
+                            <class name="board-rows"></class>
+                        </style>
                         <property name="spacing">5</property>
                         <property name="orientation">horizontal</property>
                         <property name="halign">center</property>
@@ -150,6 +185,10 @@
                 </child>
                 <child>
                     <object class="GtkBox" id="row10">
+                        <property name="name">row10</property>
+                        <style>
+                            <class name="board-rows"></class>
+                        </style>
                         <property name="spacing">5</property>
                         <property name="orientation">horizontal</property>
                         <property name="halign">center</property>
@@ -167,6 +206,10 @@
                 </child>
                 <child>
                     <object class="GtkBox" id="row11">
+                        <property name="name">row11</property>
+                        <style>
+                            <class name="board-rows"></class>
+                        </style>
                         <property name="spacing">5</property>
                         <property name="orientation">horizontal</property>
                         <property name="halign">center</property>
@@ -185,6 +228,10 @@
                 </child>
                 <child>
                     <object class="GtkBox" id="row12">
+                        <property name="name">row12</property>
+                        <style>
+                            <class name="board-rows"></class>
+                        </style>
                         <property name="spacing">5</property>
                         <property name="orientation">horizontal</property>
                         <property name="halign">center</property>
@@ -204,6 +251,10 @@
                 </child>
                 <child>
                     <object class="GtkBox" id="row13">
+                        <property name="name">row13</property>
+                        <style>
+                            <class name="board-rows"></class>
+                        </style>
                         <property name="spacing">5</property>
                         <property name="orientation">horizontal</property>
                         <property name="halign">center</property>
@@ -224,6 +275,10 @@
                 </child>
                 <child>
                     <object class="GtkBox" id="row14">
+                        <property name="name">row14</property>
+                        <style>
+                            <class name="board-rows"></class>
+                        </style>
                         <property name="spacing">5</property>
                         <property name="orientation">horizontal</property>
                         <property name="halign">center</property>
@@ -235,6 +290,10 @@
                 </child>
                 <child>
                     <object class="GtkBox" id="row15">
+                        <property name="name">row15</property>
+                        <style>
+                            <class name="board-rows"></class>
+                        </style>
                         <property name="spacing">5</property>
                         <property name="orientation">horizontal</property>
                         <property name="halign">center</property>
@@ -245,6 +304,10 @@
                 </child>
                 <child>
                     <object class="GtkBox" id="row16">
+                        <property name="name">row16</property>
+                        <style>
+                            <class name="board-rows"></class>
+                        </style>
                         <property name="spacing">5</property>
                         <property name="orientation">horizontal</property>
                         <property name="halign">center</property>
@@ -254,6 +317,10 @@
                 </child>
                 <child>
                     <object class="GtkBox" id="row17">
+                        <property name="name">row17</property>
+                        <style>
+                            <class name="board-rows"></class>
+                        </style>
                         <property name="spacing">5</property>
                         <property name="orientation">horizontal</property>
                         <property name="halign">center</property>

@@ -1,4 +1,9 @@
 
 .board-window box.board-rows {
-    background: lightblue;
+    background: red;
+}
+
+.board-window box#board {
+    background-image: url("resource:///com/fullaccess/ChineseCheckers/ui/assets/blue_ball.png");
+    background-size: cover;
 }

@@ -1,4 +1,5 @@
 todo:
+add background to BoardWindow
 design game over
 
 
