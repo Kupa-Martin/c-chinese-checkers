@@ -3,9 +3,6 @@
 #define DEBUG
 
 void handle_gtk_application_activate_app(GtkApplication *app, gpointer userData) {
-    #ifdef DEBUG
-    BoardButton *test= BOARD_BUTTON(board_button_new());
-    #endif
     g_type_ensure(BOARD_TYPE_BUTTON);
     g_type_ensure(BOARD_TYPE_WINDOW);
     g_type_ensure(MAIN_MENU_TYPE_WINDOW);

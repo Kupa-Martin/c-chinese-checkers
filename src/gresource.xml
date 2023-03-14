@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/com/fullaccess/ChineseCheckers">
+    
     <file alias="ui/markup/app.ui">../ui/markup/app.ui</file>
     <file alias="ui/markup/BoardButton.ui">../ui/markup/BoardButton.ui</file>
     <file alias="ui/markup/MainMenuWindow.ui">../ui/markup/MainMenuWindow.ui</file>

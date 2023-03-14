@@ -5,328 +5,333 @@
             <class name="board-window"></class>
         </style>
         <child>
-            <object class="GtkBox" id="board">
-                <property name="name">board</property>
-                <property name="orientation">vertical</property>
-                <property name="halign">center</property>
-                <property name="width-request">800</property>
-                <property name="spacing">5</property>
-                
+            <object class="GtkOverlay" id="overlay">
                 <child>
-                    <object class="GtkLabel" id="label">
-                        <property name="label">'s turn</property>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkBox" id="row1">
-                        <property name="name">row1</property>
-                        <style>
-                            <class name="board-rows"></class>
-                        </style>
-                        <property name="spacing">5</property>
-                        <property name="orientation">horizontal</property>
+                    <object class="GtkBox" id="board">
+                        <property name="name">board</property>
+                        <property name="orientation">vertical</property>
                         <property name="halign">center</property>
+                        <property name="width-request">800</property>
+                        <property name="spacing">5</property>
+
                         <child>
-                            <object class="BoardButton" id="boardbutton00-00"></object>
+                            <object class="GtkLabel" id="label">
+                                <property name="label">'s turn</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox" id="row1">
+                                <property name="name">row1</property>
+                                <style>
+                                    <class name="board-rows"></class>
+                                </style>
+                                <property name="spacing">5</property>
+                                <property name="orientation">horizontal</property>
+                                <property name="halign">center</property>
+                                <child>
+                                    <object class="BoardButton" id="boardbutton00-00"></object>
+                                </child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox" id="row2">
+                                <property name="name">row2</property>
+                                <style>
+                                    <class name="board-rows"></class>
+                                </style>
+                                <property name="spacing">5</property>
+                                <property name="orientation">horizontal</property>
+                                <property name="halign">center</property>
+                                <child><object class="BoardButton" id="boardbutton01-00"></object></child>
+                                <child><object class="BoardButton" id="boardbutton01-01"></object></child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox" id="row3">
+                                <property name="name">row3</property>
+                                <style>
+                                    <class name="board-rows"></class>
+                                </style>
+                                <property name="spacing">5</property>
+                                <property name="orientation">horizontal</property>
+                                <property name="halign">center</property>
+                                    <child><object class="BoardButton" id="boardbutton02-00"></object></child>
+                                    <child><object class="BoardButton" id="boardbutton02-01"></object></child>
+                                    <child><object class="BoardButton" id="boardbutton02-02"></object></child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox" id="row4">
+                                <property name="name">row4</property>
+                                <style>
+                                    <class name="board-rows"></class>
+                                </style>
+                                <property name="spacing">5</property>
+                                <property name="orientation">horizontal</property>
+                                <property name="halign">center</property>
+                                <child><object class="BoardButton" id="boardbutton03-00"></object></child>
+                                <child><object class="BoardButton" id="boardbutton03-01"></object></child>
+                                <child><object class="BoardButton" id="boardbutton03-02"></object></child>
+                                <child><object class="BoardButton" id="boardbutton03-03"></object></child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox" id="row5">
+                                <property name="name">row5</property>
+                                <style>
+                                    <class name="board-rows"></class>
+                                </style>
+                                <property name="spacing">5</property>
+                                <property name="orientation">horizontal</property>
+                                <property name="halign">center</property>
+                                <child><object class="BoardButton" id="boardbutton04-00"></object></child>
+                                <child><object class="BoardButton" id="boardbutton04-01"></object></child>
+                                <child><object class="BoardButton" id="boardbutton04-02"></object></child>
+                                <child><object class="BoardButton" id="boardbutton04-03"></object></child>
+                                <child><object class="BoardButton" id="boardbutton04-04"></object></child>
+                                <child><object class="BoardButton" id="boardbutton04-05"></object></child>
+                                <child><object class="BoardButton" id="boardbutton04-06"></object></child>
+                                <child><object class="BoardButton" id="boardbutton04-07"></object></child>
+                                <child><object class="BoardButton" id="boardbutton04-08"></object></child>
+                                <child><object class="BoardButton" id="boardbutton04-09"></object></child>
+                                <child><object class="BoardButton" id="boardbutton04-10"></object></child>
+                                <child><object class="BoardButton" id="boardbutton04-11"></object></child>
+                                <child><object class="BoardButton" id="boardbutton04-12"></object></child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox" id="row6">
+                                <property name="name">row6</property>
+                                <style>
+                                    <class name="board-rows"></class>
+                                </style>
+                                <property name="spacing">5</property>
+                                <property name="orientation">horizontal</property>
+                                <property name="halign">center</property>
+                                <child><object class="BoardButton" id="boardbutton05-00"></object></child>
+                                <child><object class="BoardButton" id="boardbutton05-01"></object></child>
+                                <child><object class="BoardButton" id="boardbutton05-02"></object></child>
+                                <child><object class="BoardButton" id="boardbutton05-03"></object></child>
+                                <child><object class="BoardButton" id="boardbutton05-04"></object></child>
+                                <child><object class="BoardButton" id="boardbutton05-05"></object></child>
+                                <child><object class="BoardButton" id="boardbutton05-06"></object></child>
+                                <child><object class="BoardButton" id="boardbutton05-07"></object></child>
+                                <child><object class="BoardButton" id="boardbutton05-08"></object></child>
+                                <child><object class="BoardButton" id="boardbutton05-09"></object></child>
+                                <child><object class="BoardButton" id="boardbutton05-10"></object></child>
+                                <child><object class="BoardButton" id="boardbutton05-11"></object></child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox" id="row7">
+                                <property name="name">row7</property>
+                                <style>
+                                    <class name="board-rows"></class>
+                                </style>
+                                <property name="spacing">5</property>
+                                <property name="orientation">horizontal</property>
+                                <property name="halign">center</property>
+                                <child><object class="BoardButton" id="boardbutton06-00"></object></child>
+                                <child><object class="BoardButton" id="boardbutton06-01"></object></child>
+                                <child><object class="BoardButton" id="boardbutton06-02"></object></child>
+                                <child><object class="BoardButton" id="boardbutton06-03"></object></child>
+                                <child><object class="BoardButton" id="boardbutton06-04"></object></child>
+                                <child><object class="BoardButton" id="boardbutton06-05"></object></child>
+                                <child><object class="BoardButton" id="boardbutton06-06"></object></child>
+                                <child><object class="BoardButton" id="boardbutton06-07"></object></child>
+                                <child><object class="BoardButton" id="boardbutton06-08"></object></child>
+                                <child><object class="BoardButton" id="boardbutton06-09"></object></child>
+                                <child><object class="BoardButton" id="boardbutton06-10"></object></child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox" id="row8">
+                                <property name="name">row8</property>
+                                <style>
+                                    <class name="board-rows"></class>
+                                </style>
+                                <property name="spacing">5</property>
+                                <property name="orientation">horizontal</property>
+                                <property name="halign">center</property>
+                                <child><object class="BoardButton" id="boardbutton07-00"></object></child>
+                                <child><object class="BoardButton" id="boardbutton07-01"></object></child>
+                                <child><object class="BoardButton" id="boardbutton07-02"></object></child>
+                                <child><object class="BoardButton" id="boardbutton07-03"></object></child>
+                                <child><object class="BoardButton" id="boardbutton07-04"></object></child>
+                                <child><object class="BoardButton" id="boardbutton07-05"></object></child>
+                                <child><object class="BoardButton" id="boardbutton07-06"></object></child>
+                                <child><object class="BoardButton" id="boardbutton07-07"></object></child>
+                                <child><object class="BoardButton" id="boardbutton07-08"></object></child>
+                                <child><object class="BoardButton" id="boardbutton07-09"></object></child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox" id="row9">
+                                <property name="name">row9</property>
+                                <style>
+                                    <class name="board-rows"></class>
+                                </style>
+                                <property name="spacing">5</property>
+                                <property name="orientation">horizontal</property>
+                                <property name="halign">center</property>
+                                <child><object class="BoardButton" id="boardbutton08-00"></object></child>
+                                <child><object class="BoardButton" id="boardbutton08-01"></object></child>
+                                <child><object class="BoardButton" id="boardbutton08-02"></object></child>
+                                <child><object class="BoardButton" id="boardbutton08-03"></object></child>
+                                <child><object class="BoardButton" id="boardbutton08-04"></object></child>
+                                <child><object class="BoardButton" id="boardbutton08-05"></object></child>
+                                <child><object class="BoardButton" id="boardbutton08-06"></object></child>
+                                <child><object class="BoardButton" id="boardbutton08-07"></object></child>
+                                <child><object class="BoardButton" id="boardbutton08-08"></object></child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox" id="row10">
+                                <property name="name">row10</property>
+                                <style>
+                                    <class name="board-rows"></class>
+                                </style>
+                                <property name="spacing">5</property>
+                                <property name="orientation">horizontal</property>
+                                <property name="halign">center</property>
+                                <child><object class="BoardButton" id="boardbutton09-00"></object></child>
+                                <child><object class="BoardButton" id="boardbutton09-01"></object></child>
+                                <child><object class="BoardButton" id="boardbutton09-02"></object></child>
+                                <child><object class="BoardButton" id="boardbutton09-03"></object></child>
+                                <child><object class="BoardButton" id="boardbutton09-04"></object></child>
+                                <child><object class="BoardButton" id="boardbutton09-05"></object></child>
+                                <child><object class="BoardButton" id="boardbutton09-06"></object></child>
+                                <child><object class="BoardButton" id="boardbutton09-07"></object></child>
+                                <child><object class="BoardButton" id="boardbutton09-08"></object></child>
+                                <child><object class="BoardButton" id="boardbutton09-09"></object></child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox" id="row11">
+                                <property name="name">row11</property>
+                                <style>
+                                    <class name="board-rows"></class>
+                                </style>
+                                <property name="spacing">5</property>
+                                <property name="orientation">horizontal</property>
+                                <property name="halign">center</property>
+                                <child><object class="BoardButton" id="boardbutton10-00"></object></child>
+                                <child><object class="BoardButton" id="boardbutton10-01"></object></child>
+                                <child><object class="BoardButton" id="boardbutton10-02"></object></child>
+                                <child><object class="BoardButton" id="boardbutton10-03"></object></child>
+                                <child><object class="BoardButton" id="boardbutton10-04"></object></child>
+                                <child><object class="BoardButton" id="boardbutton10-05"></object></child>
+                                <child><object class="BoardButton" id="boardbutton10-06"></object></child>
+                                <child><object class="BoardButton" id="boardbutton10-07"></object></child>
+                                <child><object class="BoardButton" id="boardbutton10-08"></object></child>
+                                <child><object class="BoardButton" id="boardbutton10-09"></object></child>
+                                <child><object class="BoardButton" id="boardbutton10-10"></object></child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox" id="row12">
+                                <property name="name">row12</property>
+                                <style>
+                                    <class name="board-rows"></class>
+                                </style>
+                                <property name="spacing">5</property>
+                                <property name="orientation">horizontal</property>
+                                <property name="halign">center</property>
+                                <child><object class="BoardButton" id="boardbutton11-00"></object></child>
+                                <child><object class="BoardButton" id="boardbutton11-01"></object></child>
+                                <child><object class="BoardButton" id="boardbutton11-02"></object></child>
+                                <child><object class="BoardButton" id="boardbutton11-03"></object></child>
+                                <child><object class="BoardButton" id="boardbutton11-04"></object></child>
+                                <child><object class="BoardButton" id="boardbutton11-05"></object></child>
+                                <child><object class="BoardButton" id="boardbutton11-06"></object></child>
+                                <child><object class="BoardButton" id="boardbutton11-07"></object></child>
+                                <child><object class="BoardButton" id="boardbutton11-08"></object></child>
+                                <child><object class="BoardButton" id="boardbutton11-09"></object></child>
+                                <child><object class="BoardButton" id="boardbutton11-10"></object></child>
+                                <child><object class="BoardButton" id="boardbutton11-11"></object></child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox" id="row13">
+                                <property name="name">row13</property>
+                                <style>
+                                    <class name="board-rows"></class>
+                                </style>
+                                <property name="spacing">5</property>
+                                <property name="orientation">horizontal</property>
+                                <property name="halign">center</property>
+                                <child><object class="BoardButton" id="boardbutton12-00"></object></child>
+                                <child><object class="BoardButton" id="boardbutton12-01"></object></child>
+                                <child><object class="BoardButton" id="boardbutton12-02"></object></child>
+                                <child><object class="BoardButton" id="boardbutton12-03"></object></child>
+                                <child><object class="BoardButton" id="boardbutton12-04"></object></child>
+                                <child><object class="BoardButton" id="boardbutton12-05"></object></child>
+                                <child><object class="BoardButton" id="boardbutton12-06"></object></child>
+                                <child><object class="BoardButton" id="boardbutton12-07"></object></child>
+                                <child><object class="BoardButton" id="boardbutton12-08"></object></child>
+                                <child><object class="BoardButton" id="boardbutton12-09"></object></child>
+                                <child><object class="BoardButton" id="boardbutton12-10"></object></child>
+                                <child><object class="BoardButton" id="boardbutton12-11"></object></child>
+                                <child><object class="BoardButton" id="boardbutton12-12"></object></child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox" id="row14">
+                                <property name="name">row14</property>
+                                <style>
+                                    <class name="board-rows"></class>
+                                </style>
+                                <property name="spacing">5</property>
+                                <property name="orientation">horizontal</property>
+                                <property name="halign">center</property>
+                                <child><object class="BoardButton" id="boardbutton13-00"></object></child>
+                                <child><object class="BoardButton" id="boardbutton13-01"></object></child>
+                                <child><object class="BoardButton" id="boardbutton13-02"></object></child>
+                                <child><object class="BoardButton" id="boardbutton13-03"></object></child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox" id="row15">
+                                <property name="name">row15</property>
+                                <style>
+                                    <class name="board-rows"></class>
+                                </style>
+                                <property name="spacing">5</property>
+                                <property name="orientation">horizontal</property>
+                                <property name="halign">center</property>
+                                <child><object class="BoardButton" id="boardbutton14-00"></object></child>
+                                <child><object class="BoardButton" id="boardbutton14-01"></object></child>
+                                <child><object class="BoardButton" id="boardbutton14-02"></object></child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox" id="row16">
+                                <property name="name">row16</property>
+                                <style>
+                                    <class name="board-rows"></class>
+                                </style>
+                                <property name="spacing">5</property>
+                                <property name="orientation">horizontal</property>
+                                <property name="halign">center</property>
+                                <child><object class="BoardButton" id="boardbutton15-00"></object></child>
+                                <child><object class="BoardButton" id="boardbutton15-01"></object></child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox" id="row17">
+                                <property name="name">row17</property>
+                                <style>
+                                    <class name="board-rows"></class>
+                                </style>
+                                <property name="spacing">5</property>
+                                <property name="orientation">horizontal</property>
+                                <property name="halign">center</property>
+                                <child><object class="BoardButton" id="boardbutton16-00"></object></child>
+                            </object>
                         </child>
                     </object>
                 </child>
-                <child>
-                    <object class="GtkBox" id="row2">
-                        <property name="name">row2</property>
-                        <style>
-                            <class name="board-rows"></class>
-                        </style>
-                        <property name="spacing">5</property>
-                        <property name="orientation">horizontal</property>
-                        <property name="halign">center</property>
-                        <child><object class="BoardButton" id="boardbutton01-00"></object></child>
-                        <child><object class="BoardButton" id="boardbutton01-01"></object></child>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkBox" id="row3">
-                        <property name="name">row3</property>
-                        <style>
-                            <class name="board-rows"></class>
-                        </style>
-                        <property name="spacing">5</property>
-                        <property name="orientation">horizontal</property>
-                        <property name="halign">center</property>
-                            <child><object class="BoardButton" id="boardbutton02-00"></object></child>
-                            <child><object class="BoardButton" id="boardbutton02-01"></object></child>
-                            <child><object class="BoardButton" id="boardbutton02-02"></object></child>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkBox" id="row4">
-                        <property name="name">row4</property>
-                        <style>
-                            <class name="board-rows"></class>
-                        </style>
-                        <property name="spacing">5</property>
-                        <property name="orientation">horizontal</property>
-                        <property name="halign">center</property>
-                        <child><object class="BoardButton" id="boardbutton03-00"></object></child>
-                        <child><object class="BoardButton" id="boardbutton03-01"></object></child>
-                        <child><object class="BoardButton" id="boardbutton03-02"></object></child>
-                        <child><object class="BoardButton" id="boardbutton03-03"></object></child>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkBox" id="row5">
-                        <property name="name">row5</property>
-                        <style>
-                            <class name="board-rows"></class>
-                        </style>
-                        <property name="spacing">5</property>
-                        <property name="orientation">horizontal</property>
-                        <property name="halign">center</property>
-                        <child><object class="BoardButton" id="boardbutton04-00"></object></child>
-                        <child><object class="BoardButton" id="boardbutton04-01"></object></child>
-                        <child><object class="BoardButton" id="boardbutton04-02"></object></child>
-                        <child><object class="BoardButton" id="boardbutton04-03"></object></child>
-                        <child><object class="BoardButton" id="boardbutton04-04"></object></child>
-                        <child><object class="BoardButton" id="boardbutton04-05"></object></child>
-                        <child><object class="BoardButton" id="boardbutton04-06"></object></child>
-                        <child><object class="BoardButton" id="boardbutton04-07"></object></child>
-                        <child><object class="BoardButton" id="boardbutton04-08"></object></child>
-                        <child><object class="BoardButton" id="boardbutton04-09"></object></child>
-                        <child><object class="BoardButton" id="boardbutton04-10"></object></child>
-                        <child><object class="BoardButton" id="boardbutton04-11"></object></child>
-                        <child><object class="BoardButton" id="boardbutton04-12"></object></child>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkBox" id="row6">
-                        <property name="name">row6</property>
-                        <style>
-                            <class name="board-rows"></class>
-                        </style>
-                        <property name="spacing">5</property>
-                        <property name="orientation">horizontal</property>
-                        <property name="halign">center</property>
-                        <child><object class="BoardButton" id="boardbutton05-00"></object></child>
-                        <child><object class="BoardButton" id="boardbutton05-01"></object></child>
-                        <child><object class="BoardButton" id="boardbutton05-02"></object></child>
-                        <child><object class="BoardButton" id="boardbutton05-03"></object></child>
-                        <child><object class="BoardButton" id="boardbutton05-04"></object></child>
-                        <child><object class="BoardButton" id="boardbutton05-05"></object></child>
-                        <child><object class="BoardButton" id="boardbutton05-06"></object></child>
-                        <child><object class="BoardButton" id="boardbutton05-07"></object></child>
-                        <child><object class="BoardButton" id="boardbutton05-08"></object></child>
-                        <child><object class="BoardButton" id="boardbutton05-09"></object></child>
-                        <child><object class="BoardButton" id="boardbutton05-10"></object></child>
-                        <child><object class="BoardButton" id="boardbutton05-11"></object></child>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkBox" id="row7">
-                        <property name="name">row7</property>
-                        <style>
-                            <class name="board-rows"></class>
-                        </style>
-                        <property name="spacing">5</property>
-                        <property name="orientation">horizontal</property>
-                        <property name="halign">center</property>
-                        <child><object class="BoardButton" id="boardbutton06-00"></object></child>
-                        <child><object class="BoardButton" id="boardbutton06-01"></object></child>
-                        <child><object class="BoardButton" id="boardbutton06-02"></object></child>
-                        <child><object class="BoardButton" id="boardbutton06-03"></object></child>
-                        <child><object class="BoardButton" id="boardbutton06-04"></object></child>
-                        <child><object class="BoardButton" id="boardbutton06-05"></object></child>
-                        <child><object class="BoardButton" id="boardbutton06-06"></object></child>
-                        <child><object class="BoardButton" id="boardbutton06-07"></object></child>
-                        <child><object class="BoardButton" id="boardbutton06-08"></object></child>
-                        <child><object class="BoardButton" id="boardbutton06-09"></object></child>
-                        <child><object class="BoardButton" id="boardbutton06-10"></object></child>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkBox" id="row8">
-                        <property name="name">row8</property>
-                        <style>
-                            <class name="board-rows"></class>
-                        </style>
-                        <property name="spacing">5</property>
-                        <property name="orientation">horizontal</property>
-                        <property name="halign">center</property>
-                        <child><object class="BoardButton" id="boardbutton07-00"></object></child>
-                        <child><object class="BoardButton" id="boardbutton07-01"></object></child>
-                        <child><object class="BoardButton" id="boardbutton07-02"></object></child>
-                        <child><object class="BoardButton" id="boardbutton07-03"></object></child>
-                        <child><object class="BoardButton" id="boardbutton07-04"></object></child>
-                        <child><object class="BoardButton" id="boardbutton07-05"></object></child>
-                        <child><object class="BoardButton" id="boardbutton07-06"></object></child>
-                        <child><object class="BoardButton" id="boardbutton07-07"></object></child>
-                        <child><object class="BoardButton" id="boardbutton07-08"></object></child>
-                        <child><object class="BoardButton" id="boardbutton07-09"></object></child>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkBox" id="row9">
-                        <property name="name">row9</property>
-                        <style>
-                            <class name="board-rows"></class>
-                        </style>
-                        <property name="spacing">5</property>
-                        <property name="orientation">horizontal</property>
-                        <property name="halign">center</property>
-                        <child><object class="BoardButton" id="boardbutton08-00"></object></child>
-                        <child><object class="BoardButton" id="boardbutton08-01"></object></child>
-                        <child><object class="BoardButton" id="boardbutton08-02"></object></child>
-                        <child><object class="BoardButton" id="boardbutton08-03"></object></child>
-                        <child><object class="BoardButton" id="boardbutton08-04"></object></child>
-                        <child><object class="BoardButton" id="boardbutton08-05"></object></child>
-                        <child><object class="BoardButton" id="boardbutton08-06"></object></child>
-                        <child><object class="BoardButton" id="boardbutton08-07"></object></child>
-                        <child><object class="BoardButton" id="boardbutton08-08"></object></child>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkBox" id="row10">
-                        <property name="name">row10</property>
-                        <style>
-                            <class name="board-rows"></class>
-                        </style>
-                        <property name="spacing">5</property>
-                        <property name="orientation">horizontal</property>
-                        <property name="halign">center</property>
-                        <child><object class="BoardButton" id="boardbutton09-00"></object></child>
-                        <child><object class="BoardButton" id="boardbutton09-01"></object></child>
-                        <child><object class="BoardButton" id="boardbutton09-02"></object></child>
-                        <child><object class="BoardButton" id="boardbutton09-03"></object></child>
-                        <child><object class="BoardButton" id="boardbutton09-04"></object></child>
-                        <child><object class="BoardButton" id="boardbutton09-05"></object></child>
-                        <child><object class="BoardButton" id="boardbutton09-06"></object></child>
-                        <child><object class="BoardButton" id="boardbutton09-07"></object></child>
-                        <child><object class="BoardButton" id="boardbutton09-08"></object></child>
-                        <child><object class="BoardButton" id="boardbutton09-09"></object></child>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkBox" id="row11">
-                        <property name="name">row11</property>
-                        <style>
-                            <class name="board-rows"></class>
-                        </style>
-                        <property name="spacing">5</property>
-                        <property name="orientation">horizontal</property>
-                        <property name="halign">center</property>
-                        <child><object class="BoardButton" id="boardbutton10-00"></object></child>
-                        <child><object class="BoardButton" id="boardbutton10-01"></object></child>
-                        <child><object class="BoardButton" id="boardbutton10-02"></object></child>
-                        <child><object class="BoardButton" id="boardbutton10-03"></object></child>
-                        <child><object class="BoardButton" id="boardbutton10-04"></object></child>
-                        <child><object class="BoardButton" id="boardbutton10-05"></object></child>
-                        <child><object class="BoardButton" id="boardbutton10-06"></object></child>
-                        <child><object class="BoardButton" id="boardbutton10-07"></object></child>
-                        <child><object class="BoardButton" id="boardbutton10-08"></object></child>
-                        <child><object class="BoardButton" id="boardbutton10-09"></object></child>
-                        <child><object class="BoardButton" id="boardbutton10-10"></object></child>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkBox" id="row12">
-                        <property name="name">row12</property>
-                        <style>
-                            <class name="board-rows"></class>
-                        </style>
-                        <property name="spacing">5</property>
-                        <property name="orientation">horizontal</property>
-                        <property name="halign">center</property>
-                        <child><object class="BoardButton" id="boardbutton11-00"></object></child>
-                        <child><object class="BoardButton" id="boardbutton11-01"></object></child>
-                        <child><object class="BoardButton" id="boardbutton11-02"></object></child>
-                        <child><object class="BoardButton" id="boardbutton11-03"></object></child>
-                        <child><object class="BoardButton" id="boardbutton11-04"></object></child>
-                        <child><object class="BoardButton" id="boardbutton11-05"></object></child>
-                        <child><object class="BoardButton" id="boardbutton11-06"></object></child>
-                        <child><object class="BoardButton" id="boardbutton11-07"></object></child>
-                        <child><object class="BoardButton" id="boardbutton11-08"></object></child>
-                        <child><object class="BoardButton" id="boardbutton11-09"></object></child>
-                        <child><object class="BoardButton" id="boardbutton11-10"></object></child>
-                        <child><object class="BoardButton" id="boardbutton11-11"></object></child>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkBox" id="row13">
-                        <property name="name">row13</property>
-                        <style>
-                            <class name="board-rows"></class>
-                        </style>
-                        <property name="spacing">5</property>
-                        <property name="orientation">horizontal</property>
-                        <property name="halign">center</property>
-                        <child><object class="BoardButton" id="boardbutton12-00"></object></child>
-                        <child><object class="BoardButton" id="boardbutton12-01"></object></child>
-                        <child><object class="BoardButton" id="boardbutton12-02"></object></child>
-                        <child><object class="BoardButton" id="boardbutton12-03"></object></child>
-                        <child><object class="BoardButton" id="boardbutton12-04"></object></child>
-                        <child><object class="BoardButton" id="boardbutton12-05"></object></child>
-                        <child><object class="BoardButton" id="boardbutton12-06"></object></child>
-                        <child><object class="BoardButton" id="boardbutton12-07"></object></child>
-                        <child><object class="BoardButton" id="boardbutton12-08"></object></child>
-                        <child><object class="BoardButton" id="boardbutton12-09"></object></child>
-                        <child><object class="BoardButton" id="boardbutton12-10"></object></child>
-                        <child><object class="BoardButton" id="boardbutton12-11"></object></child>
-                        <child><object class="BoardButton" id="boardbutton12-12"></object></child>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkBox" id="row14">
-                        <property name="name">row14</property>
-                        <style>
-                            <class name="board-rows"></class>
-                        </style>
-                        <property name="spacing">5</property>
-                        <property name="orientation">horizontal</property>
-                        <property name="halign">center</property>
-                        <child><object class="BoardButton" id="boardbutton13-00"></object></child>
-                        <child><object class="BoardButton" id="boardbutton13-01"></object></child>
-                        <child><object class="BoardButton" id="boardbutton13-02"></object></child>
-                        <child><object class="BoardButton" id="boardbutton13-03"></object></child>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkBox" id="row15">
-                        <property name="name">row15</property>
-                        <style>
-                            <class name="board-rows"></class>
-                        </style>
-                        <property name="spacing">5</property>
-                        <property name="orientation">horizontal</property>
-                        <property name="halign">center</property>
-                        <child><object class="BoardButton" id="boardbutton14-00"></object></child>
-                        <child><object class="BoardButton" id="boardbutton14-01"></object></child>
-                        <child><object class="BoardButton" id="boardbutton14-02"></object></child>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkBox" id="row16">
-                        <property name="name">row16</property>
-                        <style>
-                            <class name="board-rows"></class>
-                        </style>
-                        <property name="spacing">5</property>
-                        <property name="orientation">horizontal</property>
-                        <property name="halign">center</property>
-                        <child><object class="BoardButton" id="boardbutton15-00"></object></child>
-                        <child><object class="BoardButton" id="boardbutton15-01"></object></child>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkBox" id="row17">
-                        <property name="name">row17</property>
-                        <style>
-                            <class name="board-rows"></class>
-                        </style>
-                        <property name="spacing">5</property>
-                        <property name="orientation">horizontal</property>
-                        <property name="halign">center</property>
-                        <child><object class="BoardButton" id="boardbutton16-00"></object></child>
-                    </object>
-                </child>
+                <child type="overlay"><object class="BoardGameOver"></object></child>
             </object>
         </child>
     </template>
