@@ -3,9 +3,12 @@
 #define DEBUG
 
 void handle_gtk_application_activate_app(GtkApplication *app, gpointer userData) {
-    g_type_ensure(BOARD_TYPE_BUTTON);
-    g_type_ensure(BOARD_TYPE_WINDOW);
     g_type_ensure(MAIN_MENU_TYPE_WINDOW);
+    g_type_ensure(CHECKERS_TYPE_BOARD_BUTTON);
+    g_type_ensure(CHECKERS_TYPE_PLAYER_SELECT);
+    g_type_ensure(CHECKERS_TYPE_WINDOW);
+    g_type_ensure(CHECKERS_TYPE_GAME_OVER);
+    g_type_ensure(CHECKERS_TYPE_BOARD);
     GtkBuilder *builder = gtk_builder_new_from_resource("/com/fullaccess/ChineseCheckers/ui/markup/app.ui");
     GtkWindow *window = GTK_WINDOW(gtk_builder_get_object(builder, "window"));
     GtkCssProvider *cssProvider = gtk_css_provider_new();
@@ -20,9 +23,9 @@ void handle_gtk_application_activate_app(GtkApplication *app, gpointer userData)
 }
 
 int main(int argc, char const *argv[]) {
-    GtkApplication *app= gtk_application_new("com.fullaccess.ChineseCheckers", G_APPLICATION_DEFAULT_FLAGS);
+    GtkApplication *app = gtk_application_new("com.fullaccess.ChineseCheckers", G_APPLICATION_DEFAULT_FLAGS);
     g_signal_connect(app, "activate", G_CALLBACK(handle_gtk_application_activate_app), NULL);
-    int status= g_application_run(G_APPLICATION(app), argc, (char **)argv);
+    int status = g_application_run(G_APPLICATION(app), argc, (char **)argv);
     g_object_unref(app);
     return status;
 }

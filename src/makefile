@@ -1,21 +1,24 @@
 CC = gcc 
 
-PKGFLAGS = $(shell pkg-config --cflags gtk4) $(shell pkg-config --libs gtk4)
+PKGFLAGS =  $(shell pkg-config --cflags gtk4) $(shell pkg-config --libs gtk4) -lm -no-pie
 
 INCLUDES = -I/ -I/widgets
 
 TARGET = app
 
 WIDGETS = $(addprefix ./widgets/,\
-	BoardButton\
 	MainMenuWindow\
-	BoardWindow\
+	CheckersBoardButton\
+	CheckersWindow\
+	CheckersGameOver\
+	CheckersBoard\
+	CheckersPlayerSelect\
 )
 
 all: build_app clean
 
 build_app: compile_enum_types.c compile_resources compile_widgets compile_app
-	${CC} $(addsuffix .o,$(notdir ${WIDGETS})) $(addsuffix .o,${TARGET}) gresource.o enum_types.o -o $(addsuffix .exe,${TARGET}) ${PKGFLAGS} ${INCLUDES}
+		${CC} $(addsuffix .o,$(notdir ${WIDGETS})) $(addsuffix .o,${TARGET}) gresource.o enum_types.o -o ${TARGET} ${PKGFLAGS} ${INCLUDES}
 
 compile_widgets:
 	${CC} ${PKGFLAGS} ${INCLUDES} $(addsuffix .c,${WIDGETS}) -c

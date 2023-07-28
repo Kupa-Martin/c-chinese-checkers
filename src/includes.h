@@ -3,8 +3,11 @@
 
 #include <gtk/gtk.h>
 #include "enum_types.h"
-#include "widgets/BoardButton.h"
+#include "widgets/CheckersBoardButton.h"
+#include "widgets/CheckersPlayerSelect.h"
 #include "widgets/MainMenuWindow.h"
-#include "widgets/BoardWindow.h"
+#include "widgets/CheckersWindow.h"
+#include "widgets/CheckersGameOver.h"
+#include "widgets/CheckersBoard.h"
 
 #endif

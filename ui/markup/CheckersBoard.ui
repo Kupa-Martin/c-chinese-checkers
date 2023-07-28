@@ -1,0 +1,1244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="CheckersBoard" parent="GtkBox">
+        <style>
+            <class name="checkers-board"></class>
+        </style>
+
+        <!-- Own properties -->
+        <!-- players: CHECKERS_BOARD_EMPTY_BOARD; How many players are in the current game -->
+        <!-- slot-radius: 20; The radius of the board's buttons -->
+
+        <!-- Inherited properties -->
+        <property name="name">board</property>
+        <property name="orientation">vertical</property>
+        <property name="halign">center</property>
+        <property name="valign">center</property>
+
+        
+        <child>
+            <object class="GtkBox" id="row1">
+                <property name="name">row1</property>
+                <style>
+                    <class name="board-rows"></class>
+                </style>
+                <!-- Perhaps a constraint would be more appropriate, further research is needed -->
+                <binding name="spacing">
+                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                        <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                    </closure>
+                </binding>
+                <property name="orientation">horizontal</property>
+                <property name="halign">center</property>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton00-00">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkBox" id="row2">
+                <property name="name">row2</property>
+                <style>
+                    <class name="board-rows"></class>
+                </style>
+                <binding name="spacing">
+                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                        <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                    </closure>
+                </binding>
+                <property name="orientation">horizontal</property>
+                <property name="halign">center</property>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton01-00">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton01-01">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkBox" id="row3">
+                <property name="name">row3</property>
+                <style>
+                    <class name="board-rows"></class>
+                </style>
+                <binding name="spacing">
+                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                        <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                    </closure>
+                </binding>
+                <property name="orientation">horizontal</property>
+                <property name="halign">center</property>
+                    <child>
+                        <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                        <object class="CheckersBoardButton" id="checkersboardbutton02-00">
+                            <binding name="radius">
+                                <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                            </binding>
+                        </object>
+                    </child>
+                    <child>
+                        <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                        <object class="CheckersBoardButton" id="checkersboardbutton02-01">
+                            <binding name="radius">
+                                <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                            </binding>
+                        </object>
+                    </child>
+                    <child>
+                        <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                        <object class="CheckersBoardButton" id="checkersboardbutton02-02">
+                            <binding name="radius">
+                                <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                            </binding>
+                        </object>
+                    </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkBox" id="row4">
+                <property name="name">row4</property>
+                <style>
+                    <class name="board-rows"></class>
+                </style>
+                <binding name="spacing">
+                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                        <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                    </closure>
+                </binding>
+                <property name="orientation">horizontal</property>
+                <property name="halign">center</property>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton03-00">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton03-01">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton03-02">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton03-03">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkBox" id="row5">
+                <property name="name">row5</property>
+                <style>
+                    <class name="board-rows"></class>
+                </style>
+                <binding name="spacing">
+                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                        <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                    </closure>
+                </binding>
+                <property name="orientation">horizontal</property>
+                <property name="halign">center</property>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton04-00">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton04-01">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton04-02">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton04-03">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton04-04">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton04-05">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton04-06">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton04-07">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton04-08">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton04-09">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton04-10">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton04-11">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton04-12">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkBox" id="row6">
+                <property name="name">row6</property>
+                <style>
+                    <class name="board-rows"></class>
+                </style>
+                <binding name="spacing">
+                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                        <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                    </closure>
+                </binding>
+                <property name="orientation">horizontal</property>
+                <property name="halign">center</property>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton05-00">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton05-01">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton05-02">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton05-03">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton05-04">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton05-05">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton05-06">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton05-07">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton05-08">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton05-09">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton05-10">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton05-11">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkBox" id="row7">
+                <property name="name">row7</property>
+                <style>
+                    <class name="board-rows"></class>
+                </style>
+                <binding name="spacing">
+                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                        <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                    </closure>
+                </binding>
+                <property name="orientation">horizontal</property>
+                <property name="halign">center</property>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton06-00">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton06-01">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton06-02">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton06-03">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton06-04">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton06-05">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton06-06">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton06-07">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton06-08">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton06-09">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton06-10">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkBox" id="row8">
+                <property name="name">row8</property>
+                <style>
+                    <class name="board-rows"></class>
+                </style>
+                <binding name="spacing">
+                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                        <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                    </closure>
+                </binding>
+                <property name="orientation">horizontal</property>
+                <property name="halign">center</property>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton07-00">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton07-01">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton07-02">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton07-03">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton07-04">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton07-05">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton07-06">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton07-07">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton07-08">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton07-09">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkBox" id="row9">
+                <property name="name">row9</property>
+                <style>
+                    <class name="board-rows"></class>
+                </style>
+                <binding name="spacing">
+                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                        <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                    </closure>
+                </binding>
+                <property name="orientation">horizontal</property>
+                <property name="halign">center</property>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton08-00">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton08-01">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton08-02">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton08-03">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton08-04">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton08-05">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton08-06">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton08-07">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton08-08">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkBox" id="row10">
+                <property name="name">row10</property>
+                <style>
+                    <class name="board-rows"></class>
+                </style>
+                <binding name="spacing">
+                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                        <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                    </closure>
+                </binding>
+                <property name="orientation">horizontal</property>
+                <property name="halign">center</property>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton09-00">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton09-01">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton09-02">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton09-03">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton09-04">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton09-05">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton09-06">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton09-07">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton09-08">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton09-09">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkBox" id="row11">
+                <property name="name">row11</property>
+                <style>
+                    <class name="board-rows"></class>
+                </style>
+                <binding name="spacing">
+                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                        <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                    </closure>
+                </binding>
+                <property name="orientation">horizontal</property>
+                <property name="halign">center</property>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton10-00">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton10-01">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton10-02">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton10-03">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton10-04">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton10-05">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton10-06">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton10-07">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton10-08">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton10-09">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton10-10">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkBox" id="row12">
+                <property name="name">row12</property>
+                <style>
+                    <class name="board-rows"></class>
+                </style>
+                <binding name="spacing">
+                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                        <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                    </closure>
+                </binding>
+                <property name="orientation">horizontal</property>
+                <property name="halign">center</property>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton11-00">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton11-01">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton11-02">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton11-03">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton11-04">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton11-05">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton11-06">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton11-07">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton11-08">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton11-09">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton11-10">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton11-11">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkBox" id="row13">
+                <property name="name">row13</property>
+                <style>
+                    <class name="board-rows"></class>
+                </style>
+                <binding name="spacing">
+                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                        <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                    </closure>
+                </binding>
+                <property name="orientation">horizontal</property>
+                <property name="halign">center</property>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton12-00">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton12-01">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton12-02">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton12-03">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton12-04">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton12-05">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton12-06">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton12-07">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton12-08">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton12-09">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton12-10">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton12-11">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton12-12">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkBox" id="row14">
+                <property name="name">row14</property>
+                <style>
+                    <class name="board-rows"></class>
+                </style>
+                <binding name="spacing">
+                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                        <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                    </closure>
+                </binding>
+                <property name="orientation">horizontal</property>
+                <property name="halign">center</property>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton13-00">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton13-01">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton13-02">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton13-03">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkBox" id="row15">
+                <property name="name">row15</property>
+                <style>
+                    <class name="board-rows"></class>
+                </style>
+                <binding name="spacing">
+                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                        <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                    </closure>
+                </binding>
+                <property name="orientation">horizontal</property>
+                <property name="halign">center</property>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton14-00">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton14-01">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton14-02">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkBox" id="row16">
+                <property name="name">row16</property>
+                <style>
+                    <class name="board-rows"></class>
+                </style>
+                <binding name="spacing">
+                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                        <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                    </closure>
+                </binding>
+                <property name="orientation">horizontal</property>
+                <property name="halign">center</property>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton15-00">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton15-01">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkBox" id="row17">
+                <property name="name">row17</property>
+                <style>
+                    <class name="board-rows"></class>
+                </style>
+                <binding name="spacing">
+                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                        <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                    </closure>
+                </binding>
+                <property name="orientation">horizontal</property>
+                <property name="halign">center</property>
+                <child>
+                    <!-- if you are to change the id of CheckersBoardButton, you have to update the BOARD_BUTTON_ID macro in ../../src/widgets/CheckersBoard.c -->
+                    <object class="CheckersBoardButton" id="checkersboardbutton16-00">
+                        <binding name="radius">
+                            <lookup type="CheckersBoard" name="slot-radius"></lookup>
+                        </binding>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </template>
+</interface>

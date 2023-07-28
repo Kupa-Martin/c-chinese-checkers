@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.c": "c",
+        "includes.h": "c",
+        "checkersboard.h": "c",
+        "gamewindow.h": "c"
+    }
+}
