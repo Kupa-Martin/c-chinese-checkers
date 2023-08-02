@@ -143,7 +143,7 @@ static void handle_checkers_board_button_clicked_self(CheckersBoardButton *self,
 }
 
 static gchararray checkers_board_button_closure_sourceToResource(CheckersBoardButton *self, CheckersBoardButtonSource source) {
-    const char const *resources[] = {
+    const char *const resources[] = {
         "/com/fullaccess/ChineseCheckers/ui/assets/empty_slot.png",
         "/com/fullaccess/ChineseCheckers/ui/assets/red_empty_slot.png",
         "/com/fullaccess/ChineseCheckers/ui/assets/red_ball.png",

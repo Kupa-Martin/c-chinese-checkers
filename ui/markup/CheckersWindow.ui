@@ -43,41 +43,6 @@
                         <property name="valign">GTK_ALIGN_CENTER</property>
                     </object>
                 </child>
-                <child>
-                    <!-- Use GtkDialog -->
-                    <object class="GtkMessageDialog">
-                        <property name="message-type">GTK_MESSAGE_QUESTION</property>
-                        <property name="title">Test</property>
-                        <property name="text">Test</property>
-                        <property name="halign">GTK_ALIGN_CENTER</property>
-                        <property name="valign">GTK_ALIGN_CENTER</property>
-                        <child>
-                            <object class="GtkButton" id="save_button">
-                                <property name="label">Save</property>
-                                <property name="response-id">-5</property>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="GtkButton" id="discard_button">
-                                <property name="label">Discard</property>
-                                <property name="response-id">-6</property>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="GtkButton" id="cancel_button">
-                                <property name="label">Cancel</property>
-                                <property name="response-id">-7</property>
-                            </object>
-                        </child>
-                        <!-- <child>
-                            <object class="CheckersPlayerSelect" id="playerSelect1">
-                                <property name="visible">false</property>
-
-                                <signal name="players-selected" handler="handle_checkers_player_select_playersSelected_playerSelect1"></signal>
-                            </object>
-                        </child> -->
-                    </object>
-                </child>
             </object>
         </child>
     </template>

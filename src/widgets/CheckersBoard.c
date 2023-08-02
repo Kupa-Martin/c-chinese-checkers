@@ -1,8 +1,12 @@
 #include "../includes.h"
 #include <math.h>
+#ifdef DEBUG
+#include <errno.h>
+#endif
 
 // the first part (coords excluded) of the id property of `CheckersBoardButton`s widgets in ../../ui/markup/CheckersBoard.ui
 #define BOARD_BUTTONS_ID "checkersboardbutton"
+#define BOARD_BUTTONS_ROWS 10
 
 enum {
     N_SLOTS = 121 /* The number of `BoardButton`s in the board */
@@ -12,6 +16,11 @@ enum PropertyId {
     PROPERTY_PLAYERS = 1,
     PROPERTY_SLOT_RADIUS
 };
+
+static gint columns[] = {
+    1,2,3,4,5,6,7,8,9,10
+};
+G_STATIC_ASSERT(sizeof columns / sizeof *columns == BOARD_BUTTONS_ROWS);
 
 // Type definitions
 
@@ -162,6 +171,89 @@ static void checkers_board_init(CheckersBoard *self) {
     return;
 }
 
+#ifdef TRUE
+typedef struct MyParseData {
+    int rows;
+    int previousRow;
+    int currentRow;
+    int columns[BOARD_BUTTONS_ROWS];
+} MyParseData;
+void markupParse_startElement(GMarkupParseContext *context,
+                              const gchar         *element_name,
+                              const gchar        **attribute_names,
+                              const gchar        **attribute_values,
+                              gpointer             user_data,
+                              GError             **error) 
+{
+    // Only interested in <object> tag
+    if (g_strcmp0("object", element_name) != 0)
+        return;
+
+    while (*attribute_names != NULL) {
+        if (g_strcmp0("class", *attribute_names) == 0) {
+            if (g_strcmp0("CheckersBoardButton", *attribute_values) != 0) {
+                // Only interested in tags whose class attribute equals "CheckersBoardButton"
+                break;
+            }
+        } else if (g_strcmp0("id", *attribute_names) == 0) {
+            // Check if id starts with BOARD_BUTTONS_ID
+            enum { BUFFER_SIZE = sizeof(BOARD_BUTTONS_ID) };
+            char buffer[BUFFER_SIZE];
+            g_strlcpy(buffer, *attribute_values, BUFFER_SIZE);
+            if (g_strcmp0(BOARD_BUTTONS_ID, buffer) == 0) {
+                // Check if id's size is as expected
+                bool hasExpectedLength = strlen(*attribute_values) != sizeof(BOARD_BUTTONS_ID) - 1 + 5; 
+                if () {
+
+                    g_assert();
+                }
+                // retrieve rows
+                char numBuffer[3];
+                gchar* endPtr;
+                g_strlcpy(numBuffer, *attribute_values + (BUFFER_SIZE - 1), 3);
+                errno = 0;
+                gint64 row = g_ascii_strtoll(numBuffer, &endPtr, 10);
+                if (row == 0 && errno != 0) {
+                    if (numBuffer == endPtr) {
+                        //longjmp failed assert. Invalid row value
+                    } else {
+                        //longjmp failed assert. Something else happened
+                    }
+                }
+                g_strlcpy(numBuffer, *attribute_values + (BUFFER_SIZE - 1) + 3, 3);
+                gint64 column = g_ascii_strtoll(numBuffer, &endPtr, 10);
+                if (column == 0 && errno != 0) {
+                    if (numBuffer == endPtr) {
+                        //longjmp failed assert. Invalid column value
+                    } else {
+                        //longjmp failed assert. Something else happened
+                    }
+                }
+                
+                if (row < 0 || row >= BOARD_BUTTONS_ROWS) {
+                    // BOARD_BUTTONS_ROWS doesnt match rows in .ui file
+                }
+                if (column < 0 || column >= columns[row]) {
+                    // The columns array doesnt match the columns in the .ui file
+                }
+
+                MyParseData *data = user_data;
+                data->columns[row]++;
+            } else {
+                //longjmp failed assert. CheckersBoardButton with invalid id
+            }
+
+            // Once we find the id attribute, there is no need to keep iterating
+            break;
+        }
+        attribute_names++;
+        attribute_values++;
+    }
+    
+}
+
+#endif
+
 static void checkers_board_class_init(CheckersBoardClass *klass){
     GtkWidgetClass *widgetClass= GTK_WIDGET_CLASS(klass);
     GObjectClass *objectClass = G_OBJECT_CLASS(klass);
@@ -196,15 +288,34 @@ static void checkers_board_class_init(CheckersBoardClass *klass){
 
     gtk_widget_class_set_template_from_resource(widgetClass, "/com/fullaccess/ChineseCheckers/ui/markup/CheckersBoard.ui");
 
+#ifdef TRUE
+    //TODO: Check whether the board's id match the string BOARD_BUTTONS_ID and if it has the rows CHECKERS_BOARD_ROWS specifies
+    struct MyParseData userData = {.rows = 0, .previousRow = -1, .columns = {0}};
+    GBytes *uiFile = g_resources_lookup_data("/com/fullaccess/ChineseCheckers/ui/markup/CheckersBoard.ui", G_RESOURCE_LOOKUP_FLAGS_NONE, NULL);
+    gsize fileSize;
+    const guint8 *data = g_bytes_get_data(uiFile, &fileSize);
+
+    // Count the number of child elements
+    GMarkupParser parser = {
+        .start_element = markupParse_startElement
+    };
+
+    // Parse the template XML data
+    GMarkupParseContext *context = g_markup_parse_context_new(&parser, G_MARKUP_TREAT_CDATA_AS_TEXT, &userData, NULL);
+    g_markup_parse_context_parse(context, (const gchar *)data, fileSize, NULL);
+
+    g_markup_parse_context_unref(context);
+#endif
+
     for (size_t i= 0; i < N_SLOTS; i++) {
         struct XY temp = toXY(i); // I have to convert the sequencial numbering of the buttons to their position expressed as rows, column.
         enum {
             STRING_SIZE = sizeof(BOARD_BUTTONS_ID "%02zu-%02zu")
         };
-        char objectId[STRING_SIZE]; // should it persist?
+        char objectId[STRING_SIZE]; // It doesnt need to persist, gtk_widget_class_bind_template_child_full will call stddup() on it
 
         snprintf(objectId, STRING_SIZE, BOARD_BUTTONS_ID "%02zu-%02zu", temp.x, temp.y);
-        gtk_widget_class_bind_template_child_full(widgetClass, /* passing reference to local variable, posible fuck up --> */ objectId, FALSE, G_STRUCT_OFFSET(CheckersBoard, slots)+((glong)(i * sizeof(CheckersBoardButton *))));
+        gtk_widget_class_bind_template_child_full(widgetClass, objectId, FALSE, G_STRUCT_OFFSET(CheckersBoard, slots)+((glong)(i * sizeof(CheckersBoardButton *))));
     }
     gtk_widget_class_bind_template_callback(widgetClass, checkers_board_closure_computeSpacingForEquilateralTriangle);
     return;
