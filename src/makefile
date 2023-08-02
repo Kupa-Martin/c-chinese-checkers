@@ -1,7 +1,7 @@
 CC = gcc 
 
 CFLAGS =  $(shell pkg-config --cflags gtk4) $(shell pkg-config --libs gtk4) -lm -no-pie -Wall -Wshadow \
--Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -std=c17
+-Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -std=c17 -DDEBUG 
 
 INCLUDES = -I/ -I/widgets
 

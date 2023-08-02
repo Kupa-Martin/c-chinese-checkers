@@ -6,7 +6,7 @@
 
 // the first part (coords excluded) of the id property of `CheckersBoardButton`s widgets in ../../ui/markup/CheckersBoard.ui
 #define BOARD_BUTTONS_ID "checkersboardbutton"
-#define BOARD_BUTTONS_ROWS 10
+
 
 enum {
     N_SLOTS = 121 /* The number of `BoardButton`s in the board */
@@ -17,16 +17,15 @@ enum PropertyId {
     PROPERTY_SLOT_RADIUS
 };
 
-static gint columns[] = {
-    1,2,3,4,5,6,7,8,9,10
+static const gint columns[] = {
+    1,2,3,4,13,12,11,10,9,10,11,12,13,4,3,2,1
 };
-G_STATIC_ASSERT(sizeof columns / sizeof *columns == BOARD_BUTTONS_ROWS);
+
+enum { CHECKERS_BOARD_ROWS = sizeof columns / sizeof *columns };
 
 // Type definitions
 
-struct XY {
-    size_t x, y;
-};
+struct XY { size_t x, y; };
 
 enum {
     // First 3 letters indicate color, last letter indicates wether it's a ball (B) or a slot (S)
@@ -171,12 +170,10 @@ static void checkers_board_init(CheckersBoard *self) {
     return;
 }
 
-#ifdef TRUE
+#ifdef DEBUG
 typedef struct MyParseData {
     int rows;
-    int previousRow;
-    int currentRow;
-    int columns[BOARD_BUTTONS_ROWS];
+    int columns[CHECKERS_BOARD_ROWS];
 } MyParseData;
 void markupParse_startElement(GMarkupParseContext *context,
                               const gchar         *element_name,
@@ -185,6 +182,11 @@ void markupParse_startElement(GMarkupParseContext *context,
                               gpointer             user_data,
                               GError             **error) 
 {
+#define CURRENT_LINE_MESSAGE "Parsing file CheckersBoard.ui Line %d Char %d"
+    enum { CURRENT_LINE_MESSAGE_SIZE = sizeof(CURRENT_LINE_MESSAGE) + 20 };
+    gint lineNumber;
+    gint charNumber;
+    g_markup_parse_context_get_position(context, &lineNumber, &charNumber);
     // Only interested in <object> tag
     if (g_strcmp0("object", element_name) != 0)
         return;
@@ -200,13 +202,10 @@ void markupParse_startElement(GMarkupParseContext *context,
             enum { BUFFER_SIZE = sizeof(BOARD_BUTTONS_ID) };
             char buffer[BUFFER_SIZE];
             g_strlcpy(buffer, *attribute_values, BUFFER_SIZE);
-            if (g_strcmp0(BOARD_BUTTONS_ID, buffer) == 0) {
+            if (g_strcmp0(BOARD_BUTTONS_ID, buffer) == 0) { 
                 // Check if id's size is as expected
-                bool hasExpectedLength = strlen(*attribute_values) != sizeof(BOARD_BUTTONS_ID) - 1 + 5; 
-                if () {
-
-                    g_assert();
-                }
+		bool hasExpectedLength = strlen(*attribute_values) == sizeof(BOARD_BUTTONS_ID) - 1 + 5; 
+                g_assert_true(hasExpectedLength); // Id has unexpected length
                 // retrieve rows
                 char numBuffer[3];
                 gchar* endPtr;
@@ -216,31 +215,65 @@ void markupParse_startElement(GMarkupParseContext *context,
                 if (row == 0 && errno != 0) {
                     if (numBuffer == endPtr) {
                         //longjmp failed assert. Invalid row value
+#define ERROR_MESSAGE "The id's row value is invalid. "
+			enum { BUFFER_SIZE = sizeof(ERROR_MESSAGE) + CURRENT_LINE_MESSAGE_SIZE  };
+			char errorMessageBuffer[BUFFER_SIZE];
+			g_snprintf(errorMessageBuffer, BUFFER_SIZE, ERROR_MESSAGE CURRENT_LINE_MESSAGE "\n", lineNumber, charNumber);
+			g_error(errorMessageBuffer);
+#undef ERROR_MESSAGE
                     } else {
                         //longjmp failed assert. Something else happened
+#define ERROR_MESSAGE "g_ascii_strtoll() returned unknown error number in errno: %d. "
+			enum { BUFFER_SIZE = sizeof(ERROR_MESSAGE) + 10 + CURRENT_LINE_MESSAGE_SIZE };
+			char errorMessageBuffer[BUFFER_SIZE];
+			g_snprintf(errorMessageBuffer, BUFFER_SIZE, ERROR_MESSAGE CURRENT_LINE_MESSAGE "\n", errno, lineNumber, charNumber);
+			g_error(errorMessageBuffer);
+#undef ERROR_MESSAGE
                     }
+		    g_assert_true(false);
                 }
                 g_strlcpy(numBuffer, *attribute_values + (BUFFER_SIZE - 1) + 3, 3);
                 gint64 column = g_ascii_strtoll(numBuffer, &endPtr, 10);
                 if (column == 0 && errno != 0) {
                     if (numBuffer == endPtr) {
                         //longjmp failed assert. Invalid column value
+#define ERROR_MESSAGE "The id's column value is invalid. "
+			enum { BUFFER_SIZE = sizeof(ERROR_MESSAGE) + CURRENT_LINE_MESSAGE_SIZE  };
+			char errorMessageBuffer[BUFFER_SIZE];
+			g_snprintf(errorMessageBuffer, BUFFER_SIZE, ERROR_MESSAGE CURRENT_LINE_MESSAGE "\n", lineNumber, charNumber);
+			g_error(errorMessageBuffer);
+#undef ERROR_MESSAGE
                     } else {
                         //longjmp failed assert. Something else happened
+#define ERROR_MESSAGE "g_ascii_strtoll() returned unknown error number in errno: %d. "
+			enum { BUFFER_SIZE = sizeof(ERROR_MESSAGE) + 10 + CURRENT_LINE_MESSAGE_SIZE };
+			char errorMessageBuffer[BUFFER_SIZE];
+			g_snprintf(errorMessageBuffer, BUFFER_SIZE, ERROR_MESSAGE CURRENT_LINE_MESSAGE "\n", errno, lineNumber, charNumber);
+			g_error(errorMessageBuffer);
+#undef ERROR_MESSAGE
                     }
+		    g_assert_true(false);
                 }
-                
-                if (row < 0 || row >= BOARD_BUTTONS_ROWS) {
-                    // BOARD_BUTTONS_ROWS doesnt match rows in .ui file
+#undef CURRENT_LINE_MESSAGE
+                if (row < 0 || row >= CHECKERS_BOARD_ROWS) {
+                    // CHECKERS_BOARD_ROWS doesnt match rows in .ui file
+		    g_error("The value of the CHECKERS_BOARD_ROWS macro in CheckersBoard.c doesnt match the rows in CheckersBoard.ui\n");
+		    g_assert_true(false);
                 }
                 if (column < 0 || column >= columns[row]) {
                     // The columns array doesnt match the columns in the .ui file
-                }
+#define ERROR_MESSAGE "The amount of columns in the %ldth row (i.e global variable columns[%ld] in CheckersBoard.c) doesnt match the columns in CheckersBoard.ui"
+		    enum { BUFFER_SIZE = sizeof(ERROR_MESSAGE) + 10  };
+		    char errorMessageBuffer[BUFFER_SIZE];
+		    g_snprintf(errorMessageBuffer, BUFFER_SIZE, ERROR_MESSAGE "\n", row+1, row);
+		    g_error(errorMessageBuffer);
+#undef ERROR_MESSAGE
+		}
 
                 MyParseData *data = user_data;
+		if (data->columns[row] == 0)
+			data->rows++;
                 data->columns[row]++;
-            } else {
-                //longjmp failed assert. CheckersBoardButton with invalid id
             }
 
             // Once we find the id attribute, there is no need to keep iterating
@@ -249,7 +282,6 @@ void markupParse_startElement(GMarkupParseContext *context,
         attribute_names++;
         attribute_values++;
     }
-    
 }
 
 #endif
@@ -288,27 +320,45 @@ static void checkers_board_class_init(CheckersBoardClass *klass){
 
     gtk_widget_class_set_template_from_resource(widgetClass, "/com/fullaccess/ChineseCheckers/ui/markup/CheckersBoard.ui");
 
-#ifdef TRUE
+#ifdef DEBUG
     //TODO: Check whether the board's id match the string BOARD_BUTTONS_ID and if it has the rows CHECKERS_BOARD_ROWS specifies
-    struct MyParseData userData = {.rows = 0, .previousRow = -1, .columns = {0}};
+    struct MyParseData userData = {.rows = 0, .columns = {0}};
     GBytes *uiFile = g_resources_lookup_data("/com/fullaccess/ChineseCheckers/ui/markup/CheckersBoard.ui", G_RESOURCE_LOOKUP_FLAGS_NONE, NULL);
     gsize fileSize;
     const guint8 *data = g_bytes_get_data(uiFile, &fileSize);
 
     // Count the number of child elements
     GMarkupParser parser = {
-        .start_element = markupParse_startElement
+        .start_element = markupParse_startElement,
+	.end_element = NULL,
+	.text = NULL,
+	.passthrough = NULL,
+	.error = NULL
     };
 
     // Parse the template XML data
     GMarkupParseContext *context = g_markup_parse_context_new(&parser, G_MARKUP_TREAT_CDATA_AS_TEXT, &userData, NULL);
     g_markup_parse_context_parse(context, (const gchar *)data, fileSize, NULL);
 
+    if (userData.rows != CHECKERS_BOARD_ROWS) {
+	g_error("The rows in CheckersBoard.ui (%d) dont match those in CheckersBoard.c macro CHECKERS_BOARD_ROWS (%d)", userData.rows, CHECKERS_BOARD_ROWS);
+	g_assert_true(false);
+    }
+
+    for (size_t i = 0; i < CHECKERS_BOARD_ROWS; i++) {
+        if (columns[i] != userData.columns[i]) {
+	    g_error("The columns (%d) in CheckersBoard.ui's %zuth row dont match those in CheckersBoard.c's (coluns[%zu] = %d)", userData.columns[i], i+1, i,  columns[i]);
+	    g_assert_true(false);
+	    break;
+	}
+    }
     g_markup_parse_context_unref(context);
 #endif
 
     for (size_t i= 0; i < N_SLOTS; i++) {
-        struct XY temp = toXY(i); // I have to convert the sequencial numbering of the buttons to their position expressed as rows, column.
+        struct {int x, y;} temp = {0}; // I have to convert the sequencial numbering of the buttons to their position expressed as rows, column.
+	
+	}	
         enum {
             STRING_SIZE = sizeof(BOARD_BUTTONS_ID "%02zu-%02zu")
         };
@@ -403,24 +453,6 @@ static gint checkers_board_closure_computeSpacingForEquilateralTriangle(Checkers
 }
 
 static inline struct XY toXY(size_t num) {
-    if (num == 0) return (struct XY){0, 0};
-    else if (num < 3) return (struct XY){1, num - 1};
-    else if (num < 6) return (struct XY){2, num - 3};
-    else if (num < 10) return (struct XY){3, num - 6};
-    else if (num < 23) return (struct XY){4, num - 10};
-    else if (num < 35) return (struct XY){5, num - 23};
-    else if (num < 46) return (struct XY){6, num - 35};
-    else if (num < 56) return (struct XY){7, num - 46};
-    else if (num < 65) return (struct XY){8, num - 56};
-    else if (num < 75) return (struct XY){9, num - 65};
-    else if (num < 86) return (struct XY){10, num - 75};
-    else if (num < 98) return (struct XY){11, num - 86};
-    else if (num < 111) return (struct XY){12, num - 98};
-    else if (num < 115) return (struct XY){13, num - 111};
-    else if (num < 118) return (struct XY){14, num - 115};
-    else if (num < 120) return (struct XY){15, num - 118};
-    else if (num == 120) return (struct XY){16, num - 120};
-    else g_abort(); // this should never happen
 }
 
 extern GtkWidget *checkers_board_new(void) {

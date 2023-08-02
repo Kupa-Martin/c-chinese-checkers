@@ -1,7 +1,5 @@
 #include "includes.h"
 
-#define DEBUG
-
 void handle_gtk_application_activate_app(GtkApplication *app, gpointer userData) {
     g_type_ensure(MAIN_MENU_TYPE_WINDOW);
     g_type_ensure(CHECKERS_TYPE_BOARD_BUTTON);
