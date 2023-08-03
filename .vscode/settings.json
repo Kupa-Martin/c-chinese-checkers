@@ -3,6 +3,10 @@
         "*.c": "c",
         "includes.h": "c",
         "checkersboard.h": "c",
-        "gamewindow.h": "c"
+        "gamewindow.h": "c",
+        "compare": "c",
+        "cstdint": "c",
+        "math.h": "c",
+        "stdint.h": "c"
     }
 }
