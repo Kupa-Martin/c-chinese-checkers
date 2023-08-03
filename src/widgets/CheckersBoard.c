@@ -214,7 +214,7 @@ void markupParse_startElement(GMarkupParseContext *context,
         g_strlcpy(idStartBuffer, *attribute_values, ID_START_BUFFER_SIZE);
         bool idStartsWithExpectedValue = g_strcmp0(BOARD_BUTTONS_ID, idStartBuffer) == 0;
         if (idStartsWithExpectedValue) {
-            // This BoardButton is now considered to be a slot in the CheckersBoard. It's id attribute must meet certain requirements
+            // This BoardButton is now considered to be a slot in the CheckersBoard. Its id attribute must meet certain requirements
 #define CURRENT_LINE_MESSAGE "Parsing file CheckersBoard.ui line: %d char: %d"
             int lineNumber;
             int charNumber;
@@ -222,7 +222,7 @@ void markupParse_startElement(GMarkupParseContext *context,
 
             // Check if id's size is as expected
             enum { EXPECTED_LENGTH = LENGTH(BOARD_BUTTONS_ID "00-00") };
-		    bool hasExpectedLength = strlen(*attribute_values) == EXPECTED_LENGTH; 
+	    bool hasExpectedLength = strlen(*attribute_values) == EXPECTED_LENGTH; 
             if (!hasExpectedLength) 
                 g_error("Id's length is not as expected (expected %d). " CURRENT_LINE_MESSAGE, EXPECTED_LENGTH, lineNumber, charNumber);
             // retrieve the 2 digit numbers in the id
@@ -232,8 +232,8 @@ void markupParse_startElement(GMarkupParseContext *context,
             g_strlcpy(numBuffer, *attribute_values + LENGTH(BOARD_BUTTONS_ID), NUM_BUFFER_SIZE);
             errno = 0;
             int64_t row = g_ascii_strtoll(numBuffer, &endPtr, 10);
-            bool error = row == 0 && errno != 0;
-            if (error) {
+            bool errorOccurred = row == 0 && errno != 0;
+            if (errorOccurred) {
                 bool couldNotConvert = numBuffer == endPtr;
                 if (couldNotConvert) {
 		            g_error("The id's row value is not a number. " CURRENT_LINE_MESSAGE, lineNumber, charNumber);
@@ -244,8 +244,8 @@ void markupParse_startElement(GMarkupParseContext *context,
             g_strlcpy(numBuffer, *attribute_values + LENGTH(BOARD_BUTTONS_ID "00-"), NUM_BUFFER_SIZE);
             errno = 0;
             int64_t column = g_ascii_strtoll(numBuffer, &endPtr, 10);
-            error = column == 0 && errno != 0;
-            if (error) {
+            errorOccurred = column == 0 && errno != 0;
+            if (errorOccurred) {
                 bool couldNotConvert = numBuffer == endPtr;
                 if (couldNotConvert) {
                     g_error("The id's column value is not a number. " CURRENT_LINE_MESSAGE, lineNumber, charNumber);
