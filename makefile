@@ -29,13 +29,13 @@ WIDGETS = $(addprefix widgets/,\
 	CheckersPlayerSelect\
 )
 
-OBJ = /obj
+OBJ = obj
 
-SRC = /src
+SRC = src
 
-BUILD = /build/debug
+BUILD = build/debug
 
-app: $(addprefix ${OBJ}/,$(addsuffix .o,${WIDGETS})) ${OBJ}/enum_types.o ${OBJ}/gresource.o
+app: ${OBJ}/app.o $(addprefix ${OBJ}/,$(addsuffix .o,${WIDGETS})) ${OBJ}/enum_types.o ${OBJ}/gresource.o
 	${CC} ${LDFLAGS} $^ ${LDLIBS} -o ${BUILD}/app
 
 ${OBJ}/%.o: ${SRC}/%.c
@@ -49,3 +49,6 @@ ${SRC}/enum_types.c: ${SRC}/enum_types.h ${SRC}/enum_types.c.in
 
 ${SRC}/enum_types.h: ${SRC}/enum_types.h.in
 	glib-mkenums --template=${SRC}/enum_types.h.in --output=${SRC}/enum_types.h $(addprefix ${SRC}/,$(addsuffix .h,${WIDGETS}))
+
+clean:
+	find . -name "*.o" -print0 | xargs -0 rm
