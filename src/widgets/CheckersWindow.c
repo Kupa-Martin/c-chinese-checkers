@@ -42,6 +42,9 @@ static void checkers_window_init(CheckersWindow *self) {
     GtkCssProvider *cssProvider = gtk_css_provider_new();
     gtk_css_provider_load_from_resource(cssProvider, "/com/fullaccess/ChineseCheckers/ui/styles/CheckersWindow.css");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(GTK_WIDGET(self)), GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
+	GtkAlertDialog *testDialog = gtk_alert_dialog_new("test dialog");
+	gtk_alert_dialog_set_modal(testDialog, true);
+	gtk_alert_dialog_show(testDialog, GTK_WINDOW(self));
     
     g_object_unref(cssProvider);
     return;

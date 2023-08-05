@@ -167,7 +167,7 @@ static void checkers_board_init(CheckersBoard *self) {
     gtk_css_provider_load_from_resource(cssProvider, "/com/fullaccess/ChineseCheckers/ui/styles/CheckersBoard.css");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(GTK_WIDGET(self)), GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
     
-    g_object_unref(cssProvider);
+    g_object_unref(cssProvider);	
     return;
 }
 
