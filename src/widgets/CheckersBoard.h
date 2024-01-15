@@ -1,7 +1,8 @@
 #ifndef __CHECKERS_BOARD_H__
 #define __CHECKERS_BOARD_H__
 
-#include "../includes.h"
+#include "../enum_types.h"
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
@@ -23,6 +24,7 @@ typedef enum {
 G_DECLARE_FINAL_TYPE(CheckersBoard, checkers_board, CHECKERS, BOARD, GtkBox);
 
 extern GtkWidget *checkers_board_new(void);
+extern guint checkers_board_get_slots(gsize row);
 // End forward declarations
 G_END_DECLS
 

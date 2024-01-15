@@ -7,6 +7,11 @@
         "compare": "c",
         "cstdint": "c",
         "math.h": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "gtk.h": "c",
+        "mainmenuwindow.h": "c",
+        "checkersboardbutton.h": "c",
+        "enum_types.h": "c",
+        "checkersgameover.h": "c"
     }
 }

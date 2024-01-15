@@ -8,14 +8,12 @@
     <file alias="ui/markup/CheckersWindow.ui">./ui/markup/CheckersWindow.ui</file>
     <file alias="ui/markup/CheckersGameOver.ui">./ui/markup/CheckersGameOver.ui</file>
     <file alias="ui/markup/CheckersBoard.ui">./ui/markup/CheckersBoard.ui</file>
-    <file alias="ui/markup/CheckersPlayerSelect.ui">./ui/markup/CheckersPlayerSelect.ui</file>
     <file alias="ui/styles/global.css">./ui/styles/global.css</file>
     <file alias="ui/styles/CheckersBoardButton.css">./ui/styles/CheckersBoardButton.css</file>
     <file alias="ui/styles/MainMenuWindow.css">./ui/styles/MainMenuWindow.css</file>
     <file alias="ui/styles/CheckersWindow.css">./ui/styles/CheckersWindow.css</file>
     <file alias="ui/styles/CheckersGameOver.css">./ui/styles/CheckersGameOver.css</file>
     <file alias="ui/styles/CheckersBoard.css">./ui/styles/CheckersBoard.css</file>
-    <file alias="ui/styles/CheckersPlayerSelect.css">./ui/styles/CheckersPlayerSelect.css</file>
     <file alias="ui/assets/logo.svg">./ui/assets/logo.svg</file>
     <file alias="ui/assets/empty_slot.png">./ui/assets/empty_slot.png</file>
     <file alias="ui/assets/board_background.jpg">./ui/assets/board_background.jpg</file>

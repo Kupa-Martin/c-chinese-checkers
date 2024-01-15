@@ -1,7 +1,8 @@
 #ifndef __CHECKERS_BOARD_BUTTON_H__
 #define __CHECKERS_BOARD_BUTTON_H__
 
-#include "../includes.h"
+#include "../enum_types.h"
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 

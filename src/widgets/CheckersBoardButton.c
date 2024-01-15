@@ -1,4 +1,6 @@
-#include "../includes.h"
+#include "CheckersBoardButton.h"
+#include "../macro_utils.h"
+#include <assert.h>
 
 enum PropertyId {
     PROPERTY_SOURCE = 1,
@@ -143,7 +145,7 @@ static void handle_checkers_board_button_clicked_self(CheckersBoardButton *self,
 }
 
 static gchararray checkers_board_button_closure_sourceToResource(CheckersBoardButton *self, CheckersBoardButtonSource source) {
-    const char *const resources[] = {
+    static const char *const resources[] = {
         "/com/fullaccess/ChineseCheckers/ui/assets/empty_slot.png",
         "/com/fullaccess/ChineseCheckers/ui/assets/red_empty_slot.png",
         "/com/fullaccess/ChineseCheckers/ui/assets/red_ball.png",
@@ -158,6 +160,7 @@ static gchararray checkers_board_button_closure_sourceToResource(CheckersBoardBu
         "/com/fullaccess/ChineseCheckers/ui/assets/white_empty_slot.png",
         "/com/fullaccess/ChineseCheckers/ui/assets/white_ball.png"
     };
+    assert(source < ARRAY_SIZE(resources));
     // Dont return a string literal, it crashes the app.
     return g_strdup_printf(resources[source]);
 }

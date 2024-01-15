@@ -1,4 +1,4 @@
-#include "../includes.h"
+#include "CheckersGameOver.h"
 
 struct _CheckersGameOver {
     GtkBox parent_instance;

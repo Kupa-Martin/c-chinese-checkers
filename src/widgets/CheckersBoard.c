@@ -1,45 +1,44 @@
-#include "../includes.h"
+#include "CheckersBoardButton.h"
+#include "CheckersBoard.h"
+#include "CheckersWindow.h"
+#include "../macro_utils.h"
 #include <math.h>
-#ifdef DEBUG
-#include <errno.h>
-#include <inttypes.h>
-#include <limits.h>
-#endif
 
 // the first part (coords excluded) of the id property of `CheckersBoardButton`s widgets in ../../ui/markup/CheckersBoard.ui
 #define BOARD_BUTTONS_ID "checkersboardbutton"
-
-
-enum {
-    N_SLOTS = 121 /* The number of `BoardButton`s in the board */
-};
 
 enum PropertyId {
     PROPERTY_PLAYERS = 1,
     PROPERTY_SLOT_RADIUS
 };
 
-static const int columns[] = { 1, 2, 3, 4, 13, 12, 11, 10, 9, 10, 11, 12, 13, 4, 3, 2, 1 };
-enum { CHECKERS_BOARD_ROWS = ARRAY_SIZE(columns) };
+#define FOR_SLOTS_PER_ROW(DO) \
+    DO(1) DO(2) DO(3) DO(4) DO(13) DO(12) DO(11) DO(10) DO(9) DO(10) DO(11) DO(12) DO(13) DO(4) DO(3) DO(2) DO(1)
+
+#define COMMA(x) x,
+static const guint slotsPerRow[] = { FOR_SLOTS_PER_ROW(COMMA) };
+#undef COMMA
+enum { CHECKERS_BOARD_ROWS = ARRAY_SIZE(slotsPerRow) };
+#define SUM(x) +x
+enum { N_SLOTS = 0 + FOR_SLOTS_PER_ROW(SUM)  /* The number of `BoardButton`s in the board */ };
+#undef SUM
 
 // Type definitions
 
-enum {
-    // First 3 letters indicate color, last letter indicates wether it's a ball (B) or a slot (S)
-    ETYS = CHECKERS_BOARD_BUTTON_EMPTY_SLOT,
-    REDS = CHECKERS_BOARD_BUTTON_RED_SLOT,
-    REDB = CHECKERS_BOARD_BUTTON_RED_BALL,
-    BLUS = CHECKERS_BOARD_BUTTON_BLUE_SLOT,
-    BLUB = CHECKERS_BOARD_BUTTON_BLUE_BALL,
-    GRES = CHECKERS_BOARD_BUTTON_GREEN_SLOT,
-    GREB = CHECKERS_BOARD_BUTTON_GREEN_BALL,
-    BLKS = CHECKERS_BOARD_BUTTON_BLACK_SLOT,
-    BLKB = CHECKERS_BOARD_BUTTON_BLACK_BALL,
-    YLWS = CHECKERS_BOARD_BUTTON_YELLOW_SLOT,
-    YLWB = CHECKERS_BOARD_BUTTON_YELLOW_BALL,
-    WHTS = CHECKERS_BOARD_BUTTON_WHITE_SLOT,
-    WHTB = CHECKERS_BOARD_BUTTON_WHITE_BALL
-};
+// First 3 letters indicate color, last letter indicates wether it's a ball (B) or a slot (S)
+#define ETYS CHECKERS_BOARD_BUTTON_EMPTY_SLOT
+#define REDS CHECKERS_BOARD_BUTTON_RED_SLOT
+#define REDB CHECKERS_BOARD_BUTTON_RED_BALL
+#define BLUS CHECKERS_BOARD_BUTTON_BLUE_SLOT
+#define BLUB CHECKERS_BOARD_BUTTON_BLUE_BALL
+#define GRES CHECKERS_BOARD_BUTTON_GREEN_SLOT
+#define GREB CHECKERS_BOARD_BUTTON_GREEN_BALL
+#define BLKS CHECKERS_BOARD_BUTTON_BLACK_SLOT
+#define BLKB CHECKERS_BOARD_BUTTON_BLACK_BALL
+#define YLWS CHECKERS_BOARD_BUTTON_YELLOW_SLOT
+#define YLWB CHECKERS_BOARD_BUTTON_YELLOW_BALL
+#define WHTS CHECKERS_BOARD_BUTTON_WHITE_SLOT
+#define WHTB CHECKERS_BOARD_BUTTON_WHITE_BALL
 
 static const CheckersBoardButtonSource initialBoardDistributionData[][N_SLOTS] = {
     // CHECKERS_BOARD_EMPTY_BOARD
@@ -123,6 +122,19 @@ static const CheckersBoardButtonSource initialBoardDistributionData[][N_SLOTS] =
                                                         REDB
     }
 };
+#undef ETYS
+#undef REDS
+#undef REDB
+#undef BLUS
+#undef BLUB
+#undef GRES
+#undef GREB
+#undef BLKS
+#undef BLKB
+#undef YLWS
+#undef YLWB
+#undef WHTS
+#undef WHTB
 
 G_STATIC_ASSERT(ARRAY_SIZE(initialBoardDistributionData) == CHECKERS_BOARD_N_PLAYER_VALUES);
 
@@ -154,9 +166,6 @@ static void checkers_board_get_property(GObject *, guint, GValue *, GParamSpec *
 static void checkers_board_set_property(GObject *, guint, const GValue *, GParamSpec *);
 static void checkers_board_constructed(GObject *);
 static gint checkers_board_closure_computeSpacingForEquilateralTriangle(CheckersBoard *, gint);
-#ifdef DEBUG
-static void markupParse_startElement(GMarkupParseContext *, const gchar *, const gchar **, const gchar **, gpointer, GError **); 
-#endif
 // End forward declaration
 
 static void checkers_board_init(CheckersBoard *self) {
@@ -170,107 +179,6 @@ static void checkers_board_init(CheckersBoard *self) {
     g_object_unref(cssProvider);	
     return;
 }
-
-
-/**
- * This DEBUG block validates that the constants defined in this .c file are
- * consistent with the .ui file. It parses the .ui file and count the rows and
- * columns it finds
-*/
-#ifdef DEBUG
-typedef struct MyParseData {
-    int totalButtons;
-    int rows;
-    int columns[CHECKERS_BOARD_ROWS];
-} MyParseData;
-void markupParse_startElement(GMarkupParseContext *context,
-                              const gchar         *element_name,
-                              const gchar        **attribute_names,
-                              const gchar        **attribute_values,
-                              gpointer             user_data,
-                              GError             **error) 
-{
-    bool onObjectTag = g_strcmp0("object", element_name) == 0;
-    if (!onObjectTag)
-        return; // Only interested in <object> tag
-
-    while (*attribute_names != NULL) {
-        bool onClassAttribute = g_strcmp0("class", *attribute_names) == 0;
-        bool onIdAttribute = g_strcmp0("id", *attribute_names) == 0;
-        if (onClassAttribute) {
-            bool isBoardButton = g_strcmp0("CheckersBoardButton", *attribute_values) == 0;
-            if (!isBoardButton) 
-                return;
-        }
-        if (!onIdAttribute) {
-            //Nothing to do, only interested in the id attribute
-            attribute_names++;
-            attribute_values++;
-            continue;
-        }
-        // Check if id starts with BOARD_BUTTONS_ID
-        enum { ID_START_BUFFER_SIZE = sizeof(BOARD_BUTTONS_ID) };
-        char idStartBuffer[ID_START_BUFFER_SIZE];
-        g_strlcpy(idStartBuffer, *attribute_values, ID_START_BUFFER_SIZE);
-        bool idStartsWithExpectedValue = g_strcmp0(BOARD_BUTTONS_ID, idStartBuffer) == 0;
-        if (idStartsWithExpectedValue) {
-            // This BoardButton is now considered to be a slot in the CheckersBoard. Its id attribute must meet certain requirements
-#define CURRENT_LINE_MESSAGE "Parsing file CheckersBoard.ui line: %d char: %d"
-            int lineNumber;
-            int charNumber;
-            g_markup_parse_context_get_position(context, &lineNumber, &charNumber);
-
-            // Check if id's size is as expected
-            enum { EXPECTED_LENGTH = LENGTH(BOARD_BUTTONS_ID "00-00") };
-	    bool hasExpectedLength = strlen(*attribute_values) == EXPECTED_LENGTH; 
-            if (!hasExpectedLength) 
-                g_error("Id's length is not as expected (expected %d). " CURRENT_LINE_MESSAGE, EXPECTED_LENGTH, lineNumber, charNumber);
-            // retrieve the 2 digit numbers in the id
-            enum { NUM_BUFFER_SIZE = sizeof("00") };
-            char numBuffer[NUM_BUFFER_SIZE];
-            char *endPtr;
-            g_strlcpy(numBuffer, *attribute_values + LENGTH(BOARD_BUTTONS_ID), NUM_BUFFER_SIZE);
-            errno = 0;
-            int64_t row = g_ascii_strtoll(numBuffer, &endPtr, 10);
-            bool errorOccurred = row == 0 && errno != 0;
-            if (errorOccurred) {
-                bool couldNotConvert = numBuffer == endPtr;
-                if (couldNotConvert) {
-		            g_error("The id's row value is not a number. " CURRENT_LINE_MESSAGE, lineNumber, charNumber);
-                } else {
-		            g_error("Could not retrieve row from CheckersBoardButton's id; g_ascii_strtoll() returned an unknown error number in errno: %d. " CURRENT_LINE_MESSAGE, errno, lineNumber, charNumber);
-                }
-            }
-            g_strlcpy(numBuffer, *attribute_values + LENGTH(BOARD_BUTTONS_ID "00-"), NUM_BUFFER_SIZE);
-            errno = 0;
-            int64_t column = g_ascii_strtoll(numBuffer, &endPtr, 10);
-            errorOccurred = column == 0 && errno != 0;
-            if (errorOccurred) {
-                bool couldNotConvert = numBuffer == endPtr;
-                if (couldNotConvert) {
-                    g_error("The id's column value is not a number. " CURRENT_LINE_MESSAGE, lineNumber, charNumber);
-                } else {
-                    g_error("Could not retrieve column from CheckersBoardButton's id; g_ascii_strtoll() returned an unknown error number in errno: %d. " CURRENT_LINE_MESSAGE, errno, lineNumber, charNumber);
-                }
-            }
-            if (row < 0 || row >= CHECKERS_BOARD_ROWS)
-		        g_error("The value of the CHECKERS_BOARD_ROWS macro in CheckersBoard.c doesnt match the rows in CheckersBoard.ui" CURRENT_LINE_MESSAGE, lineNumber, charNumber);
-            
-            if (column < 0 || column >= columns[row]) 
-		        g_error("The amount of columns in the %" PRId64 "th row (i.e global variable columns[%" PRId64 "] in CheckersBoard.c) doesnt match the columns in CheckersBoard.ui" CURRENT_LINE_MESSAGE, row+1, row, lineNumber, charNumber);
-#undef CURRENT_LINE_MESSAGE
-            // Keep count of rows and columns. class_init() will compare the result with those provided at compile-time
-            MyParseData *data = user_data;
-		    if (data->columns[row] == 0)
-		        data->rows++;
-            data->columns[row]++;
-            data->totalButtons++;
-        }
-        // Once we found and validated the id attribute, there is no need to keep iterating
-        break;
-    }
-}
-#endif
 
 static void checkers_board_class_init(CheckersBoardClass *klass) {
     GtkWidgetClass *widgetClass= GTK_WIDGET_CLASS(klass);
@@ -305,51 +213,18 @@ static void checkers_board_class_init(CheckersBoardClass *klass) {
                                     );
 
     gtk_widget_class_set_template_from_resource(widgetClass, "/com/fullaccess/ChineseCheckers/ui/markup/CheckersBoard.ui");
-/**
- * This DEBUG block validates that the constants defined in this .c file are consistent with the .ui file. It checks the values in the columns[] array as well as the CHECKERS_BOARD_ROWS constant by comparing them with those gathered by the markupParse_startElement() function
-*/
-#ifdef DEBUG
-    GBytes *uiFile = g_resources_lookup_data("/com/fullaccess/ChineseCheckers/ui/markup/CheckersBoard.ui", G_RESOURCE_LOOKUP_FLAGS_NONE, NULL);
-    gsize fileSize;
-    const gchar *text = g_bytes_get_data(uiFile, &fileSize);
 
-    GMarkupParser parser = {
-        .start_element = markupParse_startElement,
-	    .end_element = NULL,
-	    .text = NULL,
-	    .passthrough = NULL,
-	    .error = NULL
-    };
-
-    // Parse CheckersBoard.ui
-    MyParseData userData = {0};
-    GMarkupParseContext *context = g_markup_parse_context_new(&parser, G_MARKUP_TREAT_CDATA_AS_TEXT, &userData, NULL);
-    g_markup_parse_context_parse(context, text, fileSize, NULL);
-
-    if (userData.totalButtons != N_SLOTS)
-        g_error("The amount of buttons in CheckersBoard.ui (%d) doesnt match its corresponding constant N_SLOTS (%d) in CheckersBoard.c", userData.totalButtons, N_SLOTS);
-
-    if (userData.rows != CHECKERS_BOARD_ROWS) 
-	    g_error("The amount of rows in CheckersBoard.ui (%d) doesnt its corresponding constant CHECKERS_BOARD_ROWS (%d) in CheckersBoard.c", userData.rows, CHECKERS_BOARD_ROWS);
-
-    for (size_t i = 0; i < CHECKERS_BOARD_ROWS; i++) {
-        if (columns[i] != userData.columns[i]) 
-	        g_error("The columns (%d) in CheckersBoard.ui's %zuth row dont match those in CheckersBoard.c's (coluns[%zu] = %d)", userData.columns[i], i+1, i,  columns[i]);
-    }
-    g_markup_parse_context_unref(context);
-#endif
-
-    for (size_t i= 0; i < N_SLOTS; i++) {
+    for (guint i= 0; i < N_SLOTS; i++) {
         // I have to convert the sequencial numbering of the buttons to their position expressed as rows, column.
-        struct {int row, column;} temp = {0}; 
+        struct {guint row, column;} temp = {0}; 
         while (temp.column <= i) 
-            temp.column += columns[temp.row++];
-        temp.column = i - (temp.column - columns[--temp.row]);
+            temp.column += slotsPerRow[temp.row++];
+        temp.column = i - (temp.column - slotsPerRow[--temp.row]);
 
-        enum { OBJECT_ID_BUFFER_SIZE = sizeof(BOARD_BUTTONS_ID "%02d-%02d") };
-        char objectIdBuffer[OBJECT_ID_BUFFER_SIZE]; // It doesnt need to persist, gtk_widget_class_bind_template_child_full will call stddup() on it
+        enum { OBJECT_ID_BUFFER_SIZE = sizeof(BOARD_BUTTONS_ID "%02u-%02u") };
+        char objectIdBuffer[OBJECT_ID_BUFFER_SIZE]; // It doesnt need to persist, gtk_widget_class_bind_template_child_full will call strdup() on it
 
-        snprintf(objectIdBuffer, OBJECT_ID_BUFFER_SIZE, BOARD_BUTTONS_ID "%02d-%02d", temp.row, temp.column);
+        snprintf(objectIdBuffer, OBJECT_ID_BUFFER_SIZE, BOARD_BUTTONS_ID "%02u-%02u", temp.row, temp.column);
         gtk_widget_class_bind_template_child_full(widgetClass, objectIdBuffer, FALSE, G_STRUCT_OFFSET(CheckersBoard, slots)+((glong)(i * sizeof(CheckersBoardButton *))));
     }
     gtk_widget_class_bind_template_callback(widgetClass, checkers_board_closure_computeSpacingForEquilateralTriangle);
@@ -433,11 +308,20 @@ static gint checkers_board_closure_computeSpacingForEquilateralTriangle(Checkers
      * From this follows:
      * 2c = 2(sqrt(4/3)-1) * r
     */ 
-    return round(boardButtonDiameter * 0.15470053);
+    return (gint)round(boardButtonDiameter * 0.15470053);
     //                   2r          * (sqrt(4/3)-1)
 }
 
 extern GtkWidget *checkers_board_new(void) {
     return g_object_new(CHECKERS_TYPE_BOARD, NULL);
+}
+
+extern guint checkers_board_get_slots(gsize row) {
+#ifdef DEBUG
+    if (row > CHECKERS_BOARD_ROWS) {
+        g_error("Index out of bounds on checkers_board_get_slots(). Index: %zu", row);
+    }
+#endif
+    return slotsPerRow[row];
 }
 

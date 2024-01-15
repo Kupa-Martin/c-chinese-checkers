@@ -3,8 +3,9 @@
 
 #pragma once
 
-/* Include the main project header */
-#include "includes.h"
+#include "widgets/CheckersBoard.h"
+#include "widgets/CheckersBoardButton.h"
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 

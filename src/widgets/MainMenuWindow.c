@@ -1,4 +1,5 @@
-#include "../includes.h"
+#include "MainMenuWindow.h"
+#include "CheckersWindow.h"
 
 // Type definitions
 struct _MainMenuWindow {
@@ -67,7 +68,7 @@ static void handle_main_menu_window_clicked_button1(GtkButton *button1, gpointer
     GtkWindow *gameWindow = GTK_WINDOW(g_object_new(CHECKERS_TYPE_WINDOW, NULL));
     gtk_window_set_application(gameWindow, app);
     gtk_window_close(self);
-    gtk_widget_show(GTK_WIDGET(gameWindow));
+    gtk_window_present(gameWindow);
 }
 
 extern GtkWidget *main_menu_window_new(void) {

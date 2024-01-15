@@ -1,7 +1,7 @@
 #ifndef __MAIN_MENU_WINDOW_H__
 #define __MAIN_MENU_WINDOW_H__
 
-#include "../includes.h"
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 

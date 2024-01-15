@@ -1,7 +1,7 @@
 #ifndef __CHECKERS_GAME_OVER_H__
 #define __CHECKERS_GAME_OVER_H__
 
-#include "../includes.h"
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
