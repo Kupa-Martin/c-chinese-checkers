@@ -15,7 +15,7 @@
         <property name="has-frame">true</property>
 
         <!-- Signals -->
-        <signal name="clicked" handler="handle_checkers_board_button_clicked_self"></signal>
+        <signal name="clicked" handler="checkers_board_button_handle_clicked_self"></signal>
         
         <child>
             <object class="GtkImage" id="image">
@@ -24,7 +24,7 @@
                 </style>
                 
                 <binding name="resource">
-                    <closure type="gchararray" function="checkers_board_button_closure_sourceToResource">
+                    <closure type="gchararray" function="checkers_board_button_source_to_resource">
                         <lookup type="CheckersBoardButton" name="source"></lookup>
                     </closure>
                 </binding>

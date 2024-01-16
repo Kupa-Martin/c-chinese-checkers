@@ -1,15 +1,16 @@
-#include "CheckersBoardButton.h"
 #include "CheckersBoard.h"
+#include "CheckersBoardButton.h"
 #include "CheckersWindow.h"
 #include "../macro_utils.h"
 #include <math.h>
 
-// the first part (coords excluded) of the id property of `CheckersBoardButton`s widgets in ../../ui/markup/CheckersBoard.ui
+// the first part (coords excluded) of the id property of `CheckersBoardButton`s widgets in ../../resources/markup/CheckersBoard.ui
 #define BOARD_BUTTONS_ID "checkersboardbutton"
 
 enum PropertyId {
     PROPERTY_PLAYERS = 1,
-    PROPERTY_SLOT_RADIUS
+    PROPERTY_SLOT_RADIUS,
+    PROPERTY_GAME_ACTIVE
 };
 
 #define FOR_SLOTS_PER_ROW(DO) \
@@ -144,6 +145,7 @@ struct _CheckersBoard {
     // Properties
     CheckersBoardPlayers players;
     gint slotRadius;
+    gboolean gameActive;
 
     // Child widgets
     CheckersBoardButton *slots[N_SLOTS];
@@ -170,10 +172,11 @@ static gint checkers_board_closure_computeSpacingForEquilateralTriangle(Checkers
 
 static void checkers_board_init(CheckersBoard *self) {
     self->players = CHECKERS_BOARD_EMPTY_BOARD;
+    self->gameActive = false;
     gtk_widget_init_template(GTK_WIDGET(self));
 
     GtkCssProvider *cssProvider = gtk_css_provider_new();
-    gtk_css_provider_load_from_resource(cssProvider, "/com/fullaccess/ChineseCheckers/ui/styles/CheckersBoard.css");
+    gtk_css_provider_load_from_resource(cssProvider, "/com/fullaccess/ChineseCheckers/resources/styles/CheckersBoard.css");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(GTK_WIDGET(self)), GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
     
     g_object_unref(cssProvider);	
@@ -211,8 +214,17 @@ static void checkers_board_class_init(CheckersBoardClass *klass) {
                                             G_PARAM_READWRITE
                                         )
                                     );
+    g_object_class_install_property(objectClass, PROPERTY_GAME_ACTIVE, 
+                                    g_param_spec_boolean(
+                                            "game-active",
+                                            "game-active",
+                                            "Whether a game is ongoing",
+                                            false,
+                                            G_PARAM_READWRITE
+                                        )
+                                    );
 
-    gtk_widget_class_set_template_from_resource(widgetClass, "/com/fullaccess/ChineseCheckers/ui/markup/CheckersBoard.ui");
+    gtk_widget_class_set_template_from_resource(widgetClass, "/com/fullaccess/ChineseCheckers/resources/markup/CheckersBoard.ui");
 
     for (guint i= 0; i < N_SLOTS; i++) {
         // I have to convert the sequencial numbering of the buttons to their position expressed as rows, column.
@@ -254,6 +266,10 @@ static void checkers_board_get_property(GObject *object, guint propertyId, GValu
             g_value_set_int(value, self->slotRadius);
             break;
         }
+        case PROPERTY_GAME_ACTIVE: {
+            g_value_set_boolean(value, self->gameActive);
+            break;
+        }
         default: {
             G_OBJECT_WARN_INVALID_PROPERTY_ID(object, propertyId, paramSpec);
             break;
@@ -269,17 +285,18 @@ static void checkers_board_set_property(GObject *object, guint propertyId, const
             self->players = g_value_get_enum(value);
             for (size_t i= 0; i < N_SLOTS; i++) 
                 checkers_board_button_set_source(self->slots[i], initialBoardDistributionData[self->players][i]);
-            break;
+            return;
         }
         case PROPERTY_SLOT_RADIUS: {
             self->slotRadius = g_value_get_int(value);
-            break;
+            return;
         }
-        default: {
-            G_OBJECT_WARN_INVALID_PROPERTY_ID(object, propertyId, paramSpec);
-            break;
+        case PROPERTY_GAME_ACTIVE: {
+            self->gameActive = g_value_get_boolean(value);
+            return;
         }
     }
+    G_OBJECT_WARN_INVALID_PROPERTY_ID(object, propertyId, paramSpec);
 }
 
 static void checkers_board_constructed(GObject *object) {    
@@ -323,5 +340,15 @@ extern guint checkers_board_get_slots(gsize row) {
     }
 #endif
     return slotsPerRow[row];
+}
+
+extern gboolean checkers_board_is_game_active(CheckersBoard *self) {
+    gboolean isActiveGame;
+    g_object_get(self, "game-active", &isActiveGame, NULL);
+    return isActiveGame;
+}
+
+extern void checkers_board_set_game_active(CheckersBoard *self, gboolean gameActive) {
+    g_object_set(self, "game-active", gameActive, NULL);
 }
 

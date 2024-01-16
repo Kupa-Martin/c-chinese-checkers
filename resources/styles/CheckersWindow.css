@@ -1,0 +1,14 @@
+
+.checkers-window box#sidebar {
+    background: lightgray;
+    padding: 10px;
+}
+
+.checkers-window label#sidebar-label {
+    font-weight: bolder;
+    font-size: xx-large;
+    margin: 10px 0 10px 0;
+}
+
+
+

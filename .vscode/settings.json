@@ -12,6 +12,11 @@
         "mainmenuwindow.h": "c",
         "checkersboardbutton.h": "c",
         "enum_types.h": "c",
-        "checkersgameover.h": "c"
+        "checkersgameover.h": "c",
+        "macro_utils.h": "c",
+        "assert.h": "c",
+        "checkerswindow.h": "c",
+        "gdk.h": "c",
+        "gdktypes.h": "c"
     }
 }

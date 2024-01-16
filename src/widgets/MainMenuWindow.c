@@ -28,7 +28,7 @@ static void main_menu_window_init(MainMenuWindow *self) {
     gtk_widget_init_template(GTK_WIDGET(self));
 
     GtkCssProvider *cssProvider = gtk_css_provider_new();
-    gtk_css_provider_load_from_resource(cssProvider, "/com/fullaccess/ChineseCheckers/ui/styles/MainMenuWindow.css");
+    gtk_css_provider_load_from_resource(cssProvider, "/com/fullaccess/ChineseCheckers/resources/styles/MainMenuWindow.css");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(GTK_WIDGET(self)), GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
     
     
@@ -43,7 +43,7 @@ static void main_menu_window_class_init(MainMenuWindowClass *klass) {
     objectClass->dispose = main_menu_window_dispose;
     objectClass->finalize = main_menu_window_finalize;
 
-    gtk_widget_class_set_template_from_resource(widgetClass, "/com/fullaccess/ChineseCheckers/ui/markup/MainMenuWindow.ui");
+    gtk_widget_class_set_template_from_resource(widgetClass, "/com/fullaccess/ChineseCheckers/resources/markup/MainMenuWindow.ui");
 
     gtk_widget_class_bind_template_child(widgetClass, MainMenuWindow, button1);
     gtk_widget_class_bind_template_callback(widgetClass, handle_main_menu_window_clicked_button1);

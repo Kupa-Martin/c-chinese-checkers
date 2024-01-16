@@ -21,10 +21,10 @@ void handle_gtk_application_activate_app(GtkApplication *app, gpointer userData)
     g_type_ensure(CHECKERS_TYPE_WINDOW);
     g_type_ensure(CHECKERS_TYPE_GAME_OVER);
     g_type_ensure(CHECKERS_TYPE_BOARD);
-    GtkBuilder *builder = gtk_builder_new_from_resource("/com/fullaccess/ChineseCheckers/ui/markup/app.ui");
+    GtkBuilder *builder = gtk_builder_new_from_resource("/com/fullaccess/ChineseCheckers/resources/markup/app.ui");
     GtkWindow *window = GTK_WINDOW(gtk_builder_get_object(builder, "window"));
     GtkCssProvider *cssProvider = gtk_css_provider_new();
-    gtk_css_provider_load_from_resource(cssProvider, "/com/fullaccess/ChineseCheckers/ui/styles/global.css");
+    gtk_css_provider_load_from_resource(cssProvider, "/com/fullaccess/ChineseCheckers/resources/styles/global.css");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(GTK_WIDGET(window)), GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
     gtk_window_set_application(window, app);
 

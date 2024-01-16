@@ -6,8 +6,13 @@
 
 G_BEGIN_DECLS
 
+// Forward declarations
+G_DECLARE_FINAL_TYPE(CheckersBoardButton, checkers_board_button, CHECKERS, BOARD_BUTTON, GtkButton);
+
 #define CHECKERS_TYPE_BOARD_BUTTON checkers_board_button_get_type()
 #define CHECKERS_BOARD_BUTTON_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), CHECKERS_TYPE_BOARD_BUTTON, CheckersBoardButtonClass))
+#define CHECKERS_BOARD_BUTTON(board_button) (G_TYPE_CHECK_INSTANCE_CAST ((board_button), CHECKERS_TYPE_BOARD_BUTTON, CheckersBoardButton))
+
 
 // Type definitions
 typedef enum {
@@ -28,8 +33,6 @@ typedef enum {
 } CheckersBoardButtonSource;
 // End type definitions
 
-// Forward declarations
-G_DECLARE_FINAL_TYPE(CheckersBoardButton, checkers_board_button, CHECKERS, BOARD_BUTTON, GtkButton);
 
 extern GtkWidget *checkers_board_button_new(void);
 extern CheckersBoardButtonSource checkers_board_button_get_source(CheckersBoardButton *);

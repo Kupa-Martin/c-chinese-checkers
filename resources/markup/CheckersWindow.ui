@@ -7,32 +7,62 @@
         <child>
             <object class="GtkOverlay" id="overlay">
                 <child>
-                    <object class="GtkOverlay">
-                        <child type="overlay">
+                    <object class="GtkBox">
+                        <child>
                             <object class="GtkBox" id="sidebar">
+                                <property name="name">sidebar</property>
                                 <property name="halign">start</property>
                                 <property name="orientation">vertical</property>
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="name">sidebar-label</property>
+                                        <property name="label">Select player count</property>
+                                    </object>
+                                </child>
                                 <child>
                                     <object class="GtkBox">
                                         <property name="orientation">vertical</property>
                                         <child>
                                             <object class="GtkToggleButton" id="player_select2">
+                                                <binding name="sensitive">
+                                                    <closure type="gboolean" function="checkers_window_closure_player_select">
+                                                        <lookup type="CheckersBoard" name="game-active">board</lookup>
+                                                    </closure>
+                                                </binding>
                                                 <property name="label">2 players</property>
                                                 <property name="active">true</property>
                                             </object>
                                         </child>
                                         <child>
                                             <object class="GtkToggleButton" id="player_select4">
+                                                <binding name="sensitive">
+                                                    <closure type="gboolean" function="checkers_window_closure_player_select">
+                                                        <lookup type="CheckersBoard" name="game-active">board</lookup>
+                                                    </closure>
+                                                </binding>
                                                 <property name="group">player_select2</property>
                                                 <property name="label">4 players</property> 
                                             </object>
                                         </child>
                                         <child>
                                             <object class="GtkToggleButton" id="player_select6">
+                                                <binding name="sensitive">
+                                                    <closure type="gboolean" function="checkers_window_closure_player_select">
+                                                        <lookup type="CheckersBoard" name="game-active">board</lookup>
+                                                    </closure>
+                                                </binding>
                                                 <property name="group">player_select2</property>
                                                 <property name="label">6 players</property>
                                             </object>
                                         </child>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkButton" id="button1">
+                                        <property name="label">Start</property>
+                                        <property name="valign">end</property>
+                                        <property name="vexpand">true</property>
+                                        <signal name="clicked" handler="checkers_window_handle_button1_clicked"></signal>
                                     </object>
                                 </child>
                             </object>

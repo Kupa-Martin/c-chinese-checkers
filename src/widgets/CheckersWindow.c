@@ -33,13 +33,15 @@ static void checkers_window_finalize(GObject *);
 static void checkers_window_get_property(GObject *, guint, GValue *, GParamSpec *);
 static void checkers_window_set_property(GObject *, guint, const GValue *, GParamSpec *);
 static CheckersBoardPlayers checkers_window_change_board_players(CheckersWindow *, gboolean, gboolean, gboolean);
+static void checkers_window_handle_button1_clicked(GtkButton *, gpointer);
+static gboolean checkers_window_closure_player_select(CheckersWindow *, gboolean);
 // End forward declaration
 
 static void checkers_window_init(CheckersWindow *self) {
     gtk_widget_init_template(GTK_WIDGET(self));
 
     GtkCssProvider *cssProvider = gtk_css_provider_new();
-    gtk_css_provider_load_from_resource(cssProvider, "/com/fullaccess/ChineseCheckers/ui/styles/CheckersWindow.css");
+    gtk_css_provider_load_from_resource(cssProvider, "/com/fullaccess/ChineseCheckers/resources/styles/CheckersWindow.css");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(GTK_WIDGET(self)), GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
 	GtkAlertDialog *testDialog = gtk_alert_dialog_new("test dialog");
 	gtk_alert_dialog_set_modal(testDialog, true);
@@ -58,10 +60,13 @@ static void checkers_window_class_init(CheckersWindowClass *klass){
     objectClass->dispose = checkers_window_dispose;
     objectClass->finalize = checkers_window_finalize;
 
-    gtk_widget_class_set_template_from_resource(widgetClass, "/com/fullaccess/ChineseCheckers/ui/markup/CheckersWindow.ui");
+    gtk_widget_class_set_template_from_resource(widgetClass, "/com/fullaccess/ChineseCheckers/resources/markup/CheckersWindow.ui");
     gtk_widget_class_bind_template_child(widgetClass, CheckersWindow, sidebar);
     gtk_widget_class_bind_template_child(widgetClass, CheckersWindow, board);
     gtk_widget_class_bind_template_callback(widgetClass, checkers_window_change_board_players);
+    gtk_widget_class_bind_template_callback(widgetClass, checkers_window_handle_button1_clicked);
+    gtk_widget_class_bind_template_callback(widgetClass, checkers_window_closure_player_select);
+
     return;
 }
 
@@ -109,6 +114,18 @@ static CheckersBoardPlayers checkers_window_change_board_players(CheckersWindow 
         return CHECKERS_BOARD_6_PLAYERS;
     return CHECKERS_BOARD_EMPTY_BOARD;
 }
+
+static void checkers_window_handle_button1_clicked(GtkButton *self, gpointer data) {
+    GtkRoot *r = gtk_widget_get_root(GTK_WIDGET(self));
+    CheckersWindow *window = CHECKERS_WINDOW(r);
+    checkers_board_set_game_active(window->board, !checkers_board_is_game_active(window->board));
+    gtk_button_set_label(self, checkers_board_is_game_active(window->board) ? "Resign" : "Start");
+}
+
+static gboolean checkers_window_closure_player_select(CheckersWindow *self, gboolean isGameActive) {
+    return !isGameActive;
+}
+
 
 extern GtkWidget *checkers_window_new(void) {
     return g_object_new(CHECKERS_TYPE_WINDOW, NULL);

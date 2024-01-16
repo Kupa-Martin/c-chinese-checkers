@@ -17,7 +17,7 @@ CPPFLAGS := ${CPPFLAGS} -D$(shell echo "$(TARGET)" | tr 'a-z' 'A-Z')
 
 INCLUDES = $(shell ${PKG_CONFIG} --cflags-only-I gtk4) -I/ -I/widgets
 
-CFLAGS := $(CFLAGS) -std=c17 -Wall -Wextra -Wundef -Wcast-align -Wstrict-overflow=5 -Wswitch-enum -Wconversion -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wno-unused-parameter
+CFLAGS := $(CFLAGS) -std=c17 -Werror -Wall -Wextra -Wundef -Wcast-align -Wstrict-overflow=5 -Wswitch-enum -Wconversion -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wno-unused-parameter
 CFLAGS += $(shell ${PKG_CONFIG} --cflags-only-other gtk4) ${INCLUDES}
 
 LDLIBS := ${LDLIBS} -lm
@@ -26,7 +26,7 @@ LDLIBS += $(shell ${PKG_CONFIG} --libs-only-l gtk4)
 LDFLAGS := ${LDFLAGS}
 LDFLAGS += $(shell ${PKG_CONFIG} --libs-only-L --libs-only-other gtk4)
 
-RESOURCES = $(shell echo $(shell find ui -type f))
+RESOURCES = $(shell echo $(shell find resources -type f))
 
 WIDGETS = MainMenuWindow \
 	CheckersBoardButton \

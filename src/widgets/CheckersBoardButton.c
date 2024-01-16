@@ -1,6 +1,7 @@
 #include "CheckersBoardButton.h"
+#include "CheckersBoard.h"
 #include "../macro_utils.h"
-#include <assert.h>
+#include <stddef.h>
 
 enum PropertyId {
     PROPERTY_SOURCE = 1,
@@ -32,8 +33,8 @@ static void checkers_board_button_dispose(GObject *);
 static void checkers_board_button_finalize(GObject *);
 static void checkers_board_button_get_property(GObject *, guint, GValue *, GParamSpec *);
 static void checkers_board_button_set_property(GObject *, guint, const GValue *, GParamSpec *);
-static void handle_checkers_board_button_clicked_self(CheckersBoardButton *, gpointer);
-static gchararray checkers_board_button_closure_sourceToResource(CheckersBoardButton *, CheckersBoardButtonSource);
+static void checkers_board_button_handle_clicked_self(CheckersBoardButton *, gpointer);
+static gchararray checkers_board_button_source_to_resource(CheckersBoardButton *, CheckersBoardButtonSource);
 // End forward declarations
 
 static void checkers_board_button_init(CheckersBoardButton *self) {
@@ -42,7 +43,7 @@ static void checkers_board_button_init(CheckersBoardButton *self) {
     gtk_widget_init_template(GTK_WIDGET(self));
 
     GtkCssProvider *cssProvider = gtk_css_provider_new();
-    gtk_css_provider_load_from_resource(cssProvider, "/com/fullaccess/ChineseCheckers/ui/styles/CheckersBoardButton.css");
+    gtk_css_provider_load_from_resource(cssProvider, "/com/fullaccess/ChineseCheckers/resources/styles/CheckersBoardButton.css");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(GTK_WIDGET(self)), GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
     
     
@@ -81,10 +82,10 @@ static void checkers_board_button_class_init(CheckersBoardButtonClass *klass) {
                                         )
                                     );
 
-    gtk_widget_class_set_template_from_resource(widgetClass, "/com/fullaccess/ChineseCheckers/ui/markup/CheckersBoardButton.ui");
+    gtk_widget_class_set_template_from_resource(widgetClass, "/com/fullaccess/ChineseCheckers/resources/markup/CheckersBoardButton.ui");
     gtk_widget_class_bind_template_child(widgetClass, CheckersBoardButton, image);
-    gtk_widget_class_bind_template_callback(widgetClass, handle_checkers_board_button_clicked_self);
-    gtk_widget_class_bind_template_callback(widgetClass, checkers_board_button_closure_sourceToResource);
+    gtk_widget_class_bind_template_callback(widgetClass, checkers_board_button_handle_clicked_self);
+    gtk_widget_class_bind_template_callback(widgetClass, checkers_board_button_source_to_resource);
     return;
 }
 
@@ -139,28 +140,33 @@ static void checkers_board_button_set_property(GObject *object, guint propertyId
     }
 }
 
-static void handle_checkers_board_button_clicked_self(CheckersBoardButton *self, gpointer data) {
+static void checkers_board_button_handle_clicked_self(CheckersBoardButton *self, gpointer data) {
+    GtkWidget *w = gtk_widget_get_ancestor(GTK_WIDGET(self), CHECKERS_TYPE_BOARD);
+    CheckersBoard *owner = CHECKERS_BOARD(w);
+    g_assert(owner != NULL);
+    if (!checkers_board_is_game_active(owner)) 
+        return;
     checkers_board_button_set_source(self, (checkers_board_button_get_source(self)+1)%CHECKERS_BOARD_BUTTON_N_SOURCES);
     return;
 }
 
-static gchararray checkers_board_button_closure_sourceToResource(CheckersBoardButton *self, CheckersBoardButtonSource source) {
-    static const char *const resources[] = {
-        "/com/fullaccess/ChineseCheckers/ui/assets/empty_slot.png",
-        "/com/fullaccess/ChineseCheckers/ui/assets/red_empty_slot.png",
-        "/com/fullaccess/ChineseCheckers/ui/assets/red_ball.png",
-        "/com/fullaccess/ChineseCheckers/ui/assets/blue_empty_slot.png",
-        "/com/fullaccess/ChineseCheckers/ui/assets/blue_ball.png",
-        "/com/fullaccess/ChineseCheckers/ui/assets/green_empty_slot.png",
-        "/com/fullaccess/ChineseCheckers/ui/assets/green_ball.png",
-        "/com/fullaccess/ChineseCheckers/ui/assets/black_empty_slot.png",
-        "/com/fullaccess/ChineseCheckers/ui/assets/black_ball.png",
-        "/com/fullaccess/ChineseCheckers/ui/assets/yellow_empty_slot.png",
-        "/com/fullaccess/ChineseCheckers/ui/assets/yellow_ball.png",
-        "/com/fullaccess/ChineseCheckers/ui/assets/white_empty_slot.png",
-        "/com/fullaccess/ChineseCheckers/ui/assets/white_ball.png"
+static gchararray checkers_board_button_source_to_resource(CheckersBoardButton *self, CheckersBoardButtonSource source) {
+    static const char *resources[] = {
+        "/com/fullaccess/ChineseCheckers/resources/assets/empty_slot.png",
+        "/com/fullaccess/ChineseCheckers/resources/assets/red_empty_slot.png",
+        "/com/fullaccess/ChineseCheckers/resources/assets/red_ball.png",
+        "/com/fullaccess/ChineseCheckers/resources/assets/blue_empty_slot.png",
+        "/com/fullaccess/ChineseCheckers/resources/assets/blue_ball.png",
+        "/com/fullaccess/ChineseCheckers/resources/assets/green_empty_slot.png",
+        "/com/fullaccess/ChineseCheckers/resources/assets/green_ball.png",
+        "/com/fullaccess/ChineseCheckers/resources/assets/black_empty_slot.png",
+        "/com/fullaccess/ChineseCheckers/resources/assets/black_ball.png",
+        "/com/fullaccess/ChineseCheckers/resources/assets/yellow_empty_slot.png",
+        "/com/fullaccess/ChineseCheckers/resources/assets/yellow_ball.png",
+        "/com/fullaccess/ChineseCheckers/resources/assets/white_empty_slot.png",
+        "/com/fullaccess/ChineseCheckers/resources/assets/white_ball.png"
     };
-    assert(source < ARRAY_SIZE(resources));
+    g_assert(source < ARRAY_SIZE(resources));
     // Dont return a string literal, it crashes the app.
     return g_strdup_printf(resources[source]);
 }

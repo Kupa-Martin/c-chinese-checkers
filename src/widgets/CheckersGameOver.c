@@ -20,7 +20,7 @@ static void checkers_game_over_init(CheckersGameOver *self) {
     gtk_widget_init_template(GTK_WIDGET(self));
 
     GtkCssProvider *cssProvider = gtk_css_provider_new();
-    gtk_css_provider_load_from_resource(cssProvider, "/com/fullaccess/ChineseCheckers/ui/styles/CheckersGameOver.css");
+    gtk_css_provider_load_from_resource(cssProvider, "/com/fullaccess/ChineseCheckers/resources/styles/CheckersGameOver.css");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(GTK_WIDGET(self)), GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
     
     g_object_unref(cssProvider);
@@ -34,7 +34,7 @@ static void checkers_game_over_class_init(CheckersGameOverClass *klass) {
     objectClass->dispose = checkers_game_over_dispose;
     objectClass->finalize = checkers_game_over_finalize;
 
-    gtk_widget_class_set_template_from_resource(widgetClass, "/com/fullaccess/ChineseCheckers/ui/markup/CheckersGameOver.ui");
+    gtk_widget_class_set_template_from_resource(widgetClass, "/com/fullaccess/ChineseCheckers/resources/markup/CheckersGameOver.ui");
     return;
 }
 
