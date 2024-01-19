@@ -29,17 +29,17 @@ enum { N_SLOTS = 0 + FOR_SLOTS_PER_ROW(SUM)  /* The number of `BoardButton`s in 
 // First 3 letters indicate color, last letter indicates wether it's a ball (B) or a slot (S)
 #define ETYS CHECKERS_BOARD_BUTTON_EMPTY_SLOT
 #define REDS CHECKERS_BOARD_BUTTON_RED_SLOT
-#define REDB CHECKERS_BOARD_BUTTON_RED_BALL
+#define REDM CHECKERS_BOARD_BUTTON_RED_MARBLE
 #define BLUS CHECKERS_BOARD_BUTTON_BLUE_SLOT
-#define BLUB CHECKERS_BOARD_BUTTON_BLUE_BALL
+#define BLUM CHECKERS_BOARD_BUTTON_BLUE_MARBLE
 #define GRES CHECKERS_BOARD_BUTTON_GREEN_SLOT
-#define GREB CHECKERS_BOARD_BUTTON_GREEN_BALL
+#define GREM CHECKERS_BOARD_BUTTON_GREEN_MARBLE
 #define BLKS CHECKERS_BOARD_BUTTON_BLACK_SLOT
-#define BLKB CHECKERS_BOARD_BUTTON_BLACK_BALL
+#define BLKM CHECKERS_BOARD_BUTTON_BLACK_MARBLE
 #define YLWS CHECKERS_BOARD_BUTTON_YELLOW_SLOT
-#define YLWB CHECKERS_BOARD_BUTTON_YELLOW_BALL
+#define YLWM CHECKERS_BOARD_BUTTON_YELLOW_MARBLE
 #define WHTS CHECKERS_BOARD_BUTTON_WHITE_SLOT
-#define WHTB CHECKERS_BOARD_BUTTON_WHITE_BALL
+#define WHTM CHECKERS_BOARD_BUTTON_WHITE_MARBLE
 
 static const CheckersBoardButtonSource initialBoardDistributionData[][N_SLOTS] = {
     // CHECKERS_BOARD_EMPTY_BOARD
@@ -64,10 +64,10 @@ static const CheckersBoardButtonSource initialBoardDistributionData[][N_SLOTS] =
     },
     // CHECKERS_BOARD_2_PLAYERS 
     {
-                                                        BLKB,
-                                                    BLKB,    BLKB,
-                                                BLKB,    BLKB,    BLKB,
-                                            BLKB,    BLKB,    BLKB,   BLKB,
+                                                        BLKM,
+                                                    BLKM,    BLKM,
+                                                BLKM,    BLKM,    BLKM,
+                                            BLKM,    BLKM,    BLKM,   BLKM,
         YLWS,   YLWS,   YLWS,   YLWS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   GRES,   GRES,   GRES,   GRES,
             YLWS,   YLWS,   YLWS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   GRES,   GRES,   GRES,
                 YLWS,   YLWS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   GRES,   GRES,
@@ -77,10 +77,10 @@ static const CheckersBoardButtonSource initialBoardDistributionData[][N_SLOTS] =
                 WHTS,   WHTS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   BLUS,   BLUS,
             WHTS,   WHTS,   WHTS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   BLUS,   BLUS,   BLUS,
         WHTS,   WHTS,   WHTS,   WHTS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   BLUS,   BLUS,   BLUS,   BLUS,
-                                            REDB,    REDB,    REDB,   REDB,
-                                                REDB,    REDB,    REDB,
-                                                    REDB,    REDB,
-                                                        REDB
+                                            REDM,    REDM,    REDM,   REDM,
+                                                REDM,    REDM,    REDM,
+                                                    REDM,    REDM,
+                                                        REDM
     },
     // CHECKERS_BOARD_4_PLAYERS
     {
@@ -88,15 +88,15 @@ static const CheckersBoardButtonSource initialBoardDistributionData[][N_SLOTS] =
                                                     BLKS,    BLKS,
                                                 BLKS,    BLKS,    BLKS,
                                             BLKS,    BLKS,    BLKS,   BLKS,
-        YLWB,   YLWB,   YLWB,   YLWB,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   GREB,   GREB,   GREB,   GREB,
-            YLWB,   YLWB,   YLWB,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   GREB,   GREB,   GREB,
-                YLWB,   YLWB,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   GREB,   GREB,
-                    YLWB,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   GREB,
+        YLWM,   YLWM,   YLWM,   YLWM,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   GREM,   GREM,   GREM,   GREM,
+            YLWM,   YLWM,   YLWM,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   GREM,   GREM,   GREM,
+                YLWM,   YLWM,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   GREM,   GREM,
+                    YLWM,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   GREM,
                         ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,
-                    WHTB,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   BLUB,
-                WHTB,   WHTB,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   BLUB,   BLUB,
-            WHTB,   WHTS,   WHTB,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   BLUB,   BLUB,   BLUB,
-        WHTB,   WHTB,   WHTB,   WHTB,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   BLUB,   BLUB,   BLUB,   BLUB,
+                    WHTM,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   BLUM,
+                WHTM,   WHTM,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   BLUM,   BLUM,
+            WHTM,   WHTM,   WHTM,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   BLUM,   BLUM,   BLUM,
+        WHTM,   WHTM,   WHTM,   WHTM,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   BLUM,   BLUM,   BLUM,   BLUM,
                                             REDS,    REDS,    REDS,   REDS,
                                                 REDS,    REDS,    REDS,
                                                     REDS,    REDS,
@@ -104,38 +104,38 @@ static const CheckersBoardButtonSource initialBoardDistributionData[][N_SLOTS] =
     },
     // CHECKERS_BOARD_6_PLAYERS 
     {
-                                                        BLKB,
-                                                    BLKB,    BLKB,
-                                                BLKB,    BLKB,    BLKB,
-                                            BLKB,    BLKB,    BLKB,   BLKB,
-        YLWB,   YLWB,   YLWB,   YLWB,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   GREB,   GREB,   GREB,   GREB,
-            YLWB,   YLWB,   YLWB,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   GREB,   GREB,   GREB,
-                YLWB,   YLWB,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   GREB,   GREB,
-                    YLWB,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   GREB,
+                                                        BLKM,
+                                                    BLKM,    BLKM,
+                                                BLKM,    BLKM,    BLKM,
+                                            BLKM,    BLKM,    BLKM,   BLKM,
+        YLWM,   YLWM,   YLWM,   YLWM,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   GREM,   GREM,   GREM,   GREM,
+            YLWM,   YLWM,   YLWM,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   GREM,   GREM,   GREM,
+                YLWM,   YLWM,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   GREM,   GREM,
+                    YLWM,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   GREM,
                         ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,
-                    WHTB,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   BLUB,
-                WHTB,   WHTB,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   BLUB,   BLUB,
-            WHTB,   WHTS,   WHTB,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   BLUB,   BLUB,   BLUB,
-        WHTB,   WHTB,   WHTB,   WHTB,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   BLUB,   BLUB,   BLUB,   BLUB,
-                                            REDB,    REDB,    REDB,   REDB,
-                                                REDB,    REDB,    REDB,
-                                                    REDB,    REDB,
-                                                        REDB
+                    WHTM,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   BLUM,
+                WHTM,   WHTM,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   BLUM,   BLUM,
+            WHTM,   WHTM,   WHTM,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   BLUM,   BLUM,   BLUM,
+        WHTM,   WHTM,   WHTM,   WHTM,   ETYS,   ETYS,   ETYS,   ETYS,   ETYS,   BLUM,   BLUM,   BLUM,   BLUM,
+                                            REDM,    REDM,    REDM,   REDM,
+                                                REDM,    REDM,    REDM,
+                                                    REDM,    REDM,
+                                                        REDM
     }
 };
 #undef ETYS
 #undef REDS
-#undef REDB
+#undef REDM
 #undef BLUS
-#undef BLUB
+#undef BLUM
 #undef GRES
-#undef GREB
+#undef GREM
 #undef BLKS
-#undef BLKB
+#undef BLKM
 #undef YLWS
-#undef YLWB
+#undef YLWM
 #undef WHTS
-#undef WHTB
+#undef WHTM
 
 G_STATIC_ASSERT(ARRAY_SIZE(initialBoardDistributionData) == CHECKERS_BOARD_N_PLAYER_VALUES);
 
@@ -167,7 +167,7 @@ static void checkers_board_finalize(GObject *);
 static void checkers_board_get_property(GObject *, guint, GValue *, GParamSpec *);
 static void checkers_board_set_property(GObject *, guint, const GValue *, GParamSpec *);
 static void checkers_board_constructed(GObject *);
-static gint checkers_board_closure_computeSpacingForEquilateralTriangle(CheckersBoard *, gint);
+static gint checkers_board_closure_compute_spacing(CheckersBoard *, gint);
 // End forward declaration
 
 static void checkers_board_init(CheckersBoard *self) {
@@ -239,7 +239,7 @@ static void checkers_board_class_init(CheckersBoardClass *klass) {
         snprintf(objectIdBuffer, OBJECT_ID_BUFFER_SIZE, BOARD_BUTTONS_ID "%02u-%02u", temp.row, temp.column);
         gtk_widget_class_bind_template_child_full(widgetClass, objectIdBuffer, FALSE, G_STRUCT_OFFSET(CheckersBoard, slots)+((glong)(i * sizeof(CheckersBoardButton *))));
     }
-    gtk_widget_class_bind_template_callback(widgetClass, checkers_board_closure_computeSpacingForEquilateralTriangle);
+    gtk_widget_class_bind_template_callback(widgetClass, checkers_board_closure_compute_spacing);
     return;
 }
 
@@ -306,7 +306,7 @@ static void checkers_board_constructed(GObject *object) {
     G_OBJECT_CLASS(checkers_board_parent_class)->constructed(object);
 }
 
-static gint checkers_board_closure_computeSpacingForEquilateralTriangle(CheckersBoard *self, gint boardButtonDiameter) {
+static gint checkers_board_closure_compute_spacing(CheckersBoard *self, gint boardButtonDiameter) {
     /**
      * Consider:
      *                  CheckersBoardButton 
@@ -350,5 +350,8 @@ extern gboolean checkers_board_is_game_active(CheckersBoard *self) {
 
 extern void checkers_board_set_game_active(CheckersBoard *self, gboolean gameActive) {
     g_object_set(self, "game-active", gameActive, NULL);
+    for (size_t i= 0; i < N_SLOTS; i++) 
+        gtk_widget_set_can_focus(GTK_WIDGET(self->slots[i]), gameActive);
+    
 }
 

@@ -24,7 +24,7 @@
                 </style>
                 <!-- Perhaps a constraint would be more appropriate, further research is needed -->
                 <binding name="spacing">
-                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                    <closure type="gint" function="checkers_board_closure_compute_spacing">
                         <lookup type="CheckersBoard" name="slot-radius"></lookup>
                     </closure>
                 </binding>
@@ -47,7 +47,7 @@
                     <class name="board-rows"></class>
                 </style>
                 <binding name="spacing">
-                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                    <closure type="gint" function="checkers_board_closure_compute_spacing">
                         <lookup type="CheckersBoard" name="slot-radius"></lookup>
                     </closure>
                 </binding>
@@ -78,7 +78,7 @@
                     <class name="board-rows"></class>
                 </style>
                 <binding name="spacing">
-                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                    <closure type="gint" function="checkers_board_closure_compute_spacing">
                         <lookup type="CheckersBoard" name="slot-radius"></lookup>
                     </closure>
                 </binding>
@@ -117,7 +117,7 @@
                     <class name="board-rows"></class>
                 </style>
                 <binding name="spacing">
-                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                    <closure type="gint" function="checkers_board_closure_compute_spacing">
                         <lookup type="CheckersBoard" name="slot-radius"></lookup>
                     </closure>
                 </binding>
@@ -164,7 +164,7 @@
                     <class name="board-rows"></class>
                 </style>
                 <binding name="spacing">
-                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                    <closure type="gint" function="checkers_board_closure_compute_spacing">
                         <lookup type="CheckersBoard" name="slot-radius"></lookup>
                     </closure>
                 </binding>
@@ -283,7 +283,7 @@
                     <class name="board-rows"></class>
                 </style>
                 <binding name="spacing">
-                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                    <closure type="gint" function="checkers_board_closure_compute_spacing">
                         <lookup type="CheckersBoard" name="slot-radius"></lookup>
                     </closure>
                 </binding>
@@ -394,7 +394,7 @@
                     <class name="board-rows"></class>
                 </style>
                 <binding name="spacing">
-                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                    <closure type="gint" function="checkers_board_closure_compute_spacing">
                         <lookup type="CheckersBoard" name="slot-radius"></lookup>
                     </closure>
                 </binding>
@@ -497,7 +497,7 @@
                     <class name="board-rows"></class>
                 </style>
                 <binding name="spacing">
-                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                    <closure type="gint" function="checkers_board_closure_compute_spacing">
                         <lookup type="CheckersBoard" name="slot-radius"></lookup>
                     </closure>
                 </binding>
@@ -592,7 +592,7 @@
                     <class name="board-rows"></class>
                 </style>
                 <binding name="spacing">
-                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                    <closure type="gint" function="checkers_board_closure_compute_spacing">
                         <lookup type="CheckersBoard" name="slot-radius"></lookup>
                     </closure>
                 </binding>
@@ -679,7 +679,7 @@
                     <class name="board-rows"></class>
                 </style>
                 <binding name="spacing">
-                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                    <closure type="gint" function="checkers_board_closure_compute_spacing">
                         <lookup type="CheckersBoard" name="slot-radius"></lookup>
                     </closure>
                 </binding>
@@ -774,7 +774,7 @@
                     <class name="board-rows"></class>
                 </style>
                 <binding name="spacing">
-                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                    <closure type="gint" function="checkers_board_closure_compute_spacing">
                         <lookup type="CheckersBoard" name="slot-radius"></lookup>
                     </closure>
                 </binding>
@@ -877,7 +877,7 @@
                     <class name="board-rows"></class>
                 </style>
                 <binding name="spacing">
-                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                    <closure type="gint" function="checkers_board_closure_compute_spacing">
                         <lookup type="CheckersBoard" name="slot-radius"></lookup>
                     </closure>
                 </binding>
@@ -988,7 +988,7 @@
                     <class name="board-rows"></class>
                 </style>
                 <binding name="spacing">
-                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                    <closure type="gint" function="checkers_board_closure_compute_spacing">
                         <lookup type="CheckersBoard" name="slot-radius"></lookup>
                     </closure>
                 </binding>
@@ -1107,7 +1107,7 @@
                     <class name="board-rows"></class>
                 </style>
                 <binding name="spacing">
-                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                    <closure type="gint" function="checkers_board_closure_compute_spacing">
                         <lookup type="CheckersBoard" name="slot-radius"></lookup>
                     </closure>
                 </binding>
@@ -1154,7 +1154,7 @@
                     <class name="board-rows"></class>
                 </style>
                 <binding name="spacing">
-                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                    <closure type="gint" function="checkers_board_closure_compute_spacing">
                         <lookup type="CheckersBoard" name="slot-radius"></lookup>
                     </closure>
                 </binding>
@@ -1193,7 +1193,7 @@
                     <class name="board-rows"></class>
                 </style>
                 <binding name="spacing">
-                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                    <closure type="gint" function="checkers_board_closure_compute_spacing">
                         <lookup type="CheckersBoard" name="slot-radius"></lookup>
                     </closure>
                 </binding>
@@ -1224,7 +1224,7 @@
                     <class name="board-rows"></class>
                 </style>
                 <binding name="spacing">
-                    <closure type="gint" function="checkers_board_closure_computeSpacingForEquilateralTriangle">
+                    <closure type="gint" function="checkers_board_closure_compute_spacing">
                         <lookup type="CheckersBoard" name="slot-radius"></lookup>
                     </closure>
                 </binding>

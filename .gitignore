@@ -1,4 +1,8 @@
-app
+build/*
+!build/
 *.exe
 *.out
 *.o
+enum_types.c
+enum_types.h
+gresource.c

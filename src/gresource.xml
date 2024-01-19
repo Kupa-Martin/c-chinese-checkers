@@ -17,16 +17,16 @@
     <file alias="assets/empty_slot.png">./resources/assets/empty_slot.png</file>
     <file alias="assets/board_background.jpg">./resources/assets/board_background.jpg</file>
     <file alias="assets/red_empty_slot.png">./resources/assets/red_empty_slot.png</file>
-    <file alias="assets/red_ball.png">./resources/assets/red_empty_slot.png</file>
+    <file alias="assets/red_marble.png">./resources/assets/red_marble.png</file>
     <file alias="assets/blue_empty_slot.png">./resources/assets/blue_empty_slot.png</file>
-    <file alias="assets/blue_ball.png">./resources/assets/blue_ball.png</file>
+    <file alias="assets/blue_marble.png">./resources/assets/blue_marble.png</file>
     <file alias="assets/green_empty_slot.png">./resources/assets/green_empty_slot.png</file>
-    <file alias="assets/green_ball.png">./resources/assets/green_empty_slot.png</file>
+    <file alias="assets/green_marble.png">./resources/assets/green_marble.png</file>
     <file alias="assets/black_empty_slot.png">./resources/assets/black_empty_slot.png</file>
-    <file alias="assets/black_ball.png">./resources/assets/black_empty_slot.png</file>
+    <file alias="assets/black_marble.png">./resources/assets/black_marble.png</file>
     <file alias="assets/yellow_empty_slot.png">./resources/assets/yellow_empty_slot.png</file>
-    <file alias="assets/yellow_ball.png">./resources/assets/yellow_empty_slot.png</file>
+    <file alias="assets/yellow_marble.png">./resources/assets/yellow_marble.png</file>
     <file alias="assets/white_empty_slot.png">./resources/assets/white_empty_slot.png</file>
-    <file alias="assets/white_ball.png">./resources/assets/white_empty_slot.png</file>
+    <file alias="assets/white_marble.png">./resources/assets/white_marble.png</file>
   </gresource>
 </gresources>

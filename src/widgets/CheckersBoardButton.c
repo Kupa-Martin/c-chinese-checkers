@@ -146,6 +146,7 @@ static void checkers_board_button_handle_clicked_self(CheckersBoardButton *self,
     g_assert(owner != NULL);
     if (!checkers_board_is_game_active(owner)) 
         return;
+    gtk_widget_grab_focus(GTK_WIDGET(self));
     checkers_board_button_set_source(self, (checkers_board_button_get_source(self)+1)%CHECKERS_BOARD_BUTTON_N_SOURCES);
     return;
 }
@@ -154,17 +155,17 @@ static gchararray checkers_board_button_source_to_resource(CheckersBoardButton *
     static const char *resources[] = {
         "/com/fullaccess/ChineseCheckers/resources/assets/empty_slot.png",
         "/com/fullaccess/ChineseCheckers/resources/assets/red_empty_slot.png",
-        "/com/fullaccess/ChineseCheckers/resources/assets/red_ball.png",
+        "/com/fullaccess/ChineseCheckers/resources/assets/red_marble.png",
         "/com/fullaccess/ChineseCheckers/resources/assets/blue_empty_slot.png",
-        "/com/fullaccess/ChineseCheckers/resources/assets/blue_ball.png",
+        "/com/fullaccess/ChineseCheckers/resources/assets/blue_marble.png",
         "/com/fullaccess/ChineseCheckers/resources/assets/green_empty_slot.png",
-        "/com/fullaccess/ChineseCheckers/resources/assets/green_ball.png",
+        "/com/fullaccess/ChineseCheckers/resources/assets/green_marble.png",
         "/com/fullaccess/ChineseCheckers/resources/assets/black_empty_slot.png",
-        "/com/fullaccess/ChineseCheckers/resources/assets/black_ball.png",
+        "/com/fullaccess/ChineseCheckers/resources/assets/black_marble.png",
         "/com/fullaccess/ChineseCheckers/resources/assets/yellow_empty_slot.png",
-        "/com/fullaccess/ChineseCheckers/resources/assets/yellow_ball.png",
+        "/com/fullaccess/ChineseCheckers/resources/assets/yellow_marble.png",
         "/com/fullaccess/ChineseCheckers/resources/assets/white_empty_slot.png",
-        "/com/fullaccess/ChineseCheckers/resources/assets/white_ball.png"
+        "/com/fullaccess/ChineseCheckers/resources/assets/white_marble.png"
     };
     g_assert(source < ARRAY_SIZE(resources));
     // Dont return a string literal, it crashes the app.

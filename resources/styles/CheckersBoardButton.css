@@ -1,4 +1,4 @@
-.checkers-board-button button:focus {
+.checkers-board-button:focus {
     outline: 2px solid black;
     outline-offset: 0px;
 }
