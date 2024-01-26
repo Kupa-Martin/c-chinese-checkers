@@ -1,11 +1,4 @@
-todo:
-add background to BoardWindow
-design game over
-
-
-done:
-finish BoardButton.ui*
-	bind BoardButton::source to BoardButtton::image::resource*
-design main menu*
-BoardWindow template*
-design player select*
+update Checkers::Board::constructed() so it uses rowToSlot map*
+add properties row, column, team and refactor source property into state property in Checkers::BoardButton*
+add css class for highlighting valid moves*
+fix delta row/column values

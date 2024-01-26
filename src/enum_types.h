@@ -3,8 +3,6 @@
 
 #pragma once
 
-#include "widgets/CheckersBoard.h"
-#include "widgets/CheckersBoardButton.h"
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
@@ -14,8 +12,12 @@ GType checkers_board_players_get_type (void) G_GNUC_CONST;
 #define CHECKERS_TYPE_BOARD_PLAYERS (checkers_board_players_get_type ())
 
 /* enumerations from "CheckersBoardButton.h" */
-GType checkers_board_button_source_get_type (void) G_GNUC_CONST;
-#define CHECKERS_TYPE_BOARD_BUTTON_SOURCE (checkers_board_button_source_get_type ())
+GType checkers_board_button_occupancy_get_type (void) G_GNUC_CONST;
+#define CHECKERS_TYPE_BOARD_BUTTON_OCCUPANCY (checkers_board_button_occupancy_get_type ())
+GType checkers_board_button_team_get_type (void) G_GNUC_CONST;
+#define CHECKERS_TYPE_BOARD_BUTTON_TEAM (checkers_board_button_team_get_type ())
+GType checkers_board_button_state_get_type (void) G_GNUC_CONST;
+#define CHECKERS_TYPE_BOARD_BUTTON_STATE (checkers_board_button_state_get_type ())
 G_END_DECLS
 
 /* Generated data ends here */

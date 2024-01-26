@@ -1,6 +1,5 @@
 #include "CheckersWindow.h"
 #include "CheckersBoard.h"
-
 #include <assert.h>
 
 

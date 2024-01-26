@@ -1,4 +1,8 @@
-.checkers-board-button:focus {
+.checkers-board-button.selected {
     outline: 2px solid black;
+    outline-offset: 0px;
+}
+.checkers-board-button.highlighted {
+    outline: 2px solid lightgreen;
     outline-offset: 0px;
 }

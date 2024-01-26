@@ -17,15 +17,14 @@
         <property name="focus-on-click">false</property>
         <!-- Signals -->
         <signal name="clicked" handler="checkers_board_button_handle_clicked_self"></signal>
-        
         <child>
             <object class="GtkImage" id="image">
                 <style>
                     <class name="circular"></class>
                 </style>                
                 <binding name="resource">
-                    <closure type="gchararray" function="checkers_board_button_source_to_resource">
-                        <lookup type="CheckersBoardButton" name="source"></lookup>
+                    <closure type="gchararray" function="checkers_board_button_resolve_resource">
+                        <lookup type="CheckersBoardButton" name="state"></lookup>
                     </closure>
                 </binding>
                 <binding name="pixel-size">

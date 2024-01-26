@@ -1,5 +1,6 @@
 /*** BEGIN file-header ***/
 #include "enum_types.h"
+#include "checkers.h"
 /*** END file-header ***/
 
 /*** BEGIN file-production ***/

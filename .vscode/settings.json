@@ -17,6 +17,7 @@
         "assert.h": "c",
         "checkerswindow.h": "c",
         "gdk.h": "c",
-        "gdktypes.h": "c"
+        "gdktypes.h": "c",
+        "memory_resource": "c"
     }
 }

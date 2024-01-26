@@ -1,8 +1,6 @@
 /*** BEGIN file-header ***/
 #pragma once
 
-#include "widgets/CheckersBoard.h"
-#include "widgets/CheckersBoardButton.h"
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
