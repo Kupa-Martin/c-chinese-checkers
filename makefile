@@ -1,4 +1,7 @@
 .SECONDEXPANSION:
+
+ROOT_DIR := $(patsubst %/,%,$(dir $(realpath $(lastword $(MAKEFILE_LIST)))))
+
 PKG_CONFIG ?= pkg-config
 
 CC ?= gcc 
@@ -6,8 +9,21 @@ CC ?= gcc
 CPP ?= gcc -E
 
 BUILD ?= debug
+BUILD_DIR := build/${BUILD}
+OBJ = ${BUILD_DIR}/obj
+SRC = src
+RES = res
+INCLUDES = includes
 
-cppflags.common = $(shell ${PKG_CONFIG} --cflags-only-I gtk4) -I/ -I/widgets
+# List BUILD directory + all subdirectories of SRC
+SUBDIRS = ${BUILD_DIR} $(shell find ./${SRC} -type d -exec echo {} \; | sed 's|^./${SRC}|${OBJ}|')
+
+RESOURCES = $(shell find ${RES} -type f)
+HEADERS = $(shell find ${INCLUDES} -type f -name "*.h")
+SOURCES = $(shell find ${SRC} -type f -name "*.c")
+OBJECTS = $(subst ${SRC}/,${OBJ}/,$(patsubst %.c,%.o,$(SOURCES)))
+
+cppflags.common = $(shell ${PKG_CONFIG} --cflags-only-I gtk4) -I$(addprefix ${ROOT_DIR}/,${INCLUDES}) 
 cppflags.debug = -DDEBUG
 cppflags.release = -DRELEASE -DNDEBUG -UDEBUG
 CPPFLAGS += ${cppflags.common} $(cppflags.$(BUILD))
@@ -24,46 +40,31 @@ ldflags.common = $(shell ${PKG_CONFIG} --libs-only-L --libs-only-other gtk4)
 LDFLAGS += ${ldflags.common} $(ldflags.$(BUILD)) 
 LDLIBS += -lm $(shell ${PKG_CONFIG} --libs-only-l gtk4)
 
-BUILD_DIR := build/${BUILD}
-OBJ = ${BUILD_DIR}/obj
-SRC = src
-
-# List BUILD directory + all subdirectories of SRC
-SUBDIRS = ${BUILD_DIR} $(shell find ./${SRC} -type d -exec echo {} \; | sed 's|^./${SRC}|${OBJ}|')
-
-RESOURCES = $(shell echo $(shell find resources -type f))
-
-WIDGETS = MainMenuWindow \
-	CheckersBoardButton \
-	CheckersWindow \
-	CheckersGameOver \
-	CheckersBoard 
-
 
 all: make_build_dir app
 
 make_build_dir:
 	mkdir -p ${SUBDIRS}
 
-app: ${OBJ}/enum_types.o ${OBJ}/app.o $(addprefix ${OBJ}/widgets/,$(addsuffix .o,${WIDGETS})) ${OBJ}/gresource.o
+app: ${OBJ}/enum_types.o ${OBJ}/gresource.o ${OBJECTS}
 	${CC} ${LDFLAGS} $^ ${LDLIBS} -o ${BUILD_DIR}/app
 
 ${OBJ}/%.o: ${SRC}/%.c
 	${CC} -c ${CFLAGS} ${CPPFLAGS} $< -o $@
 
-generate_source: ${SRC}/gresource.c ${SRC}/enum_types.c ${SRC}/enum_types.h
+generate_source: ${SRC}/gresource.c ${SRC}/enum_types.c ${INCLUDES}/enum_types.h
 
 ${SRC}/gresource.c: ${SRC}/gresource.xml ${RESOURCES}
 	glib-compile-resources --generate-source ${SRC}/gresource.xml
 
-${SRC}/enum_types.c: ${SRC}/enum_types.h ${SRC}/enum_types.c.in $(addprefix ${SRC}/widgets/,$(addsuffix .h,${WIDGETS}))
-	glib-mkenums --template=${SRC}/enum_types.c.in --output=${SRC}/enum_types.c $(addprefix ${SRC}/widgets/,$(addsuffix .h,${WIDGETS}))
+${SRC}/enum_types.c: ${INCLUDES}/enum_types.h ${SRC}/enum_types.c.in 
+	glib-mkenums --template=${SRC}/enum_types.c.in --output=${SRC}/enum_types.c ${HEADERS}
 
-${SRC}/enum_types.h: ${SRC}/enum_types.h.in $(addprefix ${SRC}/widgets/,$(addsuffix .h,${WIDGETS}))
-	glib-mkenums --template=${SRC}/enum_types.h.in --output=${SRC}/enum_types.h $(addprefix ${SRC}/widgets/,$(addsuffix .h,${WIDGETS}))
+${INCLUDES}/enum_types.h: ${SRC}/enum_types.h.in  $(filter-out ${INCLUDES}/enum_types.h,${HEADERS})
+	glib-mkenums --template=${SRC}/enum_types.h.in --output=${INCLUDES}/enum_types.h ${HEADERS}
 
 clean:
 	rm -rf build/*
-	rm ${SRC}/enum_types.h
-	rm ${SRC}/enum_types.c
-	rm ${SRC}/gresource.c
+	rm -f ${INCLUDES}/enum_types.h
+	rm -f ${SRC}/enum_types.c
+	rm -f ${SRC}/gresource.c

@@ -1,6 +1,6 @@
-#include "CheckersBoardButton.h"
+#include "CheckersSlot.h"
 #include "CheckersBoard.h"
-#include "../macro_utils.h"
+#include "macro_utils.h"
 #include <stddef.h>
 
 #define HIGHLIGHTED_CSS_CLASS "highlighted"
@@ -17,12 +17,12 @@ enum PropertyId {
 };
 
 // Type definitions
-struct _CheckersBoardButton {
+struct _CheckersSlot {
     GtkButton parent_instance;
 
     // Properties
-    CheckersBoardButtonState state;
-    CheckersBoardButtonTeam team;
+    CheckersSlotState state;
+    CheckersTeam team;
     gint radius;
     guint row;
     guint column;
@@ -32,35 +32,35 @@ struct _CheckersBoardButton {
     GtkImage *image;
 };
 
-struct _CheckersBoardButtonClass {
+struct _CheckersSlotClass {
     GtkButtonClass parent_class;
 };
 // End type definitions
 
 // Forward declarations
-G_DEFINE_TYPE(CheckersBoardButton, checkers_board_button, GTK_TYPE_BUTTON);
-static void checkers_board_button_init(CheckersBoardButton *);
-static void checkers_board_button_class_init(CheckersBoardButtonClass *);
-static void checkers_board_button_dispose(GObject *);
-static void checkers_board_button_finalize(GObject *);
-static void checkers_board_button_get_property(GObject *, guint, GValue *, GParamSpec *);
-static void checkers_board_button_set_property(GObject *, guint, const GValue *, GParamSpec *);
-static void checkers_board_button_handle_clicked_self(CheckersBoardButton *, gpointer);
-static gchararray checkers_board_button_resolve_resource(CheckersBoardButton *, CheckersBoardButtonState);
+G_DEFINE_TYPE(CheckersSlot, checkers_slot, GTK_TYPE_BUTTON);
+static void checkers_slot_init(CheckersSlot *);
+static void checkers_slot_class_init(CheckersSlotClass *);
+static void checkers_slot_dispose(GObject *);
+static void checkers_slot_finalize(GObject *);
+static void checkers_slot_get_property(GObject *, guint, GValue *, GParamSpec *);
+static void checkers_slot_set_property(GObject *, guint, const GValue *, GParamSpec *);
+static void checkers_slot_handle_clicked_self(CheckersSlot *, gpointer);
+static gchararray checkers_slot_resolve_resource(CheckersSlot *, CheckersSlotState);
 // End forward declarations
 
-static void checkers_board_button_init(CheckersBoardButton *self) {
-    self->state = CHECKERS_BOARD_BUTTON_EMPTY_SLOT;
+static void checkers_slot_init(CheckersSlot *self) {
+    self->state = CHECKERS_SLOT_EMPTY_SLOT;
     self->isHighlighted = false;
     self->isSelected = false;
-    self->team = CHECKERS_BOARD_BUTTON_NEUTRAL;
+    self->team = CHECKERS_NO_TEAM;
     self->radius = 32;
     self->row = 0;
     self->column = 0;
     gtk_widget_init_template(GTK_WIDGET(self));
 
     GtkCssProvider *cssProvider = gtk_css_provider_new();
-    gtk_css_provider_load_from_resource(cssProvider, "/com/fullaccess/ChineseCheckers/resources/styles/CheckersBoardButton.css");
+    gtk_css_provider_load_from_resource(cssProvider, "/com/fullaccess/ChineseCheckers/resources/styles/CheckersSlot.css");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(GTK_WIDGET(self)), GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
     
     
@@ -68,22 +68,22 @@ static void checkers_board_button_init(CheckersBoardButton *self) {
     return;
 }
 
-static void checkers_board_button_class_init(CheckersBoardButtonClass *klass) {
+static void checkers_slot_class_init(CheckersSlotClass *klass) {
     GtkWidgetClass *widgetClass= GTK_WIDGET_CLASS(klass);
     GObjectClass *objectClass = G_OBJECT_CLASS(klass);
 
-    objectClass->set_property = checkers_board_button_set_property;
-    objectClass->get_property = checkers_board_button_get_property;
-    objectClass->dispose = checkers_board_button_dispose;
-    objectClass->finalize = checkers_board_button_finalize;
+    objectClass->set_property = checkers_slot_set_property;
+    objectClass->get_property = checkers_slot_get_property;
+    objectClass->dispose = checkers_slot_dispose;
+    objectClass->finalize = checkers_slot_finalize;
 
     g_object_class_install_property(objectClass, PROPERTY_STATE, 
                                     g_param_spec_enum(
                                             "state", 
                                             "state", 
                                             "The state tracks which marbles (if any) are on this button", 
-                                            CHECKERS_TYPE_BOARD_BUTTON_STATE, 
-                                            CHECKERS_BOARD_BUTTON_EMPTY_SLOT, 
+                                            CHECKERS_TYPE_SLOT_STATE, 
+                                            CHECKERS_SLOT_EMPTY_SLOT, 
                                             G_PARAM_CONSTRUCT | G_PARAM_READWRITE
                                         )
                                     );
@@ -92,8 +92,8 @@ static void checkers_board_button_class_init(CheckersBoardButtonClass *klass) {
                                             "team", 
                                             "team", 
                                             "The team defines whether to consider the slot when determining game over", 
-                                            CHECKERS_TYPE_BOARD_BUTTON_TEAM, 
-                                            CHECKERS_BOARD_BUTTON_NEUTRAL, 
+                                            CHECKERS_TYPE_TEAM, 
+                                            CHECKERS_NO_TEAM, 
                                             G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY
                                         )
                                     );
@@ -148,26 +148,26 @@ static void checkers_board_button_class_init(CheckersBoardButtonClass *klass) {
                                             G_PARAM_READWRITE 
                                         ) 
                                     );
-    gtk_widget_class_set_template_from_resource(widgetClass, "/com/fullaccess/ChineseCheckers/resources/markup/CheckersBoardButton.ui");
-    gtk_widget_class_bind_template_child(widgetClass, CheckersBoardButton, image);
-    gtk_widget_class_bind_template_callback(widgetClass, checkers_board_button_handle_clicked_self);
-    gtk_widget_class_bind_template_callback(widgetClass, checkers_board_button_resolve_resource);
+    gtk_widget_class_set_template_from_resource(widgetClass, "/com/fullaccess/ChineseCheckers/resources/markup/CheckersSlot.ui");
+    gtk_widget_class_bind_template_child(widgetClass, CheckersSlot, image);
+    gtk_widget_class_bind_template_callback(widgetClass, checkers_slot_handle_clicked_self);
+    gtk_widget_class_bind_template_callback(widgetClass, checkers_slot_resolve_resource);
     return;
 }
 
-static void checkers_board_button_dispose(GObject *object) {
-    gtk_widget_dispose_template(GTK_WIDGET(object), CHECKERS_TYPE_BOARD_BUTTON);
-    G_OBJECT_CLASS(checkers_board_button_parent_class)->dispose(object);
+static void checkers_slot_dispose(GObject *object) {
+    gtk_widget_dispose_template(GTK_WIDGET(object), CHECKERS_TYPE_SLOT);
+    G_OBJECT_CLASS(checkers_slot_parent_class)->dispose(object);
     return;
 }
 
-static void checkers_board_button_finalize(GObject *object) {
-    G_OBJECT_CLASS(checkers_board_button_parent_class)->finalize(object);
+static void checkers_slot_finalize(GObject *object) {
+    G_OBJECT_CLASS(checkers_slot_parent_class)->finalize(object);
     return;
 }
 
-static void checkers_board_button_get_property(GObject *object, guint propertyId, GValue *value, GParamSpec *paramSpec) {
-    CheckersBoardButton *self = CHECKERS_BOARD_BUTTON(object);
+static void checkers_slot_get_property(GObject *object, guint propertyId, GValue *value, GParamSpec *paramSpec) {
+    CheckersSlot *self = CHECKERS_SLOT(object);
 
     switch (propertyId) {
         case PROPERTY_STATE: {
@@ -202,17 +202,17 @@ static void checkers_board_button_get_property(GObject *object, guint propertyId
     G_OBJECT_WARN_INVALID_PROPERTY_ID(object, propertyId, paramSpec);
 }
 
-static void checkers_board_button_set_property(GObject *object, guint propertyId, const GValue *value, GParamSpec *paramSpec) {
-    CheckersBoardButton *self = CHECKERS_BOARD_BUTTON(object);
+static void checkers_slot_set_property(GObject *object, guint propertyId, const GValue *value, GParamSpec *paramSpec) {
+    CheckersSlot *self = CHECKERS_SLOT(object);
     
     switch (propertyId) {
         case PROPERTY_STATE: {
-            CheckersBoardButtonState state = (CheckersBoardButtonState)g_value_get_enum(value);
+            CheckersSlotState state = (CheckersSlotState)g_value_get_enum(value);
             self->state = state;
             return;
         }
         case PROPERTY_TEAM: {
-            CheckersBoardButtonTeam team = (CheckersBoardButtonTeam)g_value_get_enum(value);
+            CheckersTeam team = (CheckersTeam)g_value_get_enum(value);
             self->team = team;
             return;
         }
@@ -257,17 +257,17 @@ static void checkers_board_button_set_property(GObject *object, guint propertyId
     G_OBJECT_WARN_INVALID_PROPERTY_ID(object, propertyId, paramSpec);
 }
 
-static void checkers_board_button_handle_clicked_self(CheckersBoardButton *self, gpointer data) {
+static void checkers_slot_handle_clicked_self(CheckersSlot *self, gpointer data) {
     GtkWidget *w = gtk_widget_get_ancestor(GTK_WIDGET(self), CHECKERS_TYPE_BOARD);
     CheckersBoard *owner = CHECKERS_BOARD(w);
     g_assert(owner != NULL);
     if (!checkers_board_is_game_active(owner)) 
         return;
-    gboolean selfHasMarble = CHECKERS_BOARD_BUTTON_OCCUPANCY_FROM_STATE(checkers_board_button_get_state(self)) == CHECKERS_BOARD_BUTTON_OCCUPIED;
+    gboolean selfHasMarble = CHECKERS_SLOT_OCCUPANCY_FROM_STATE(checkers_slot_get_state(self)) == CHECKERS_SLOT_OCCUPIED;
     g_assert(!(selfHasMarble && self->isHighlighted) && "A slot cannot be highlighted as a valid move and at the same time be holding a marble");
     if (selfHasMarble) {
-        CheckersBoardButtonTeam turnTeam = checkers_board_get_current_turn_team(owner);
-        CheckersBoardButtonTeam ownTeam = CHECKERS_BOARD_BUTTON_TEAM_FROM_STATE(checkers_board_button_get_state(self));
+        CheckersTeam turnTeam = checkers_board_get_current_turn_team(owner);
+        CheckersTeam ownTeam = CHECKERS_SLOT_TEAM_FROM_STATE(checkers_slot_get_state(self));
         gboolean canMove = turnTeam == ownTeam;
         if (canMove)
             return checkers_board_mark_slot_selected(owner, self); 
@@ -277,75 +277,75 @@ static void checkers_board_button_handle_clicked_self(CheckersBoardButton *self,
     g_message("click ignored");
 }
 
-static gchararray checkers_board_button_resolve_resource(CheckersBoardButton *self, CheckersBoardButtonState state) {
-    static const char *stateToResource[CHECKERS_BOARD_BUTTON_N_STATES] = {
-        [CHECKERS_BOARD_BUTTON_RED_SLOT] = "/com/fullaccess/ChineseCheckers/resources/assets/red_empty_slot.png",
-        [CHECKERS_BOARD_BUTTON_RED_MARBLE] = "/com/fullaccess/ChineseCheckers/resources/assets/red_marble.png",
-        [CHECKERS_BOARD_BUTTON_BLUE_SLOT] = "/com/fullaccess/ChineseCheckers/resources/assets/blue_empty_slot.png",
-        [CHECKERS_BOARD_BUTTON_BLUE_MARBLE] = "/com/fullaccess/ChineseCheckers/resources/assets/blue_marble.png",
-        [CHECKERS_BOARD_BUTTON_GREEN_SLOT] = "/com/fullaccess/ChineseCheckers/resources/assets/green_empty_slot.png",
-        [CHECKERS_BOARD_BUTTON_GREEN_MARBLE] = "/com/fullaccess/ChineseCheckers/resources/assets/green_marble.png",
-        [CHECKERS_BOARD_BUTTON_BLACK_SLOT] = "/com/fullaccess/ChineseCheckers/resources/assets/black_empty_slot.png",
-        [CHECKERS_BOARD_BUTTON_BLACK_MARBLE] = "/com/fullaccess/ChineseCheckers/resources/assets/black_marble.png",
-        [CHECKERS_BOARD_BUTTON_YELLOW_SLOT] = "/com/fullaccess/ChineseCheckers/resources/assets/yellow_empty_slot.png",
-        [CHECKERS_BOARD_BUTTON_YELLOW_MARBLE] = "/com/fullaccess/ChineseCheckers/resources/assets/yellow_marble.png",
-        [CHECKERS_BOARD_BUTTON_WHITE_SLOT] = "/com/fullaccess/ChineseCheckers/resources/assets/white_empty_slot.png",
-        [CHECKERS_BOARD_BUTTON_WHITE_MARBLE] = "/com/fullaccess/ChineseCheckers/resources/assets/white_marble.png",
-        [CHECKERS_BOARD_BUTTON_EMPTY_SLOT] = "/com/fullaccess/ChineseCheckers/resources/assets/empty_slot.png" 
+static gchararray checkers_slot_resolve_resource(CheckersSlot *self, CheckersSlotState state) {
+    static const char *const stateToResource[CHECKERS_SLOT_N_STATES] = {
+        [CHECKERS_SLOT_RED_SLOT] = "/com/fullaccess/ChineseCheckers/resources/assets/red_empty_slot.png",
+        [CHECKERS_SLOT_RED_MARBLE] = "/com/fullaccess/ChineseCheckers/resources/assets/red_marble.png",
+        [CHECKERS_SLOT_BLUE_SLOT] = "/com/fullaccess/ChineseCheckers/resources/assets/blue_empty_slot.png",
+        [CHECKERS_SLOT_BLUE_MARBLE] = "/com/fullaccess/ChineseCheckers/resources/assets/blue_marble.png",
+        [CHECKERS_SLOT_GREEN_SLOT] = "/com/fullaccess/ChineseCheckers/resources/assets/green_empty_slot.png",
+        [CHECKERS_SLOT_GREEN_MARBLE] = "/com/fullaccess/ChineseCheckers/resources/assets/green_marble.png",
+        [CHECKERS_SLOT_BLACK_SLOT] = "/com/fullaccess/ChineseCheckers/resources/assets/black_empty_slot.png",
+        [CHECKERS_SLOT_BLACK_MARBLE] = "/com/fullaccess/ChineseCheckers/resources/assets/black_marble.png",
+        [CHECKERS_SLOT_YELLOW_SLOT] = "/com/fullaccess/ChineseCheckers/resources/assets/yellow_empty_slot.png",
+        [CHECKERS_SLOT_YELLOW_MARBLE] = "/com/fullaccess/ChineseCheckers/resources/assets/yellow_marble.png",
+        [CHECKERS_SLOT_WHITE_SLOT] = "/com/fullaccess/ChineseCheckers/resources/assets/white_empty_slot.png",
+        [CHECKERS_SLOT_WHITE_MARBLE] = "/com/fullaccess/ChineseCheckers/resources/assets/white_marble.png",
+        [CHECKERS_SLOT_EMPTY_SLOT] = "/com/fullaccess/ChineseCheckers/resources/assets/empty_slot.png" 
     };
     g_assert(state < ARRAY_SIZE(stateToResource)); 
     return g_strdup_printf("%s", stateToResource[state]);
 }
 
-extern GtkWidget *checkers_board_button_new(void) {
-    return g_object_new(CHECKERS_TYPE_BOARD_BUTTON, NULL);
+extern GtkWidget *checkers_slot_new(void) {
+    return g_object_new(CHECKERS_TYPE_SLOT, NULL);
 }
 
-extern CheckersBoardButtonState checkers_board_button_get_state(CheckersBoardButton *self) {
-    CheckersBoardButtonState hold;
+extern CheckersSlotState checkers_slot_get_state(CheckersSlot *self) {
+    CheckersSlotState hold;
     g_object_get(self, "state", &hold, NULL);
     return hold;
 }
 
-extern void checkers_board_button_set_state(CheckersBoardButton *self, CheckersBoardButtonState value) {
+extern void checkers_slot_set_state(CheckersSlot *self, CheckersSlotState value) {
     g_object_set(self, "state", value, NULL);
     return;
 }
 
-extern gboolean checkers_board_button_is_highlighted(CheckersBoardButton *self) {
+extern gboolean checkers_slot_is_highlighted(CheckersSlot *self) {
     gboolean hold;
     g_object_get(self, "is-highlighted", &hold, NULL);
     return hold;
 }
 
-extern void checkers_board_button_set_highlighted(CheckersBoardButton *self, gboolean value) {
+extern void checkers_slot_set_highlighted(CheckersSlot *self, gboolean value) {
     g_object_set(self, "is-highlighted", value, NULL);
     return;
 }
 
-extern gboolean checkers_board_button_is_selected(CheckersBoardButton *self) {
+extern gboolean checkers_slot_is_selected(CheckersSlot *self) {
     gboolean hold;
     g_object_get(self, "is-selected", &hold, NULL);
     return hold;
 }
 
-extern void checkers_board_button_set_selected(CheckersBoardButton *self, gboolean value) {
+extern void checkers_slot_set_selected(CheckersSlot *self, gboolean value) {
     g_object_set(self, "is-selected", value, NULL);
     return;
 }
-extern CheckersBoardButtonTeam checkers_board_button_get_team(CheckersBoardButton *self) {
-    CheckersBoardButtonTeam hold;
+extern CheckersTeam checkers_slot_get_team(CheckersSlot *self) {
+    CheckersTeam hold;
     g_object_get(self, "team", &hold, NULL);
     return hold;
 }
 
-extern guint checkers_board_button_get_row(CheckersBoardButton *self) {
+extern guint checkers_slot_get_row(CheckersSlot *self) {
     guint hold;
     g_object_get(self, "row", &hold, NULL);
     return hold;
 }
 
-extern guint checkers_board_button_get_column(CheckersBoardButton *self) {
+extern guint checkers_slot_get_column(CheckersSlot *self) {
     guint hold;
     g_object_get(self, "column", &hold, NULL);
     return hold;

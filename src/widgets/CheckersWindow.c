@@ -31,7 +31,7 @@ static void checkers_window_dispose(GObject *);
 static void checkers_window_finalize(GObject *);
 static void checkers_window_get_property(GObject *, guint, GValue *, GParamSpec *);
 static void checkers_window_set_property(GObject *, guint, const GValue *, GParamSpec *);
-static CheckersBoardPlayers checkers_window_change_board_players(CheckersWindow *, gboolean, gboolean, gboolean);
+static CheckersPlayers checkers_window_change_board_players(CheckersWindow *, gboolean, gboolean, gboolean);
 static void checkers_window_handle_button1_clicked(GtkButton *, gpointer);
 static gboolean checkers_window_closure_player_select(CheckersWindow *, gboolean);
 // End forward declaration
@@ -103,15 +103,15 @@ static void checkers_window_set_property(GObject *object, guint propertyId, cons
     }
 }
 
-static CheckersBoardPlayers checkers_window_change_board_players(CheckersWindow *self, gboolean players2, gboolean players4, gboolean players6) {
+static CheckersPlayers checkers_window_change_board_players(CheckersWindow *self, gboolean players2, gboolean players4, gboolean players6) {
     assert(!(players2 && players4) || !(players2 && players6) || !(players4 && players6));
     if (players2) 
-        return CHECKERS_BOARD_2_PLAYERS;
+        return CHECKERS_2_PLAYERS;
     if (players4) 
-        return CHECKERS_BOARD_4_PLAYERS;
+        return CHECKERS_4_PLAYERS;
     if (players6)
-        return CHECKERS_BOARD_6_PLAYERS;
-    return CHECKERS_BOARD_EMPTY_BOARD;
+        return CHECKERS_6_PLAYERS;
+    return CHECKERS_NO_PLAYERS;
 }
 
 static void checkers_window_handle_button1_clicked(GtkButton *self, gpointer data) {

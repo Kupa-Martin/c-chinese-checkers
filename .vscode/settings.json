@@ -18,6 +18,12 @@
         "checkerswindow.h": "c",
         "gdk.h": "c",
         "gdktypes.h": "c",
-        "memory_resource": "c"
+        "memory_resource": "c",
+        "checkersslot.h": "c",
+        "checkersboardteam.h": "c",
+        "checkersboardplayers.h": "c",
+        "checkers.h": "c",
+        "checkersteam.h": "c",
+        "checkersplayers.h": "c"
     }
 }

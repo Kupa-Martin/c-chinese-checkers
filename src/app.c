@@ -1,8 +1,4 @@
-#include "widgets/MainMenuWindow.h"
-#include "widgets/CheckersBoardButton.h"
-#include "widgets/CheckersWindow.h"
-#include "widgets/CheckersGameOver.h"
-#include "widgets/CheckersBoard.h"
+#include "checkers.h"
 #include <gtk/gtk.h>
 
 void handle_gtk_application_activate_app(GtkApplication *app, gpointer userData);
@@ -17,7 +13,7 @@ int main(int argc, char *argv[]) {
 
 void handle_gtk_application_activate_app(GtkApplication *app, gpointer userData) {
     g_type_ensure(MAIN_MENU_TYPE_WINDOW);
-    g_type_ensure(CHECKERS_TYPE_BOARD_BUTTON);
+    g_type_ensure(CHECKERS_TYPE_SLOT);
     g_type_ensure(CHECKERS_TYPE_WINDOW);
     g_type_ensure(CHECKERS_TYPE_GAME_OVER);
     g_type_ensure(CHECKERS_TYPE_BOARD);

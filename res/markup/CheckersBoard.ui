@@ -29,7 +29,7 @@
                 </binding>
                 <property name="orientation">horizontal</property>
                 <property name="halign">center</property>
-                <!-- Children populated programmatically in checkers_board_instance_init -->
+                <!-- Children populated programmatically in checkers_board_init -->
             </object>
         </child>
         <child>
@@ -45,7 +45,7 @@
                 </binding>
                 <property name="orientation">horizontal</property>
                 <property name="halign">center</property>
-                <!-- Children populated programmatically in checkers_board_instance_init -->
+                <!-- Children populated programmatically in checkers_board_init -->
             </object>
         </child>
         <child>
@@ -61,7 +61,7 @@
                 </binding>
                 <property name="orientation">horizontal</property>
                 <property name="halign">center</property>
-                <!-- Children populated programmatically in checkers_board_instance_init -->
+                <!-- Children populated programmatically in checkers_board_init -->
             </object>
         </child>
         <child>
@@ -77,7 +77,7 @@
                 </binding>
                 <property name="orientation">horizontal</property>
                 <property name="halign">center</property>
-                <!-- Children populated programmatically in checkers_board_instance_init -->
+                <!-- Children populated programmatically in checkers_board_init -->
             </object>
         </child>
         <child>
@@ -93,7 +93,7 @@
                 </binding>
                 <property name="orientation">horizontal</property>
                 <property name="halign">center</property>
-                <!-- Children populated programmatically in checkers_board_instance_init -->
+                <!-- Children populated programmatically in checkers_board_init -->
             </object>
         </child>
         <child>
@@ -109,7 +109,7 @@
                 </binding>
                 <property name="orientation">horizontal</property>
                 <property name="halign">center</property>
-                <!-- Children populated programmatically in checkers_board_instance_init -->
+                <!-- Children populated programmatically in checkers_board_init -->
             </object>
         </child>
         <child>
@@ -125,7 +125,7 @@
                 </binding>
                 <property name="orientation">horizontal</property>
                 <property name="halign">center</property>
-                <!-- Children populated programmatically in checkers_board_instance_init -->
+                <!-- Children populated programmatically in checkers_board_init -->
             </object>
         </child>
         <child>
@@ -141,7 +141,7 @@
                 </binding>
                 <property name="orientation">horizontal</property>
                 <property name="halign">center</property>
-                <!-- Children populated programmatically in checkers_board_instance_init -->
+                <!-- Children populated programmatically in checkers_board_init -->
             </object>
         </child>
         <child>
@@ -157,7 +157,7 @@
                 </binding>
                 <property name="orientation">horizontal</property>
                 <property name="halign">center</property>
-                <!-- Children populated programmatically in checkers_board_instance_init -->
+                <!-- Children populated programmatically in checkers_board_init -->
             </object>
         </child>
         <child>
@@ -173,7 +173,7 @@
                 </binding>
                 <property name="orientation">horizontal</property>
                 <property name="halign">center</property>
-                <!-- Children populated programmatically in checkers_board_instance_init -->
+                <!-- Children populated programmatically in checkers_board_init -->
             </object>
         </child>
         <child>
@@ -189,7 +189,7 @@
                 </binding>
                 <property name="orientation">horizontal</property>
                 <property name="halign">center</property>
-                <!-- Children populated programmatically in checkers_board_instance_init -->
+                <!-- Children populated programmatically in checkers_board_init -->
             </object>
         </child>
         <child>
@@ -205,7 +205,7 @@
                 </binding>
                 <property name="orientation">horizontal</property>
                 <property name="halign">center</property>
-                <!-- Children populated programmatically in checkers_board_instance_init -->
+                <!-- Children populated programmatically in checkers_board_init -->
             </object>
         </child>
         <child>
@@ -221,7 +221,7 @@
                 </binding>
                 <property name="orientation">horizontal</property>
                 <property name="halign">center</property>
-                <!-- Children populated programmatically in checkers_board_instance_init -->
+                <!-- Children populated programmatically in checkers_board_init -->
             </object>
         </child>
         <child>
@@ -237,7 +237,7 @@
                 </binding>
                 <property name="orientation">horizontal</property>
                 <property name="halign">center</property>
-                <!-- Children populated programmatically in checkers_board_instance_init -->
+                <!-- Children populated programmatically in checkers_board_init -->
             </object>
         </child>
         <child>
@@ -253,7 +253,7 @@
                 </binding>
                 <property name="orientation">horizontal</property>
                 <property name="halign">center</property>
-                <!-- Children populated programmatically in checkers_board_instance_init -->
+                <!-- Children populated programmatically in checkers_board_init -->
             </object>
         </child>
         <child>
@@ -269,7 +269,7 @@
                 </binding>
                 <property name="orientation">horizontal</property>
                 <property name="halign">center</property>
-                <!-- Children populated programmatically in checkers_board_instance_init -->
+                <!-- Children populated programmatically in checkers_board_init -->
             </object>
         </child>
         <child>
@@ -285,7 +285,7 @@
                 </binding>
                 <property name="orientation">horizontal</property>
                 <property name="halign">center</property>
-                <!-- Children populated programmatically in checkers_board_instance_init -->
+                <!-- Children populated programmatically in checkers_board_init -->
             </object>
         </child>
     </template>

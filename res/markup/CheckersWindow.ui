@@ -72,7 +72,7 @@
                                 <property name="slot-radius">38</property>
                                 <property name="hexpand">true</property>
                                 <binding name="players">
-                                    <closure type="CheckersBoardPlayers" function="checkers_window_change_board_players">
+                                    <closure type="CheckersPlayers" function="checkers_window_change_board_players">
                                         <lookup type="GtkToggleButton" name="active">player_select2</lookup>
                                         <lookup type="GtkToggleButton" name="active">player_select4</lookup>
                                         <lookup type="GtkToggleButton" name="active">player_select6</lookup>

@@ -1,34 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-    <template class="CheckersBoardButton" parent="GtkButton">
+    <template class="CheckersSlot" parent="GtkButton">
         <style>
-            <class name="checkers-board-button"></class>
+            <class name="checkers-slot"></class>
             <class name="circular"></class>
         </style>
-
-        <!-- Own properties -->
-        <!-- source: CHECKERS_BOARD_BUTTON_EMPTY_SLOT; The source of the button's image. -->
-        <!-- radius: 32; The radius of the button -->
-
 
         <!-- Inherited properties -->
         <property name="has-frame">true</property>
         <property name="can-focus">false</property>
         <property name="focus-on-click">false</property>
         <!-- Signals -->
-        <signal name="clicked" handler="checkers_board_button_handle_clicked_self"></signal>
+        <signal name="clicked" handler="checkers_slot_handle_clicked_self"></signal>
         <child>
             <object class="GtkImage" id="image">
                 <style>
                     <class name="circular"></class>
                 </style>                
                 <binding name="resource">
-                    <closure type="gchararray" function="checkers_board_button_resolve_resource">
-                        <lookup type="CheckersBoardButton" name="state"></lookup>
+                    <closure type="gchararray" function="checkers_slot_resolve_resource">
+                        <lookup type="CheckersSlot" name="state"></lookup>
                     </closure>
                 </binding>
                 <binding name="pixel-size">
-                    <lookup type="CheckersBoardButton" name="radius"></lookup>
+                    <lookup type="CheckersSlot" name="radius"></lookup>
                 </binding>
             </object>
         </child>

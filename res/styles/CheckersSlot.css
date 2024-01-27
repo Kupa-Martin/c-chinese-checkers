@@ -1,8 +1,8 @@
-.checkers-board-button.selected {
+.checkers-slot.selected {
     outline: 2px solid black;
     outline-offset: 0px;
 }
-.checkers-board-button.highlighted {
+.checkers-slot.highlighted {
     outline: 2px solid lightgreen;
     outline-offset: 0px;
 }

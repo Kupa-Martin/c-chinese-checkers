@@ -3,101 +3,102 @@
 
 #include "enum_types.h"
 #include "checkers.h"
-/* enumerations from "CheckersBoard.h" */
+/* enumerations from "CheckersPlayers.h" */
 GType
-checkers_board_players_get_type (void)
+checkers_players_get_type (void)
 {
   static gsize static_g_enum_type_id;
 
   if (g_once_init_enter (&static_g_enum_type_id))
     {
       static const GEnumValue values[] = {
-            { CHECKERS_BOARD_EMPTY_BOARD, "CHECKERS_BOARD_EMPTY_BOARD", "empty-board" },
-            { CHECKERS_BOARD_2_PLAYERS, "CHECKERS_BOARD_2_PLAYERS", "2-players" },
-            { CHECKERS_BOARD_4_PLAYERS, "CHECKERS_BOARD_4_PLAYERS", "4-players" },
-            { CHECKERS_BOARD_6_PLAYERS, "CHECKERS_BOARD_6_PLAYERS", "6-players" },
+            { CHECKERS_NO_PLAYERS, "CHECKERS_NO_PLAYERS", "no-players" },
+            { CHECKERS_2_PLAYERS, "CHECKERS_2_PLAYERS", "2-players" },
+            { CHECKERS_4_PLAYERS, "CHECKERS_4_PLAYERS", "4-players" },
+            { CHECKERS_6_PLAYERS, "CHECKERS_6_PLAYERS", "6-players" },
             { 0, NULL, NULL }
       };
 
       GType g_enum_type_id =
-        g_enum_register_static (g_intern_static_string ("CheckersBoardPlayers"), values);
+        g_enum_register_static (g_intern_static_string ("CheckersPlayers"), values);
 
       g_once_init_leave (&static_g_enum_type_id, g_enum_type_id);
     }
   return static_g_enum_type_id;
 }
-/* enumerations from "CheckersBoardButton.h" */
+/* enumerations from "CheckersSlot.h" */
 GType
-checkers_board_button_occupancy_get_type (void)
+checkers_slot_occupancy_get_type (void)
 {
   static gsize static_g_enum_type_id;
 
   if (g_once_init_enter (&static_g_enum_type_id))
     {
       static const GEnumValue values[] = {
-            { CHECKERS_BOARD_BUTTON_UNOCCUPIED, "CHECKERS_BOARD_BUTTON_UNOCCUPIED", "unoccupied" },
-            { CHECKERS_BOARD_BUTTON_OCCUPIED, "CHECKERS_BOARD_BUTTON_OCCUPIED", "occupied" },
+            { CHECKERS_SLOT_UNOCCUPIED, "CHECKERS_SLOT_UNOCCUPIED", "unoccupied" },
+            { CHECKERS_SLOT_OCCUPIED, "CHECKERS_SLOT_OCCUPIED", "occupied" },
             { 0, NULL, NULL }
       };
 
       GType g_enum_type_id =
-        g_enum_register_static (g_intern_static_string ("CheckersBoardButtonOccupancy"), values);
-
-      g_once_init_leave (&static_g_enum_type_id, g_enum_type_id);
-    }
-  return static_g_enum_type_id;
-}
-GType
-checkers_board_button_team_get_type (void)
-{
-  static gsize static_g_enum_type_id;
-
-  if (g_once_init_enter (&static_g_enum_type_id))
-    {
-      static const GEnumValue values[] = {
-            { CHECKERS_BOARD_BUTTON_RED_TEAM, "CHECKERS_BOARD_BUTTON_RED_TEAM", "red-team" },
-            { CHECKERS_BOARD_BUTTON_BLUE_TEAM, "CHECKERS_BOARD_BUTTON_BLUE_TEAM", "blue-team" },
-            { CHECKERS_BOARD_BUTTON_GREEN_TEAM, "CHECKERS_BOARD_BUTTON_GREEN_TEAM", "green-team" },
-            { CHECKERS_BOARD_BUTTON_BLACK_TEAM, "CHECKERS_BOARD_BUTTON_BLACK_TEAM", "black-team" },
-            { CHECKERS_BOARD_BUTTON_YELLOW_TEAM, "CHECKERS_BOARD_BUTTON_YELLOW_TEAM", "yellow-team" },
-            { CHECKERS_BOARD_BUTTON_WHITE_TEAM, "CHECKERS_BOARD_BUTTON_WHITE_TEAM", "white-team" },
-            { CHECKERS_BOARD_BUTTON_NEUTRAL, "CHECKERS_BOARD_BUTTON_NEUTRAL", "neutral" },
-            { 0, NULL, NULL }
-      };
-
-      GType g_enum_type_id =
-        g_enum_register_static (g_intern_static_string ("CheckersBoardButtonTeam"), values);
+        g_enum_register_static (g_intern_static_string ("CheckersSlotOccupancy"), values);
 
       g_once_init_leave (&static_g_enum_type_id, g_enum_type_id);
     }
   return static_g_enum_type_id;
 }
 GType
-checkers_board_button_state_get_type (void)
+checkers_slot_state_get_type (void)
 {
   static gsize static_g_enum_type_id;
 
   if (g_once_init_enter (&static_g_enum_type_id))
     {
       static const GEnumValue values[] = {
-            { CHECKERS_BOARD_BUTTON_RED_SLOT, "CHECKERS_BOARD_BUTTON_RED_SLOT", "red-slot" },
-            { CHECKERS_BOARD_BUTTON_RED_MARBLE, "CHECKERS_BOARD_BUTTON_RED_MARBLE", "red-marble" },
-            { CHECKERS_BOARD_BUTTON_BLUE_SLOT, "CHECKERS_BOARD_BUTTON_BLUE_SLOT", "blue-slot" },
-            { CHECKERS_BOARD_BUTTON_BLUE_MARBLE, "CHECKERS_BOARD_BUTTON_BLUE_MARBLE", "blue-marble" },
-            { CHECKERS_BOARD_BUTTON_GREEN_SLOT, "CHECKERS_BOARD_BUTTON_GREEN_SLOT", "green-slot" },
-            { CHECKERS_BOARD_BUTTON_GREEN_MARBLE, "CHECKERS_BOARD_BUTTON_GREEN_MARBLE", "green-marble" },
-            { CHECKERS_BOARD_BUTTON_BLACK_SLOT, "CHECKERS_BOARD_BUTTON_BLACK_SLOT", "black-slot" },
-            { CHECKERS_BOARD_BUTTON_BLACK_MARBLE, "CHECKERS_BOARD_BUTTON_BLACK_MARBLE", "black-marble" },
-            { CHECKERS_BOARD_BUTTON_YELLOW_SLOT, "CHECKERS_BOARD_BUTTON_YELLOW_SLOT", "yellow-slot" },
-            { CHECKERS_BOARD_BUTTON_YELLOW_MARBLE, "CHECKERS_BOARD_BUTTON_YELLOW_MARBLE", "yellow-marble" },
-            { CHECKERS_BOARD_BUTTON_WHITE_SLOT, "CHECKERS_BOARD_BUTTON_WHITE_SLOT", "white-slot" },
-            { CHECKERS_BOARD_BUTTON_WHITE_MARBLE, "CHECKERS_BOARD_BUTTON_WHITE_MARBLE", "white-marble" },
-            { CHECKERS_BOARD_BUTTON_EMPTY_SLOT, "CHECKERS_BOARD_BUTTON_EMPTY_SLOT", "empty-slot" },
+            { CHECKERS_SLOT_RED_SLOT, "CHECKERS_SLOT_RED_SLOT", "red-slot" },
+            { CHECKERS_SLOT_RED_MARBLE, "CHECKERS_SLOT_RED_MARBLE", "red-marble" },
+            { CHECKERS_SLOT_BLACK_SLOT, "CHECKERS_SLOT_BLACK_SLOT", "black-slot" },
+            { CHECKERS_SLOT_BLACK_MARBLE, "CHECKERS_SLOT_BLACK_MARBLE", "black-marble" },
+            { CHECKERS_SLOT_WHITE_SLOT, "CHECKERS_SLOT_WHITE_SLOT", "white-slot" },
+            { CHECKERS_SLOT_WHITE_MARBLE, "CHECKERS_SLOT_WHITE_MARBLE", "white-marble" },
+            { CHECKERS_SLOT_GREEN_SLOT, "CHECKERS_SLOT_GREEN_SLOT", "green-slot" },
+            { CHECKERS_SLOT_GREEN_MARBLE, "CHECKERS_SLOT_GREEN_MARBLE", "green-marble" },
+            { CHECKERS_SLOT_BLUE_SLOT, "CHECKERS_SLOT_BLUE_SLOT", "blue-slot" },
+            { CHECKERS_SLOT_BLUE_MARBLE, "CHECKERS_SLOT_BLUE_MARBLE", "blue-marble" },
+            { CHECKERS_SLOT_YELLOW_SLOT, "CHECKERS_SLOT_YELLOW_SLOT", "yellow-slot" },
+            { CHECKERS_SLOT_YELLOW_MARBLE, "CHECKERS_SLOT_YELLOW_MARBLE", "yellow-marble" },
+            { CHECKERS_SLOT_EMPTY_SLOT, "CHECKERS_SLOT_EMPTY_SLOT", "empty-slot" },
             { 0, NULL, NULL }
       };
 
       GType g_enum_type_id =
-        g_enum_register_static (g_intern_static_string ("CheckersBoardButtonState"), values);
+        g_enum_register_static (g_intern_static_string ("CheckersSlotState"), values);
+
+      g_once_init_leave (&static_g_enum_type_id, g_enum_type_id);
+    }
+  return static_g_enum_type_id;
+}
+/* enumerations from "CheckersTeam.h" */
+GType
+checkers_team_get_type (void)
+{
+  static gsize static_g_enum_type_id;
+
+  if (g_once_init_enter (&static_g_enum_type_id))
+    {
+      static const GEnumValue values[] = {
+            { CHECKERS_RED_TEAM, "CHECKERS_RED_TEAM", "red-team" },
+            { CHECKERS_BLACK_TEAM, "CHECKERS_BLACK_TEAM", "black-team" },
+            { CHECKERS_WHITE_TEAM, "CHECKERS_WHITE_TEAM", "white-team" },
+            { CHECKERS_GREEN_TEAM, "CHECKERS_GREEN_TEAM", "green-team" },
+            { CHECKERS_BLUE_TEAM, "CHECKERS_BLUE_TEAM", "blue-team" },
+            { CHECKERS_YELLOW_TEAM, "CHECKERS_YELLOW_TEAM", "yellow-team" },
+            { CHECKERS_NO_TEAM, "CHECKERS_NO_TEAM", "no-team" },
+            { 0, NULL, NULL }
+      };
+
+      GType g_enum_type_id =
+        g_enum_register_static (g_intern_static_string ("CheckersTeam"), values);
 
       g_once_init_leave (&static_g_enum_type_id, g_enum_type_id);
     }

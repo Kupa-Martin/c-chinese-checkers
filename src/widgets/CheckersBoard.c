@@ -1,11 +1,10 @@
 #include "CheckersBoard.h"
-#include "CheckersBoardButton.h"
 #include "CheckersWindow.h"
-#include "../macro_utils.h"
+#include "macro_utils.h"
 #include <math.h>
 
-// the first part (coords excluded) of the id property of `CheckersBoardButton`s widgets in ../../resources/markup/CheckersBoard.ui
-#define BOARD_BUTTONS_ID "checkersboardbutton"
+// the first part (coords excluded) of the id property of `CheckersSlot`s widgets in ../../resources/markup/CheckersBoard.ui
+#define SLOT_ID "checkersslot"
 
 enum PropertyId {
     PROPERTY_PLAYERS = 1,
@@ -43,22 +42,22 @@ static const guint slotSum[CHECKERS_BOARD_ROWS] = { 0, 1, 3, 6, 10, 23, 35, 46, 
 
 // Type definitions
 // First 3 letters indicate color, last letter indicates wether it's a ball (B) or a slot (S)
-#define ETYS CHECKERS_BOARD_BUTTON_EMPTY_SLOT
-#define REDS CHECKERS_BOARD_BUTTON_RED_SLOT
-#define REDM CHECKERS_BOARD_BUTTON_RED_MARBLE
-#define BLUS CHECKERS_BOARD_BUTTON_BLUE_SLOT
-#define BLUM CHECKERS_BOARD_BUTTON_BLACK_MARBLE
-#define GRES CHECKERS_BOARD_BUTTON_GREEN_SLOT
-#define GREM CHECKERS_BOARD_BUTTON_GREEN_MARBLE
-#define BLKS CHECKERS_BOARD_BUTTON_BLACK_SLOT
-#define BLKM CHECKERS_BOARD_BUTTON_BLACK_MARBLE
-#define YLWS CHECKERS_BOARD_BUTTON_YELLOW_SLOT
-#define YLWM CHECKERS_BOARD_BUTTON_YELLOW_MARBLE
-#define WHTS CHECKERS_BOARD_BUTTON_WHITE_SLOT
-#define WHTM CHECKERS_BOARD_BUTTON_WHITE_MARBLE
+#define ETYS CHECKERS_SLOT_EMPTY_SLOT
+#define REDS CHECKERS_SLOT_RED_SLOT
+#define REDM CHECKERS_SLOT_RED_MARBLE
+#define BLUS CHECKERS_SLOT_BLUE_SLOT
+#define BLUM CHECKERS_SLOT_BLUE_MARBLE
+#define GRES CHECKERS_SLOT_GREEN_SLOT
+#define GREM CHECKERS_SLOT_GREEN_MARBLE
+#define BLKS CHECKERS_SLOT_BLACK_SLOT
+#define BLKM CHECKERS_SLOT_BLACK_MARBLE
+#define YLWS CHECKERS_SLOT_YELLOW_SLOT
+#define YLWM CHECKERS_SLOT_YELLOW_MARBLE
+#define WHTS CHECKERS_SLOT_WHITE_SLOT
+#define WHTM CHECKERS_SLOT_WHITE_MARBLE
 
-static const CheckersBoardButtonState initialBoardState[][N_SLOTS] = {
-    [CHECKERS_BOARD_EMPTY_BOARD] =
+static const CheckersSlotState initialBoardState[][N_SLOTS] = {
+    [CHECKERS_NO_PLAYERS] =
     {
                                                         BLKS,
                                                     BLKS,    BLKS,
@@ -78,7 +77,7 @@ static const CheckersBoardButtonState initialBoardState[][N_SLOTS] = {
                                                     REDS,    REDS,
                                                         REDS
     },
-    [CHECKERS_BOARD_2_PLAYERS] = 
+    [CHECKERS_2_PLAYERS] = 
     {
                                                         BLKM,
                                                     BLKM,    BLKM,
@@ -98,7 +97,7 @@ static const CheckersBoardButtonState initialBoardState[][N_SLOTS] = {
                                                     REDM,    REDM,
                                                         REDM
     },
-    [CHECKERS_BOARD_4_PLAYERS] =
+    [CHECKERS_4_PLAYERS] =
     {
                                                         BLKS,
                                                     BLKS,    BLKS,
@@ -118,7 +117,7 @@ static const CheckersBoardButtonState initialBoardState[][N_SLOTS] = {
                                                     REDS,    REDS,
                                                         REDS
     },
-    [CHECKERS_BOARD_6_PLAYERS] = 
+    [CHECKERS_6_PLAYERS] = 
     {
                                                         BLKM,
                                                     BLKM,    BLKM,
@@ -139,7 +138,7 @@ static const CheckersBoardButtonState initialBoardState[][N_SLOTS] = {
                                                         REDM
     }
 };
-G_STATIC_ASSERT(ARRAY_SIZE(initialBoardState) == CHECKERS_BOARD_N_PLAYERS);
+G_STATIC_ASSERT(ARRAY_SIZE(initialBoardState) == CHECKERS_N_PLAYERS);
 enum { 
     SLOTS_PER_TEAM = 10 
 };
@@ -163,16 +162,16 @@ struct _CheckersBoard {
 
     // Properties
     GtkEventControllerFocus *focusController;
-    CheckersBoardPlayers players;
+    CheckersPlayers players;
     gint slotRadius;
     gboolean gameActive;
-    CheckersBoardButtonTeam currentTurnTeam;
-    CheckersBoardButton *selectedSlot;
-    CheckersBoardButton *highlightedSlots[N_DIRECTIONS];
-    CheckersBoardButton *slotsPerTeam[CHECKERS_BOARD_BUTTON_N_TEAMS-1][SLOTS_PER_TEAM];
+    CheckersTeam currentTurnTeam;
+    CheckersSlot *selectedSlot;
+    CheckersSlot *highlightedSlots[N_DIRECTIONS];
+    CheckersSlot *slotsPerTeam[CHECKERS_N_TEAMS-1][SLOTS_PER_TEAM];
     // Child widgets
     GtkBox *rows[CHECKERS_BOARD_ROWS];
-    CheckersBoardButton *slots[N_SLOTS];
+    CheckersSlot *slots[N_SLOTS];
 };
 
 struct _CheckersBoardClass {
@@ -191,14 +190,14 @@ static void checkers_board_finalize(GObject *);
 static void checkers_board_get_property(GObject *, guint, GValue *, GParamSpec *);
 static void checkers_board_set_property(GObject *, guint, const GValue *, GParamSpec *);
 static gint checkers_board_closure_compute_spacing(CheckersBoard *, gint);
-static gint checkers_board_find_destination_index(CheckersBoard *self, CheckersBoardButton *moveFrom, CheckersBoardDirection direction);
-static void checkers_board_find_and_populate_moves(CheckersBoard *self, CheckersBoardButton *moveFrom);
-static CheckersBoardButton *checkers_board_find_move(CheckersBoard *self, CheckersBoardButton *moveFrom, CheckersBoardDirection direction);
+static gint checkers_board_find_destination_index(CheckersBoard *self, CheckersSlot *moveFrom, CheckersBoardDirection direction);
+static void checkers_board_find_and_populate_moves(CheckersBoard *self, CheckersSlot *moveFrom);
+static CheckersSlot *checkers_board_find_move(CheckersBoard *self, CheckersSlot *moveFrom, CheckersBoardDirection direction);
 static void checkers_board_lost_focus(GtkEventControllerFocus *self, gpointer);
 // End forward declaration
 
 static void checkers_board_init(CheckersBoard *self) {
-    self->players = CHECKERS_BOARD_EMPTY_BOARD;
+    self->players = CHECKERS_NO_PLAYERS;
     self->gameActive = false;
     self->selectedSlot = NULL;
     for (size_t i= 0; i < N_DIRECTIONS; i++)  
@@ -213,7 +212,7 @@ static void checkers_board_init(CheckersBoard *self) {
     gtk_css_provider_load_from_resource(cssProvider, "/com/fullaccess/ChineseCheckers/resources/styles/CheckersBoard.css");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(GTK_WIDGET(self)), GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
     
-    size_t slotsPerTeamCounter[CHECKERS_BOARD_BUTTON_N_TEAMS-1] = {0};
+    size_t slotsPerTeamCounter[CHECKERS_N_TEAMS-1] = {0};
     // Should be reference counted but im too dumb to find it in the source code
     GtkExpression *selfExpr = gtk_constant_expression_new(CHECKERS_TYPE_BOARD, self);
     GtkExpression *slotRadiusExpr = gtk_property_expression_new(CHECKERS_TYPE_BOARD, selfExpr, "slot-radius");
@@ -222,18 +221,18 @@ static void checkers_board_init(CheckersBoard *self) {
         GtkBox *rowContainer = self->rows[row];
         for (guint i= 0; i < slotsPerRow[row]; i++) {
             guint slotIndex = precedingSlotsSum + i;
-            CheckersBoardButtonState state = initialBoardState[self->players][slotIndex];
-            CheckersBoardButtonTeam team = CHECKERS_BOARD_BUTTON_TEAM_FROM_STATE(state);  
+            CheckersSlotState state = initialBoardState[self->players][slotIndex];
+            CheckersTeam team = CHECKERS_SLOT_TEAM_FROM_STATE(state);  
             /** The column of the slot if the board were a 17 by 13 bidimensional array */
             guint column = i + ((13 - slotsPerRow[row]) >> 1);
-            CheckersBoardButton *slot = CHECKERS_BOARD_BUTTON(g_object_new(CHECKERS_TYPE_BOARD_BUTTON, "team", team, "state", state, "row", row, "column", column, NULL));
-            if (team != CHECKERS_BOARD_BUTTON_NEUTRAL)
+            CheckersSlot *slot = CHECKERS_SLOT(g_object_new(CHECKERS_TYPE_SLOT, "team", team, "state", state, "row", row, "column", column, NULL));
+            if (team != CHECKERS_NO_TEAM)
                 self->slotsPerTeam[TEAM_HASH(team)][slotsPerTeamCounter[TEAM_HASH(team)]++] = slot; 
             self->slots[slotIndex] = slot;
             gtk_expression_bind(slotRadiusExpr, slot, "radius", NULL);
-            enum { BUFFER_SIZE = ARRAY_SIZE(BOARD_BUTTONS_ID "00-00") };
+            enum { BUFFER_SIZE = ARRAY_SIZE(SLOT_ID "00-00") };
             char buffer[BUFFER_SIZE];
-            snprintf(buffer, BUFFER_SIZE, BOARD_BUTTONS_ID "%02u-%02u", row, i);
+            snprintf(buffer, BUFFER_SIZE, SLOT_ID "%02u-%02u", row, i);
             gtk_widget_set_name(GTK_WIDGET(slot), buffer);
             gtk_box_append(rowContainer, GTK_WIDGET(slot));
         }
@@ -257,8 +256,8 @@ static void checkers_board_class_init(CheckersBoardClass *klass) {
                                             "players", 
                                             "players", 
                                             "How many players are in the current game", 
-                                            CHECKERS_TYPE_BOARD_PLAYERS, 
-                                            CHECKERS_BOARD_EMPTY_BOARD, 
+                                            CHECKERS_TYPE_PLAYERS, 
+                                            CHECKERS_NO_PLAYERS, 
                                             G_PARAM_READWRITE
                                         )
                                     );
@@ -267,8 +266,8 @@ static void checkers_board_class_init(CheckersBoardClass *klass) {
                                             "current-turn-team", 
                                             "current-turn-team", 
                                             "The team to which the curent turn belongs to", 
-                                            CHECKERS_TYPE_BOARD_BUTTON_TEAM, 
-                                            CHECKERS_BOARD_BUTTON_NEUTRAL, 
+                                            CHECKERS_TYPE_TEAM, 
+                                            CHECKERS_NO_TEAM, 
                                             G_PARAM_READABLE
                                         )
                                     );
@@ -297,7 +296,7 @@ static void checkers_board_class_init(CheckersBoardClass *klass) {
                                             "selected-slot",
                                             "selected-slot",
                                             "The slot currently selected",
-                                            CHECKERS_TYPE_BOARD_BUTTON,
+                                            CHECKERS_TYPE_SLOT,
                                             G_PARAM_READWRITE
                                         )
                                     );
@@ -358,10 +357,10 @@ static void checkers_board_set_property(GObject *object, guint propertyId, const
     
     switch (propertyId) {
         case PROPERTY_PLAYERS: {
-            self->players = (CheckersBoardPlayers)g_value_get_enum(value);
-            const CheckersBoardButtonState *data = initialBoardState[self->players];
+            self->players = (CheckersPlayers)g_value_get_enum(value);
+            const CheckersSlotState *data = initialBoardState[self->players];
             for (size_t i= 0; i < N_SLOTS; i++) 
-                checkers_board_button_set_state(self->slots[i], data[i]);
+                checkers_slot_set_state(self->slots[i], data[i]);
             return;
         }
         case PROPERTY_SLOT_RADIUS: {
@@ -372,17 +371,17 @@ static void checkers_board_set_property(GObject *object, guint propertyId, const
             bool gameActive = g_value_get_boolean(value);
             g_assert((gameActive != self->gameActive) && "Setting Checkers::Board::gameActive to its own value");
             self->gameActive = gameActive;
-            self->currentTurnTeam = gameActive ? CHECKERS_BOARD_BUTTON_RED_TEAM : CHECKERS_BOARD_BUTTON_NEUTRAL;
+            self->currentTurnTeam = gameActive ? CHECKERS_RED_TEAM : CHECKERS_NO_TEAM;
             for (size_t i= 0; i < N_SLOTS; i++) 
                 gtk_widget_set_can_focus(GTK_WIDGET(self->slots[i]), gameActive);
             return;
         }
         case PROPERTY_CURRENT_TURN_TEAM: {
-            self->currentTurnTeam = (CheckersBoardButtonTeam)g_value_get_enum(value);
+            self->currentTurnTeam = (CheckersTeam)g_value_get_enum(value);
             return;
         }
         case PROPERTY_SELECTED_SLOT: {
-            self->selectedSlot = (CheckersBoardButton *)g_value_get_object(value);
+            self->selectedSlot = (CheckersSlot *)g_value_get_object(value);
             return;
         }
     }
@@ -392,18 +391,18 @@ static void checkers_board_set_property(GObject *object, guint propertyId, const
 static gint checkers_board_closure_compute_spacing(CheckersBoard *self, gint boardButtonDiameter) {
     /**
      * Consider:
-     *                  CheckersBoardButton 
+     *                     CheckersSlot 
      *                          /|\
      *                         / | \
      *                        /  |  \  2(r+c)
      *                       / 2r|   \
      *                      /    |    \
-     * CheckersBoardButton ------------- CheckersBoardButton
+     *        CheckersSlot ------------- CheckersSlot
      *                     (r+c)   (r+c)
      * 
      * Where 
      *  2c is the spacing between buttons in a row (what we need to compute)
-     *  r is the radius of the buttons (i.e CheckersBoardButton::radius, passed as boardButtonDiameter)
+     *  r is the radius of the buttons (i.e Checkers::Slot::radius, passed as boardButtonDiameter)
      * 
      * From this follows:
      * 2c = 2(sqrt(4/3)-1) * r
@@ -417,7 +416,7 @@ static gint checkers_board_closure_compute_spacing(CheckersBoard *self, gint boa
  * returns:
  *  -1 if the destination is out of bounds
 */
-static gint checkers_board_find_destination_index(CheckersBoard *self, CheckersBoardButton *moveFrom, CheckersBoardDirection direction) { 
+static gint checkers_board_find_destination_index(CheckersBoard *self, CheckersSlot *moveFrom, CheckersBoardDirection direction) { 
     static const struct {
         gint deltaRow;
         gint deltaColumn;
@@ -431,8 +430,8 @@ static gint checkers_board_find_destination_index(CheckersBoard *self, CheckersB
     };
     g_assert(direction < N_DIRECTIONS);
     g_assert(moveFrom != NULL);
-    guint row = checkers_board_button_get_row(moveFrom);
-    guint column = checkers_board_button_get_column(moveFrom);
+    guint row = checkers_slot_get_row(moveFrom);
+    guint column = checkers_slot_get_column(moveFrom);
     gint destinationRow = (gint)row + directions[direction].deltaRow;
     gboolean rowOutOfBounds = destinationRow < 0 || destinationRow >= CHECKERS_BOARD_ROWS;
     /* columns have an offset for easier navigation that treats the board as a 17 by 13 bidimensional array */
@@ -447,7 +446,7 @@ static gint checkers_board_find_destination_index(CheckersBoard *self, CheckersB
     return (gint)destinationIndex;
 }
 
-static CheckersBoardButton *checkers_board_find_move(CheckersBoard *self, CheckersBoardButton *moveFrom, CheckersBoardDirection direction) {
+static CheckersSlot *checkers_board_find_move(CheckersBoard *self, CheckersSlot *moveFrom, CheckersBoardDirection direction) {
     g_assert(moveFrom != NULL);
     g_assert(direction < N_DIRECTIONS);
     bool jumpingOver = false;
@@ -457,10 +456,10 @@ static CheckersBoardButton *checkers_board_find_move(CheckersBoard *self, Checke
     if (outOfBounds)  
         return NULL; 
     guint destinationIndex = (guint)destIdx;
-    CheckersBoardButton *destinationSlot = self->slots[destinationIndex];
+    CheckersSlot *destinationSlot = self->slots[destinationIndex];
     g_assert(destinationSlot != NULL);
-    CheckersBoardButtonState destinationState = checkers_board_button_get_state(destinationSlot);
-    bool isAvailable = CHECKERS_BOARD_BUTTON_OCCUPANCY_FROM_STATE(destinationState) == CHECKERS_BOARD_BUTTON_UNOCCUPIED;
+    CheckersSlotState destinationState = checkers_slot_get_state(destinationSlot);
+    bool isAvailable = CHECKERS_SLOT_OCCUPANCY_FROM_STATE(destinationState) == CHECKERS_SLOT_UNOCCUPIED;
     if (isAvailable) 
         return destinationSlot;
     if (jumpingOver)
@@ -471,15 +470,15 @@ static CheckersBoardButton *checkers_board_find_move(CheckersBoard *self, Checke
     goto tryAgain;
 }
 
-static void checkers_board_find_and_populate_moves(CheckersBoard *self, CheckersBoardButton *moveFrom) {
+static void checkers_board_find_and_populate_moves(CheckersBoard *self, CheckersSlot *moveFrom) {
     g_assert(moveFrom != NULL);
     guint moveCounter = 0; 
     for (CheckersBoardDirection direction= 0; direction < N_DIRECTIONS; direction++) {
-        CheckersBoardButton *destinationSlot = checkers_board_find_move(self, moveFrom, direction);
+        CheckersSlot *destinationSlot = checkers_board_find_move(self, moveFrom, direction);
         bool noMovesAvailable = destinationSlot == NULL;
         if (noMovesAvailable) 
             continue;
-        checkers_board_button_set_highlighted(destinationSlot, true);
+        checkers_slot_set_highlighted(destinationSlot, true);
         self->highlightedSlots[moveCounter++] = destinationSlot;
     }
     if (moveCounter < N_DIRECTIONS)
@@ -516,43 +515,45 @@ extern void checkers_board_set_game_active(CheckersBoard *self, gboolean gameAct
     g_object_set(self, "game-active", gameActive, NULL); 
 }
 
-extern CheckersBoardButtonTeam checkers_board_get_current_turn_team(CheckersBoard *self) {
-    CheckersBoardButtonTeam hold; 
+extern CheckersTeam checkers_board_get_current_turn_team(CheckersBoard *self) {
+    CheckersTeam hold; 
     g_object_get(self, "current-turn-team", &hold, NULL);
     return hold;
 }
 
-extern CheckersBoardButton *checkers_board_get_selected_slot(CheckersBoard *self) {
+extern CheckersSlot *checkers_board_get_selected_slot(CheckersBoard *self) {
     return self->selectedSlot;
 }
 
 extern void checkers_board_unselect_slot(CheckersBoard *self) {
     g_assert(self->selectedSlot != NULL && "Called checkers::board::unselect_slot() when a slot wasnt selected");
     for (size_t i = 0; i < N_DIRECTIONS && self->highlightedSlots[i] != NULL ; i++) {
-        CheckersBoardButton *highlightedSlot = self->highlightedSlots[i];
-        checkers_board_button_set_highlighted(highlightedSlot, false);
+        CheckersSlot *highlightedSlot = self->highlightedSlots[i];
+        checkers_slot_set_highlighted(highlightedSlot, false);
         self->highlightedSlots[i] = NULL; 
     }
-    checkers_board_button_set_selected(self->selectedSlot, false);
+    checkers_slot_set_selected(self->selectedSlot, false);
     self->selectedSlot = NULL;
 }
 
-extern void checkers_board_mark_slot_selected(CheckersBoard *self, CheckersBoardButton *slot) {
+extern void checkers_board_mark_slot_selected(CheckersBoard *self, CheckersSlot *slot) {
     g_assert(slot != NULL);
     if (self->selectedSlot != NULL)
         checkers_board_unselect_slot(self);
     /* Order is important. gtk::widget::grab_focus must be called before setting CheckersBoard::selectedSlot, otherwise Checkers::BoardButton::track_focus will assume focus was just lost */
-    checkers_board_button_set_selected(slot, true);
+    checkers_slot_set_selected(slot, true);
     self->selectedSlot = slot;
     checkers_board_find_and_populate_moves(self, slot);
 }
 
-extern void checkers_board_move_selected_slot(CheckersBoard *self, CheckersBoardButton *destination) {
-    g_assert(checkers_board_button_is_highlighted(destination) && "Attempted to move selection to an unhighlighted slot");
+extern void checkers_board_move_selected_slot(CheckersBoard *self, CheckersSlot *destination) {
+    g_assert(checkers_slot_is_highlighted(destination) && "Attempted to move selection to an unhighlighted slot");
     g_assert(self->selectedSlot != NULL && "Called checkers::board::move_selected_slot when no slot was selected");
-    CheckersBoardButtonState newState = checkers_board_button_get_state(self->selectedSlot);
-    checkers_board_button_set_state(destination, newState);
-    CheckersBoardButtonTeam team = checkers_board_button_get_team(self->selectedSlot);
-    checkers_board_button_set_state(self->selectedSlot, (CheckersBoardButtonState)(team | CHECKERS_BOARD_BUTTON_UNOCCUPIED));
+    CheckersSlotState newState = checkers_slot_get_state(self->selectedSlot);
+    checkers_slot_set_state(destination, newState);
+    CheckersTeam team = checkers_slot_get_team(self->selectedSlot);
+    checkers_slot_set_state(self->selectedSlot, (CheckersSlotState)(team | CHECKERS_SLOT_UNOCCUPIED));
     checkers_board_unselect_slot(self);
+    CheckersTeam nextTurnTeam = checkers_team_compute_next_team(self->currentTurnTeam, self->players);
+    self->currentTurnTeam = nextTurnTeam;
 }
