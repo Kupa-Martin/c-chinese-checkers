@@ -17,5 +17,6 @@ typedef enum CheckersTeam {
 } CheckersTeam;
 
 extern CheckersTeam checkers_team_compute_next_team(CheckersTeam team, CheckersPlayers players);
+extern CheckersTeam checkers_team_compute_opponent(CheckersTeam team);
 
 #endif /* __CHECKERS_TEAM_H__ */

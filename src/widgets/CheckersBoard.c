@@ -1,5 +1,8 @@
 #include "CheckersBoard.h"
 #include "CheckersWindow.h"
+#include "CheckersTeam.h"
+#include "internal/CheckersTeam.h"
+#include "marshals.h"
 #include "macro_utils.h"
 #include <math.h>
 
@@ -180,6 +183,12 @@ struct _CheckersBoardClass {
 
 // End type definitions
 
+// Friendly accesses
+#ifdef DEBUG
+extern gboolean (*const priv_checkers_team_validate_team)(CheckersTeam);
+#endif /* DEBUG */
+// End friendly accesses
+
 // Forward declaration
 G_DEFINE_TYPE(CheckersBoard, checkers_board, GTK_TYPE_BOX);
 
@@ -194,6 +203,8 @@ static gint checkers_board_find_destination_index(CheckersBoard *self, CheckersS
 static void checkers_board_find_and_populate_moves(CheckersBoard *self, CheckersSlot *moveFrom);
 static CheckersSlot *checkers_board_find_move(CheckersBoard *self, CheckersSlot *moveFrom, CheckersBoardDirection direction);
 static void checkers_board_lost_focus(GtkEventControllerFocus *self, gpointer);
+static gboolean checkers_board_check_win_condition(CheckersBoard *self, CheckersTeam team);
+static void checkers_board_on_game_over(CheckersBoard *self);
 // End forward declaration
 
 static void checkers_board_init(CheckersBoard *self) {
@@ -226,8 +237,10 @@ static void checkers_board_init(CheckersBoard *self) {
             /** The column of the slot if the board were a 17 by 13 bidimensional array */
             guint column = i + ((13 - slotsPerRow[row]) >> 1);
             CheckersSlot *slot = CHECKERS_SLOT(g_object_new(CHECKERS_TYPE_SLOT, "team", team, "state", state, "row", row, "column", column, NULL));
-            if (team != CHECKERS_NO_TEAM)
-                self->slotsPerTeam[TEAM_HASH(team)][slotsPerTeamCounter[TEAM_HASH(team)]++] = slot; 
+            if (team != CHECKERS_NO_TEAM) {
+                CheckersTeam opponentTeam = checkers_team_compute_opponent(team);
+                self->slotsPerTeam[TEAM_HASH(opponentTeam)][slotsPerTeamCounter[TEAM_HASH(opponentTeam)]++] = slot; 
+            }
             self->slots[slotIndex] = slot;
             gtk_expression_bind(slotRadiusExpr, slot, "radius", NULL);
             enum { BUFFER_SIZE = ARRAY_SIZE(SLOT_ID "00-00") };
@@ -300,6 +313,7 @@ static void checkers_board_class_init(CheckersBoardClass *klass) {
                                             G_PARAM_READWRITE
                                         )
                                     );
+    g_signal_new("game-over", CHECKERS_TYPE_BOARD, G_SIGNAL_RUN_FIRST, 0, NULL, NULL, g_cclosure_user_marshal_VOID__OBJECT_ENUM, G_TYPE_NONE, 2, CHECKERS_TYPE_BOARD, CHECKERS_TYPE_TEAM);
     gtk_widget_class_set_template_from_resource(widgetClass, "/com/fullaccess/ChineseCheckers/resources/markup/CheckersBoard.ui");
 
     
@@ -492,6 +506,37 @@ static void checkers_board_lost_focus(GtkEventControllerFocus *self, gpointer da
         checkers_board_unselect_slot(board);
 }
 
+static gboolean checkers_board_check_win_condition(CheckersBoard *self, CheckersTeam team) {
+    g_assert(f_checkers_team_validate_team(team) && "checkers::board::check_win_condition received an invalid team");
+    gboolean teamWon = true;
+    for (size_t i= 0; i < SLOTS_PER_TEAM; i++) {
+        CheckersSlot *opponentSlot = self->slotsPerTeam[TEAM_HASH(team)][i];
+        gboolean slotTaken = checkers_slot_get_state(opponentSlot) == (CHECKERS_SLOT_OCCUPIED | team);
+        if (!slotTaken) {
+            teamWon = false;
+            break;
+        } 
+    }
+    return teamWon;
+}
+
+static void checkers_board_on_game_over(CheckersBoard *self) {
+#ifdef DEBUG
+    gboolean winConditionMet = false;
+    for (CheckersTeam team= 0; team < CHECKERS_NO_TEAM; team+=2) {
+        winConditionMet = checkers_board_check_win_condition(self, team);
+        if (winConditionMet)
+            break;
+    }
+    g_assert(winConditionMet && "Called checkers::board::on_game_over when game wasnt over");
+#endif /* DEBUG */
+    g_signal_emit(self, )
+    char *winner = g_enum_to_string(CHECKERS_TYPE_TEAM, (gint)self->currentTurnTeam);
+    g_message("%s won", winner);
+    g_free(winner);
+    checkers_board_set_game_active(self, false);
+}
+
 extern GtkWidget *checkers_board_new(void) {
     return g_object_new(CHECKERS_TYPE_BOARD, NULL);
 }
@@ -555,5 +600,9 @@ extern void checkers_board_move_selected_slot(CheckersBoard *self, CheckersSlot 
     checkers_slot_set_state(self->selectedSlot, (CheckersSlotState)(team | CHECKERS_SLOT_UNOCCUPIED));
     checkers_board_unselect_slot(self);
     CheckersTeam nextTurnTeam = checkers_team_compute_next_team(self->currentTurnTeam, self->players);
-    self->currentTurnTeam = nextTurnTeam;
+    gboolean currentTeamWon = checkers_board_check_win_condition(self, self->currentTurnTeam);
+    if (currentTeamWon) 
+        return checkers_board_on_game_over(self);
+    else
+        self->currentTurnTeam = nextTurnTeam;
 }

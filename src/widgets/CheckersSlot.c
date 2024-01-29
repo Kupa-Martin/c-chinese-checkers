@@ -294,7 +294,7 @@ static gchararray checkers_slot_resolve_resource(CheckersSlot *self, CheckersSlo
         [CHECKERS_SLOT_EMPTY_SLOT] = "/com/fullaccess/ChineseCheckers/resources/assets/empty_slot.png" 
     };
     g_assert(state < ARRAY_SIZE(stateToResource)); 
-    return g_strdup_printf("%s", stateToResource[state]);
+    return g_strdup(stateToResource[state]);
 }
 
 extern GtkWidget *checkers_slot_new(void) {

@@ -34,6 +34,7 @@ static void checkers_window_set_property(GObject *, guint, const GValue *, GPara
 static CheckersPlayers checkers_window_change_board_players(CheckersWindow *, gboolean, gboolean, gboolean);
 static void checkers_window_handle_button1_clicked(GtkButton *, gpointer);
 static gboolean checkers_window_closure_player_select(CheckersWindow *, gboolean);
+static gchararray checkers_window_closure_resolve_button1_label(CheckersWindow *self, gboolean isGameActive);
 // End forward declaration
 
 static void checkers_window_init(CheckersWindow *self) {
@@ -125,6 +126,9 @@ static gboolean checkers_window_closure_player_select(CheckersWindow *self, gboo
     return !isGameActive;
 }
 
+static gchararray checkers_window_closure_resolve_button1_label(CheckersWindow *self, gboolean isGameActive) {
+    return g_strdup(isGameActive ? "Resign" : "Start");
+}
 
 extern GtkWidget *checkers_window_new(void) {
     return g_object_new(CHECKERS_TYPE_WINDOW, NULL);

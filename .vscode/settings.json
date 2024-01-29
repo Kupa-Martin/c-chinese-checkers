@@ -24,6 +24,8 @@
         "checkersboardplayers.h": "c",
         "checkers.h": "c",
         "checkersteam.h": "c",
-        "checkersplayers.h": "c"
+        "checkersplayers.h": "c",
+        "gtkbutton.h": "c",
+        "marshals.h": "c"
     }
 }
