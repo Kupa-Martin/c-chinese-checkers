@@ -274,7 +274,6 @@ static void checkers_slot_handle_clicked_self(CheckersSlot *self, gpointer data)
     } else if (self->isHighlighted) {
         return checkers_board_move_selected_slot(owner, self); 
     }
-    g_message("click ignored");
 }
 
 static gchararray checkers_slot_resolve_resource(CheckersSlot *self, CheckersSlotState state) {

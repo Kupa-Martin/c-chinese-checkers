@@ -23,35 +23,37 @@
                                     <object class="GtkBox">
                                         <property name="orientation">vertical</property>
                                         <child>
-                                            <object class="GtkToggleButton" id="player_select2">
+                                            <object class="GtkToggleButton" id="select2">
                                                 <binding name="sensitive">
                                                     <closure type="gboolean" function="checkers_window_closure_player_select">
                                                         <lookup type="CheckersBoard" name="game-active">board</lookup>
+                                                        <lookup type="CheckersGameOver" name="visible">over</lookup>
                                                     </closure>
                                                 </binding>
                                                 <property name="label">2 players</property>
-                                                <property name="active">true</property>
                                             </object>
                                         </child>
                                         <child>
-                                            <object class="GtkToggleButton" id="player_select4">
+                                            <object class="GtkToggleButton" id="select4">
                                                 <binding name="sensitive">
                                                     <closure type="gboolean" function="checkers_window_closure_player_select">
                                                         <lookup type="CheckersBoard" name="game-active">board</lookup>
+                                                        <lookup type="CheckersGameOver" name="visible">over</lookup>
                                                     </closure>
                                                 </binding>
-                                                <property name="group">player_select2</property>
+                                                <property name="group">select2</property>
                                                 <property name="label">4 players</property> 
                                             </object>
                                         </child>
                                         <child>
-                                            <object class="GtkToggleButton" id="player_select6">
+                                            <object class="GtkToggleButton" id="select6">
                                                 <binding name="sensitive">
                                                     <closure type="gboolean" function="checkers_window_closure_player_select">
                                                         <lookup type="CheckersBoard" name="game-active">board</lookup>
+                                                        <lookup type="CheckersGameOver" name="visible">over</lookup>
                                                     </closure>
                                                 </binding>
-                                                <property name="group">player_select2</property>
+                                                <property name="group">select2</property>
                                                 <property name="label">6 players</property>
                                             </object>
                                         </child>
@@ -60,8 +62,15 @@
                                 <child>
                                     <object class="GtkButton" id="button1">
                                         <binding name="label">
-                                            <closure type="gchararray" function="checkers_window_closure_button1_label">
+                                            <closure type="gchararray" function="checkers_window_resolve_button1_label">
                                                 <lookup type="CheckersBoard" name="game-active">board</lookup>
+                                            </closure>
+                                        </binding>
+                                        <binding name="sensitive">
+                                            <closure type="gboolean" function="checkers_window_control_button1_sensitivity">
+                                                <lookup type="GtkToggleButton" name="active">select2</lookup>
+                                                <lookup type="GtkToggleButton" name="active">select4</lookup>
+                                                <lookup type="GtkToggleButton" name="active">select6</lookup>
                                             </closure>
                                         </binding>
                                         <property name="valign">end</property>
@@ -75,11 +84,12 @@
                             <object class="CheckersBoard" id="board">
                                 <property name="slot-radius">38</property>
                                 <property name="hexpand">true</property>
+                                <signal name="game-over" handler="checkers_window_handle_game_over"></signal>
                                 <binding name="players">
                                     <closure type="CheckersPlayers" function="checkers_window_change_board_players">
-                                        <lookup type="GtkToggleButton" name="active">player_select2</lookup>
-                                        <lookup type="GtkToggleButton" name="active">player_select4</lookup>
-                                        <lookup type="GtkToggleButton" name="active">player_select6</lookup>
+                                        <lookup type="GtkToggleButton" name="active">select2</lookup>
+                                        <lookup type="GtkToggleButton" name="active">select4</lookup>
+                                        <lookup type="GtkToggleButton" name="active">select6</lookup>
                                     </closure>
                                 </binding>
                             </object>
@@ -88,10 +98,10 @@
                 </child>
                 <child type="overlay">
                     <!-- Use GtkDialog -->
-                    <object class="CheckersGameOver">
+                    <object class="CheckersGameOver" id="over">
                         <property name="visible">false</property>
-                        <property name="halign">GTK_ALIGN_CENTER</property>
-                        <property name="valign">GTK_ALIGN_CENTER</property>
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
                     </object>
                 </child>
             </object>

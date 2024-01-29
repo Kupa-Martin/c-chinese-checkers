@@ -6,3 +6,5 @@ build/*
 enum_types.c
 enum_types.h
 gresource.c
+marshals.c
+marshals.h

@@ -1,9 +1,0 @@
-update Checkers::Board::constructed() so it uses rowToSlot map*
-add properties row, column, team and refactor source property into state property in Checkers::BoardButton*
-add css class for highlighting valid moves*
-fix delta row/column values*
-bind checkers::window::button1::label to checkers::board::game-active*
-fix out of bounds access in CheckersBoard.c:510*
-create a friend interface for checkers::team and checkers::player*
-create game-over signal for checkers::board*
-emit game-over signal on game over

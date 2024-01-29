@@ -1,5 +1,6 @@
 #include "CheckersWindow.h"
 #include "CheckersBoard.h"
+#include "CheckersGameOver.h"
 #include <assert.h>
 
 
@@ -14,6 +15,10 @@ struct _CheckersWindow {
     // Child widgets
     GtkBox *sidebar;
     CheckersBoard *board;
+    CheckersGameOver *over;
+    GtkToggleButton *select2;
+    GtkToggleButton *select4;
+    GtkToggleButton *select6;
 };
 
 struct _CheckersWindowClass {
@@ -33,8 +38,10 @@ static void checkers_window_get_property(GObject *, guint, GValue *, GParamSpec 
 static void checkers_window_set_property(GObject *, guint, const GValue *, GParamSpec *);
 static CheckersPlayers checkers_window_change_board_players(CheckersWindow *, gboolean, gboolean, gboolean);
 static void checkers_window_handle_button1_clicked(GtkButton *, gpointer);
-static gboolean checkers_window_closure_player_select(CheckersWindow *, gboolean);
-static gchararray checkers_window_closure_resolve_button1_label(CheckersWindow *self, gboolean isGameActive);
+static gboolean checkers_window_closure_player_select(CheckersWindow *, gboolean, gboolean);
+static gchararray checkers_window_resolve_button1_label(CheckersWindow *self, gboolean isGameActive);
+static void checkers_window_handle_game_over(CheckersBoard *board, CheckersTeam winner, gpointer data);
+static gboolean checkers_window_control_button1_sensitivity(CheckersWindow *self, gboolean select2Active, gboolean select4Active, gboolean select6Active);
 // End forward declaration
 
 static void checkers_window_init(CheckersWindow *self) {
@@ -43,9 +50,6 @@ static void checkers_window_init(CheckersWindow *self) {
     GtkCssProvider *cssProvider = gtk_css_provider_new();
     gtk_css_provider_load_from_resource(cssProvider, "/com/fullaccess/ChineseCheckers/resources/styles/CheckersWindow.css");
     gtk_style_context_add_provider_for_display(gtk_widget_get_display(GTK_WIDGET(self)), GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
-	GtkAlertDialog *testDialog = gtk_alert_dialog_new("test dialog");
-	gtk_alert_dialog_set_modal(testDialog, true);
-	gtk_alert_dialog_show(testDialog, GTK_WINDOW(self));
     
     g_object_unref(cssProvider);
     return;
@@ -63,10 +67,16 @@ static void checkers_window_class_init(CheckersWindowClass *klass){
     gtk_widget_class_set_template_from_resource(widgetClass, "/com/fullaccess/ChineseCheckers/resources/markup/CheckersWindow.ui");
     gtk_widget_class_bind_template_child(widgetClass, CheckersWindow, sidebar);
     gtk_widget_class_bind_template_child(widgetClass, CheckersWindow, board);
+    gtk_widget_class_bind_template_child(widgetClass, CheckersWindow, over);
+    gtk_widget_class_bind_template_child(widgetClass, CheckersWindow, select2);
+    gtk_widget_class_bind_template_child(widgetClass, CheckersWindow, select4);
+    gtk_widget_class_bind_template_child(widgetClass, CheckersWindow, select6);
     gtk_widget_class_bind_template_callback(widgetClass, checkers_window_change_board_players);
     gtk_widget_class_bind_template_callback(widgetClass, checkers_window_handle_button1_clicked);
     gtk_widget_class_bind_template_callback(widgetClass, checkers_window_closure_player_select);
-
+    gtk_widget_class_bind_template_callback(widgetClass, checkers_window_handle_game_over);
+    gtk_widget_class_bind_template_callback(widgetClass, checkers_window_resolve_button1_label);
+    gtk_widget_class_bind_template_callback(widgetClass, checkers_window_control_button1_sensitivity);
     return;
 }
 
@@ -118,16 +128,33 @@ static CheckersPlayers checkers_window_change_board_players(CheckersWindow *self
 static void checkers_window_handle_button1_clicked(GtkButton *self, gpointer data) {
     GtkRoot *r = gtk_widget_get_root(GTK_WIDGET(self));
     CheckersWindow *window = CHECKERS_WINDOW(r);
+    CheckersSlot *selectedSlot = checkers_board_get_selected_slot(window->board);
+    if (selectedSlot != NULL)
+        checkers_board_unselect_slot(window->board);
     checkers_board_set_game_active(window->board, !checkers_board_is_game_active(window->board));
-    gtk_button_set_label(self, checkers_board_is_game_active(window->board) ? "Resign" : "Start");
 }
 
-static gboolean checkers_window_closure_player_select(CheckersWindow *self, gboolean isGameActive) {
-    return !isGameActive;
+static gboolean checkers_window_closure_player_select(CheckersWindow *self, gboolean gameActive, gboolean gameOverVisible) {
+    return !gameActive && !gameOverVisible;
 }
 
-static gchararray checkers_window_closure_resolve_button1_label(CheckersWindow *self, gboolean isGameActive) {
-    return g_strdup(isGameActive ? "Resign" : "Start");
+static gchararray checkers_window_resolve_button1_label(CheckersWindow *self, gboolean isGameActive) {
+    return g_strdup(isGameActive ? "End" : "Start");
+}
+
+static void checkers_window_handle_game_over(CheckersBoard *board, CheckersTeam winner, gpointer data) {
+    g_assert(board != NULL && winner >= 0 && winner < CHECKERS_NO_TEAM);
+    GtkWidget *w = gtk_widget_get_ancestor(GTK_WIDGET(board), CHECKERS_TYPE_WINDOW);
+    CheckersWindow *window = CHECKERS_WINDOW(w);
+    gtk_toggle_button_set_active(window->select2, false);
+    gtk_toggle_button_set_active(window->select4, false);
+    gtk_toggle_button_set_active(window->select6, false);
+    checkers_game_over_set_winner(window->over, winner);
+    gtk_widget_set_visible(GTK_WIDGET(window->over), true);
+}
+
+static gboolean checkers_window_control_button1_sensitivity(CheckersWindow *self, gboolean select2Active, gboolean select4Active, gboolean select6Active) {
+    return select2Active || select4Active || select6Active;
 }
 
 extern GtkWidget *checkers_window_new(void) {

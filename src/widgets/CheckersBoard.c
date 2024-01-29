@@ -10,11 +10,17 @@
 #define SLOT_ID "checkersslot"
 
 enum PropertyId {
-    PROPERTY_PLAYERS = 1,
-    PROPERTY_SLOT_RADIUS,
-    PROPERTY_GAME_ACTIVE,
-    PROPERTY_CURRENT_TURN_TEAM,
-    PROPERTY_SELECTED_SLOT
+    PLAYERS_PROPERTY = 1,
+    SLOT_RADIUS_PROPERTY,
+    GAME_ACTIVE_PROPERTY,
+    CURRENT_TURN_TEAM_PROPERTY,
+    SELECTED_SLOT_PROPERTY,
+    N_PROPERTIES
+};
+
+enum SignalId {
+    GAME_OVER_SIGNAL,
+    N_SIGNALS
 };
 
 typedef enum CheckersBoardDirection {
@@ -42,6 +48,8 @@ enum {
 #undef SUM_SLOTS
 /** The sum of all slots in preceding rows */
 static const guint slotSum[CHECKERS_BOARD_ROWS] = { 0, 1, 3, 6, 10, 23, 35, 46, 56, 65, 75, 86, 98, 111, 115, 118, 120 };
+static GParamSpec *properties[N_PROPERTIES];
+static guint signals[N_SIGNALS];
 
 // Type definitions
 // First 3 letters indicate color, last letter indicates wether it's a ball (B) or a slot (S)
@@ -205,6 +213,7 @@ static CheckersSlot *checkers_board_find_move(CheckersBoard *self, CheckersSlot 
 static void checkers_board_lost_focus(GtkEventControllerFocus *self, gpointer);
 static gboolean checkers_board_check_win_condition(CheckersBoard *self, CheckersTeam team);
 static void checkers_board_on_game_over(CheckersBoard *self);
+static void checkers_board_set_selected_slot(CheckersBoard *self, CheckersSlot *selectedSlot);
 // End forward declaration
 
 static void checkers_board_init(CheckersBoard *self) {
@@ -264,59 +273,60 @@ static void checkers_board_class_init(CheckersBoardClass *klass) {
     objectClass->get_property = checkers_board_get_property;
     objectClass->dispose = checkers_board_dispose;
 
-    g_object_class_install_property(objectClass, PROPERTY_PLAYERS, 
-                                    g_param_spec_enum(
-                                            "players", 
-                                            "players", 
-                                            "How many players are in the current game", 
-                                            CHECKERS_TYPE_PLAYERS, 
-                                            CHECKERS_NO_PLAYERS, 
-                                            G_PARAM_READWRITE
-                                        )
-                                    );
-    g_object_class_install_property(objectClass, PROPERTY_CURRENT_TURN_TEAM, 
-                                    g_param_spec_enum(
-                                            "current-turn-team", 
-                                            "current-turn-team", 
-                                            "The team to which the curent turn belongs to", 
-                                            CHECKERS_TYPE_TEAM, 
-                                            CHECKERS_NO_TEAM, 
-                                            G_PARAM_READABLE
-                                        )
-                                    );
-    g_object_class_install_property(objectClass, PROPERTY_SLOT_RADIUS, 
-                                    g_param_spec_int(
-                                            "slot-radius",
-                                            "slot-radius",
-                                            "The radius of the board's buttons",
-                                            0,
-                                            G_MAXINT,
-                                            20,
-                                            G_PARAM_READWRITE
-                                        )
-                                    );
-    g_object_class_install_property(objectClass, PROPERTY_GAME_ACTIVE, 
-                                    g_param_spec_boolean(
-                                            "game-active",
-                                            "game-active",
-                                            "Whether a game is ongoing",
-                                            false,
-                                            G_PARAM_READWRITE
-                                        )
-                                    );
-    g_object_class_install_property(objectClass, PROPERTY_SELECTED_SLOT, 
-                                    g_param_spec_object(
-                                            "selected-slot",
-                                            "selected-slot",
-                                            "The slot currently selected",
-                                            CHECKERS_TYPE_SLOT,
-                                            G_PARAM_READWRITE
-                                        )
-                                    );
-    g_signal_new("game-over", CHECKERS_TYPE_BOARD, G_SIGNAL_RUN_FIRST, 0, NULL, NULL, g_cclosure_user_marshal_VOID__OBJECT_ENUM, G_TYPE_NONE, 2, CHECKERS_TYPE_BOARD, CHECKERS_TYPE_TEAM);
+    properties[PLAYERS_PROPERTY] = g_param_spec_enum(
+        "players", 
+        "players", 
+        "How many players are in the current game", 
+        CHECKERS_TYPE_PLAYERS, 
+        CHECKERS_NO_PLAYERS, 
+        G_PARAM_READWRITE
+    );
+    properties[CURRENT_TURN_TEAM_PROPERTY] = g_param_spec_enum(
+        "current-turn-team", 
+        "current-turn-team", 
+        "The team to which the curent turn belongs to", 
+        CHECKERS_TYPE_TEAM, 
+        CHECKERS_NO_TEAM, 
+        G_PARAM_READABLE
+    );
+    properties[SLOT_RADIUS_PROPERTY] = g_param_spec_int(
+        "slot-radius",
+        "slot-radius",
+        "The radius of the board's buttons",
+        0,
+        G_MAXINT,
+        20,
+        G_PARAM_READWRITE
+    );
+    properties[GAME_ACTIVE_PROPERTY] = g_param_spec_boolean(
+        "game-active",
+        "game-active",
+        "Whether a game is ongoing",
+        false,
+        G_PARAM_READWRITE
+    );
+    properties[SELECTED_SLOT_PROPERTY] = g_param_spec_object(
+        "selected-slot",
+        "selected-slot",
+        "The slot currently selected",
+        CHECKERS_TYPE_SLOT,
+        G_PARAM_READWRITE
+    );
+    g_object_class_install_properties(objectClass, N_PROPERTIES, properties);
+    signals[GAME_OVER_SIGNAL] = g_signal_new(
+        "game-over",
+        CHECKERS_TYPE_BOARD,
+        G_SIGNAL_RUN_FIRST,
+        0,
+        NULL,
+        NULL,
+        g_cclosure_marshal_VOID__ENUM,
+        G_TYPE_NONE,
+        1,
+        CHECKERS_TYPE_TEAM
+    );
     gtk_widget_class_set_template_from_resource(widgetClass, "/com/fullaccess/ChineseCheckers/resources/markup/CheckersBoard.ui");
-
-    
+ 
     for (size_t i= 0; i < CHECKERS_BOARD_ROWS; i++) {
         char boxId[ARRAY_SIZE("row00")];
         snprintf(boxId, ARRAY_SIZE(boxId), "row%zu", i+1);
@@ -342,23 +352,23 @@ static void checkers_board_get_property(GObject *object, guint propertyId, GValu
     CheckersBoard *self = CHECKERS_BOARD(object);
 
     switch (propertyId) {
-        case PROPERTY_PLAYERS: {
+        case PLAYERS_PROPERTY: {
             g_value_set_enum(value, (gint)self->players);
             return;
         }
-        case PROPERTY_SLOT_RADIUS: {
+        case SLOT_RADIUS_PROPERTY: {
             g_value_set_int(value, self->slotRadius);
             return;
         }
-        case PROPERTY_GAME_ACTIVE: {
+        case GAME_ACTIVE_PROPERTY: {
             g_value_set_boolean(value, self->gameActive);
             return;
         }
-        case PROPERTY_CURRENT_TURN_TEAM: {
+        case CURRENT_TURN_TEAM_PROPERTY: {
             g_value_set_enum(value, (gint)self->currentTurnTeam); 
             return;
         }
-        case PROPERTY_SELECTED_SLOT: {
+        case SELECTED_SLOT_PROPERTY: {
             g_value_set_object(value, self->selectedSlot);
             return;
         }
@@ -370,18 +380,18 @@ static void checkers_board_set_property(GObject *object, guint propertyId, const
     CheckersBoard *self = CHECKERS_BOARD(object);
     
     switch (propertyId) {
-        case PROPERTY_PLAYERS: {
+        case PLAYERS_PROPERTY: {
             self->players = (CheckersPlayers)g_value_get_enum(value);
             const CheckersSlotState *data = initialBoardState[self->players];
             for (size_t i= 0; i < N_SLOTS; i++) 
                 checkers_slot_set_state(self->slots[i], data[i]);
             return;
         }
-        case PROPERTY_SLOT_RADIUS: {
+        case SLOT_RADIUS_PROPERTY: {
             self->slotRadius = g_value_get_int(value);
             return;
         }
-        case PROPERTY_GAME_ACTIVE: {
+        case GAME_ACTIVE_PROPERTY: {
             bool gameActive = g_value_get_boolean(value);
             g_assert((gameActive != self->gameActive) && "Setting Checkers::Board::gameActive to its own value");
             self->gameActive = gameActive;
@@ -390,11 +400,11 @@ static void checkers_board_set_property(GObject *object, guint propertyId, const
                 gtk_widget_set_can_focus(GTK_WIDGET(self->slots[i]), gameActive);
             return;
         }
-        case PROPERTY_CURRENT_TURN_TEAM: {
+        case CURRENT_TURN_TEAM_PROPERTY: {
             self->currentTurnTeam = (CheckersTeam)g_value_get_enum(value);
             return;
         }
-        case PROPERTY_SELECTED_SLOT: {
+        case SELECTED_SLOT_PROPERTY: {
             self->selectedSlot = (CheckersSlot *)g_value_get_object(value);
             return;
         }
@@ -530,11 +540,12 @@ static void checkers_board_on_game_over(CheckersBoard *self) {
     }
     g_assert(winConditionMet && "Called checkers::board::on_game_over when game wasnt over");
 #endif /* DEBUG */
-    g_signal_emit(self, )
-    char *winner = g_enum_to_string(CHECKERS_TYPE_TEAM, (gint)self->currentTurnTeam);
-    g_message("%s won", winner);
-    g_free(winner);
+    g_signal_emit(self, signals[GAME_OVER_SIGNAL], 0, self->currentTurnTeam); 
     checkers_board_set_game_active(self, false);
+}
+
+static void checkers_board_set_selected_slot(CheckersBoard *self, CheckersSlot *selectedSlot) {
+    g_object_set(self, "selected-slot", selectedSlot, NULL); 
 }
 
 extern GtkWidget *checkers_board_new(void) {
@@ -567,7 +578,9 @@ extern CheckersTeam checkers_board_get_current_turn_team(CheckersBoard *self) {
 }
 
 extern CheckersSlot *checkers_board_get_selected_slot(CheckersBoard *self) {
-    return self->selectedSlot;
+    CheckersSlot *hold; 
+    g_object_get(self, "selected-slot", &hold, NULL);
+    return hold;
 }
 
 extern void checkers_board_unselect_slot(CheckersBoard *self) {
@@ -578,7 +591,7 @@ extern void checkers_board_unselect_slot(CheckersBoard *self) {
         self->highlightedSlots[i] = NULL; 
     }
     checkers_slot_set_selected(self->selectedSlot, false);
-    self->selectedSlot = NULL;
+    checkers_board_set_selected_slot(self, NULL);
 }
 
 extern void checkers_board_mark_slot_selected(CheckersBoard *self, CheckersSlot *slot) {
@@ -587,7 +600,7 @@ extern void checkers_board_mark_slot_selected(CheckersBoard *self, CheckersSlot 
         checkers_board_unselect_slot(self);
     /* Order is important. gtk::widget::grab_focus must be called before setting CheckersBoard::selectedSlot, otherwise Checkers::BoardButton::track_focus will assume focus was just lost */
     checkers_slot_set_selected(slot, true);
-    self->selectedSlot = slot;
+    checkers_board_set_selected_slot(self, slot);
     checkers_board_find_and_populate_moves(self, slot);
 }
 
